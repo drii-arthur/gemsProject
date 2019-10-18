@@ -1,40 +1,48 @@
 import React from 'react'
-import { View, Text, StyleSheet,Image } from 'react-native'
+import { View, Text, StyleSheet,Image,TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import {withNavigation} from "react-navigation"
+import SvgUri from 'react-native-svg-uri'
 
 const OvoFeatures = (props) => {
     return (
         <View style={{ width: '25%', alignItems: 'center' }}>
-            <View style={styles.wrapperIcon}>
-                <Icon name={props.icon} size={24} color='#04b4b9' />
-            </View>
+            <TouchableOpacity 
+            onPress={props.route}
+            style={styles.wrapperIcon}>
+            <Image
+                    style={{width:'60%',height:'75%'}}
+                    source={props.image}
+                />
+            </TouchableOpacity>
             <Text style={styles.text}>{props.title}</Text>
         </View>
         
     )
 }
 
-export default class ContentFeatures extends React.Component {
+class ContentFeatures extends React.Component {
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.wrapper}>
-                    <OvoFeatures icon={'md-flash'} title='Pulsa' />
-                    <OvoFeatures icon={'md-phone-portrait'} title='Paket Data' />
-                    <OvoFeatures icon={'ios-wifi'} title='PLN' />
-                    <OvoFeatures icon={'md-phone-portrait'} title='BPJS' />
+                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='Pulsa' route={() => {this.props.navigation.navigate('Pulsa')}}/>
+                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='Paket Data' route={() => {this.props.navigation.navigate('PaketData')}} />
+                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='PLN' route={() => {this.props.navigation.navigate('Pln')}} />
+                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='BPJS' route={() => {this.props.navigation.navigate('Bpjs')}} />
                 </View>
                 <View style={styles.wrapper}>
-                    <OvoFeatures icon={'ios-medkit'} title='ASURANSI' />
-                    <OvoFeatures icon={'md-wallet'} title='PDAM' />
-                    <OvoFeatures icon={'md-videocam'} title='Internet' />
-                    <OvoFeatures icon={'ios-more'} title='Lainnya' />
+                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='ASURANSI' route={() => {this.props.navigation.navigate('Asuransi')}} />
+                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='PDAM'route={() => {this.props.navigation.navigate('Pdam')}} />
+                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='Internet' route={() => {this.props.navigation.navigate('Internet')}} />
+                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='Lainnya'  />
                 </View>
             </View>
 
         )
     }
 }
+export default withNavigation(ContentFeatures)
 
 const styles = StyleSheet.create({
     container: {
@@ -50,13 +58,13 @@ const styles = StyleSheet.create({
         marginBottom: 18
     },
     wrapperIcon: {
-        width: 58,
-        height: 58,
-        borderWidth: 1,
-        borderColor: '#c5f5fb',
-        borderRadius: 50,
+        width: 60,
+        height: 60,
+        // borderWidth: 1,
+        // borderColor: '#c5f5fb',
+        // borderRadius: 50,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     text: {
         fontSize: 11,

@@ -2,7 +2,6 @@ import React from 'react'
 import { View, Text, StyleSheet, Dimensions, StatusBar } from 'react-native'
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view'
 import Icon from 'react-native-vector-icons/Ionicons'
-import Footer from '../Components/footer'
 import Transfer from '../Screens/transfers'
 import QrCode from '../Screens/qrcode'
 import TarikSaldo from '../Screens/tarikSaldo'
@@ -40,7 +39,6 @@ class Transactions extends React.Component{
             />
         }
       />
-            <Footer />
             </View>
         )
     }

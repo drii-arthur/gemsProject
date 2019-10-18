@@ -7,8 +7,6 @@ import {View,
     AppRegistry,
     TouchableOpacity,
     Linking} from 'react-native'
-
-// import { RNCamera } from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
 class ScanScreen extends Component{
@@ -21,12 +19,11 @@ class ScanScreen extends Component{
         return(
             <QRCodeScanner
             onRead={this.onSuccess}
-            flashMode={QRCodeScanner.Constants.FlashMode.torch}      
-            topContent={
-              <Text style={styles.centerText}>
-                Go to <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on your computer and scan the QR code.
-              </Text>
-            }
+            showMarker={true}
+            markerStyle={{borderRadius:5,borderWidth:5,borderColor:'#39afb5'}}
+            // flashMode={QRCodeScanner.Constants.FlashMode.torch}
+            containerStyle={{backgroundColor:'tomato'}}
+            cameraStyle={{height:'100%'}}      
             bottomContent={
               <TouchableOpacity style={styles.buttonTouchable}>
                 <Text style={styles.buttonText}>OK. Got it!</Text>
@@ -36,7 +33,7 @@ class ScanScreen extends Component{
         );
       }
     }
-     
+      
     const styles = StyleSheet.create({
       centerText: {
         flex: 1,

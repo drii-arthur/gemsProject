@@ -34,15 +34,16 @@ export default class Banner extends React.Component {
 
 const styles = StyleSheet.create({
     wrapper: {
-        height: height / 5.5,
+        height: height / 7,
         width: width / 1.4,
         marginRight: 8,
-        elevation: 5,
-        borderRadius:10
+        elevation: 3,
+        borderRadius:10,
+        marginBottom:10
     },
     image: {
         width: '100%',
         height: '100%',
-        borderRadius: 10,
+        borderRadius: 5,
     }
 })

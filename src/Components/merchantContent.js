@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         borderColor: '#CAD3C8',
         marginBottom: 10,
         backgroundColor: '#fff',
-        borderRadius: 6
+        borderRadius: 6,
     },
     image: {
         width: '100%',

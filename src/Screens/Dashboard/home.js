@@ -5,43 +5,57 @@ import Banner from '../../Components/banner'
 import CardsMerchant from '../../Components/merchantContent'
 import BannerInfo from '../../Components/bannerInfo'
 import Icon from 'react-native-vector-icons/Ionicons'
-import Footer from '../../Components/footer'
+import LinearGradient from 'react-native-linear-gradient'
+import {withNavigation} from "react-navigation"
+import SvgUri from 'react-native-svg-uri-reborn'
+
 
 const {height} = Dimensions.get('window')
 class HomePage extends React.Component{
     render(){
         return(
-            <View style={{flex:1}}>
+            <View style={{flex:1,zIndex:-1}}>
                 <StatusBar backgroundColor='#39afb5' />
                 <View style={styles.header}>
+                
                 <ImageBackground source={require('../../Assets/Images/Header.png')}
                 imageStyle={{borderBottomRightRadius:30,borderBottomLeftRadius:30}}
                  style={styles.header}>
-                    <View>
-                        <Image />
-                    </View>
+                <View style={{paddingHorizontal:20,paddingVertical:10,flexDirection:'row'}}>
+                <View style={{flex:1,paddingVertical:0}}>
+                <Icon  name={'logo-playstation'} size={34} color={'#fff'} />
+                </View>
+                <View style={{flexDirection:'row'}}>
+                 <SvgUri
+                    fill='#fff'
+                    width="24"
+                    height="24"
+                    source={require('../../Assets/Icons/Wallet_icon.svg')}
+                />
+                <Icon  name={'md-notifications'} size={24} color={'#fff'} onPress={() => {this.props.navigation.navigate('Notification')}
+                } style={{marginLeft:10}} />
+                </View>
+                </View>
                 </ImageBackground>
                 </View>
+                
                 <View style={styles.conWrapperSaldo}>
-                <ImageBackground
-                source={require('../../Assets/Images/Dashboard_bg.png')}
-                imageStyle={{ borderRadius: 5 }}
-                style={styles.saldo}>
-                    <View style={{borderRightWidth:1,borderRightColor:'#fff',flex:1,paddingLeft:20,position:'relative'}}>
+                <LinearGradient  colors={[ '#39AFB5','#39AFB5','#7ed6df']}  style={styles.saldo} >
+
+                    <View style={{borderRightWidth:1,borderRightColor:'#fff',flex:1,paddingHorizontal:20}}>
                         {/* button top up saldo cash */}
-                    <TouchableOpacity style={{position:'absolute',top:5,right:10,borderWidth:1,borderColor:'#fff',padding:3,borderRadius:5}}>
-                                <Text style={{color:'#fff',fontSize:11}}>TOP UP</Text>
-                            </TouchableOpacity>                        
+                        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                         <Text style={{color:'#fff'}}>SALDO CASH</Text>
+                         <TouchableOpacity style={{borderWidth:1,borderColor:'#fff',padding:3,borderRadius:5,marginLeft:7}}>
+                        <Text style={{color:'#fff',fontSize:11}}>TOP UP</Text>
+                        </TouchableOpacity> 
+                        </View>
                         <Text style={{color:'yellow',fontSize:10,}}>Rp</Text>
                         <Text style={{fontSize:15,color:'yellow',marginTop:-15,marginLeft:13,fontWeight:'700'}}>20.000.000</Text>
                     </View>
                     
                     <View style={{flex:1,paddingLeft:20,position:'relative'}}>
-                        {/* button top up saldo cash */}
-                    <TouchableOpacity style={{position:'absolute',top:5,right:10,borderWidth:1,borderColor:'#fff',padding:3,borderRadius:5}}>
-                                <Text style={{color:'#fff',fontSize:11}}>TOP UP</Text>
-                            </TouchableOpacity>                        
+                        {/* button top up saldo cash */}                     
                         <Text style={{color:'#fff'}}>SALDO POINT</Text>
                         <Image 
                             style={styles.logoSaldoPoint}
@@ -49,7 +63,7 @@ class HomePage extends React.Component{
                         <Text style={{fontSize:15,color:'yellow',marginTop:-15,marginLeft:13,fontWeight:'700'}}>10.000</Text>
                     </View>
 
-                </ImageBackground>
+               </LinearGradient>
                 </View>
 
                 <ScrollView>
@@ -57,7 +71,7 @@ class HomePage extends React.Component{
                 <ContentFeatures />
 
                 {/* content cards banner */}
-                <View style={{ paddingBottom: 20 }}>
+                <View style={{ paddingBottom: 10 }}>
                         <Banner />
                 </View>
 
@@ -77,7 +91,6 @@ class HomePage extends React.Component{
                 <BannerInfo />
 
                 </ScrollView>
-                <Footer />
             </View>
         )
     }
@@ -93,21 +106,21 @@ const styles = StyleSheet.create({
     },
     saldo:{
         flexDirection:'row',
-        height:height/11,
+        height:height/9,
         borderRadius:5,
         paddingVertical:10,
         paddingHorizontal:5,
-        zIndex:1
+        elevation:5
     },
     conWrapperSaldo:{
         position:'absolute',
         left:0,
-        top:90,
+        top:70,
         paddingHorizontal:20,
         backgroundColor:'transparent',
-        height:height/11,
+        height:height/9,
         width:'100%',
-        zIndex:1
+        zIndex:999
 },
     saldoCash:{
 
@@ -119,4 +132,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default HomePage
+export default withNavigation(HomePage)

@@ -1,6 +1,5 @@
 import React from 'react'
 import {View,Text} from 'react-native'
-import Footer from '../Components/footer'
 
 class Deals extends React.Component{
     render(){
@@ -10,7 +9,6 @@ class Deals extends React.Component{
                 <Text>Deals Pages</Text>
                 </View>
                 <View>
-                    <Footer />
                 </View>
             </View>
         )
