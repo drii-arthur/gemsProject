@@ -21,7 +21,7 @@ const users = (state = initialState , action) => {
                 isRejected:true,
                 isFullFilled:false,
                 isLoading:false,
-                errMessage:action.payload.response ? action.payload.response.data.error : action.payload.data.error,
+                errMessage:action.payload.response ? action.payload.response.data.idcontact : action.payload.data.idcontact,
             }
         case 'LOGIN_FULLFILLED':
             return{
@@ -41,7 +41,9 @@ const users = (state = initialState , action) => {
             return{
             ...state,
             isRejected:true,
-            isFullFilled:false
+            isFullFilled:false,
+            errMessage:action.payload.response ? action.payload.response.data.iduser2 : action.payload.data.iduser2,
+           
             }
         case 'IZIN_FULLFILLED':
         return{
@@ -61,8 +63,47 @@ const users = (state = initialState , action) => {
             ...state,
             isRejected:true,
             isFullFilled:false,
+             errMessage:action.payload.response ? action.payload.response.data : action.payload.data
         }
         case 'SIGNUP_FULLFILLED':
+        return{
+            ...state,
+            isRejected:false,
+            isFullFilled:true
+        }
+        case 'PIN_PENDING':
+        return{
+            ...state,
+            isLoadingL:true,
+            isRejected:false,
+            isFullFilled:false
+        }
+        case 'PIN_REJECTED':
+        return{
+            ...state,
+            isRejected:true,
+            isFullFilled:false
+        }
+        case 'PIN_FULLFILLED':
+        return{
+            ...state,
+            isRejected:false,
+            isFullFilled:true
+        }
+        case 'LOGOUT_PENDING':
+        return{
+            ...state,
+            isLoading:true,
+            isRejected:false,
+            isFullFilled:false
+        }
+        case 'LOGOUT_REJECTED':
+        return{
+            ...state,
+            isRejected:true,
+            isFullFilled:false
+        }
+        case 'LOGOUT_FULLFILLED':
         return{
             ...state,
             isRejected:false,

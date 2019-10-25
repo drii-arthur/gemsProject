@@ -2,6 +2,8 @@ import React,{Component,Fragment} from 'react';
 import { View, Text, StatusBar, StyleSheet, KeyboardAvoidingView, Keyboard } from 'react-native'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 import { withNavigation } from 'react-navigation'
+import {pin} from '../Public/Actions/users'
+import {connect} from 'react-redux'
 
 const color = '#39afb5'
 class NewPin extends Component {
@@ -10,7 +12,8 @@ class NewPin extends Component {
         this.state = {
             code: '',
             confirmCode:'',
-            confirmPin:false
+            confirmPin:false,
+            iduser:this.props.navigation.getParam('iduser')
         }
     }
 
@@ -29,9 +32,17 @@ class NewPin extends Component {
 
     }
 
-    _checkCode = (confirmCode) => {
+    _checkCode = async (confirmCode) => {
         if (confirmCode == this.state.code) {
-           alert('yess')
+            await this.props.dispatch(pin({pin:this.state.code,pin_confirm:confirmCode,iduser:this.state.iduser}))
+            .then(res => {
+                console.warn(res)
+                this.props.navigation.navigate('appStackNavigator')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            
         } else {
             this.pinInput.current.shake()
                 .then(() => this.setState({ confirmCode: '' }))
@@ -117,7 +128,13 @@ class NewPin extends Component {
         )
     }
 }
-export default withNavigation(NewPin)
+const mapStateToProps = state => {
+    return {
+        users: state.users
+    };
+};
+
+export default connect(mapStateToProps)(NewPin)
 
 const styles = StyleSheet.create({
     continer: {

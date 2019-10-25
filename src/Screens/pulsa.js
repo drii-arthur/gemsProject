@@ -10,21 +10,39 @@ class Pulsa extends Component{
     constructor(props){
         super(props)
         this.state = {
-           phone:''
+           phone:'',
+        //    contact: this.props.navigation.getParam('nomor')
         }
     }
+
 
     checkNumber = (teks,name) => {
         this.setState({
             [name]:teks
-        },console.log(this.state.phone))
+        })
     }
+
+    // componentWillMount(){
+    //     const phoneNumber = this.props.navigation.getParam('nomor')
+    //     if(phoneNumber !== undefined) {
+    //         this.setState({
+    //             contact:phoneNumber
+    //         })
+    //         console.warn(this.state.contact,'contact')
+    //     }
+    //     else{
+    //         this.setState({
+    //             contact:''
+    //         })
+    //     }
+        
+    // }
 
     goBack = () => {
         this.props.navigation.goBack()
     }
     render(){
-        console.log(this.state.phone)
+        const contact = this.props.navigation.getParam('nomor')
         return(
             <View style={{flex:1}}>
             <View style={styles.header}>
@@ -34,6 +52,7 @@ class Pulsa extends Component{
                 </Text>
             </View>
             <View style={styles.wrapperInput}>
+            {contact !== '' ? 
             <Input
             inputContainerStyle={{borderBottomColor:'#ecf0f1'}}
             keyboardType='numeric'
@@ -42,11 +61,24 @@ class Pulsa extends Component{
             placeholder='Masukan No hp anda'
             inputStyle={styles.textinput}
             onChangeText={(teks) => {this.checkNumber(teks,'phone')}}
-            // value={this.state.phone}
-            rightIcon={<Font name={'address-book'} size={24} color='#39AFB5' />}
+            value={contact}
+            rightIcon={<Font name={'address-book'} size={24} color='#39AFB5' onPress={() => {this.props.navigation.navigate('ContactList')}} />}
             />
+            :
+            <Input
+            inputContainerStyle={{borderBottomColor:'#ecf0f1'}}
+            keyboardType='numeric'
+            label='Phone Number'
+            labelStyle={{color:'#39afb5',fontSize:14}}
+            placeholder='Masukan No hp anda'
+            inputStyle={styles.textinput}
+            onChangeText={(teks) => {this.checkNumber(teks,'phone')}}
+            rightIcon={<Font name={'address-book'} size={24} color='#39AFB5' onPress={() => {this.props.navigation.navigate('ContactList')}} />}
+            />
+            }
+            
             </View>
-            <CardPulsa check={this.state.phone} />
+            <CardPulsa check={this.state.phone} getContact={contact} />
             </View>
         )
     }

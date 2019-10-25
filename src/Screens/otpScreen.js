@@ -11,7 +11,7 @@ class Otp extends Component{
         super(props)
         this.state = {
             code:'',
-            otpCode : this.props.navigation.getParam('code')
+            otpCode : this.props.navigation.getParam('dataObj')
         }
     }
 
@@ -41,13 +41,34 @@ class Otp extends Component{
 
     pinInput = React.createRef();
     _checkCode = async (code) => {
-        if (code == this.state.otpCode) {
-            await this.props.dispatch(izin({code:this.state.otpCode}))
+        const dataObj = this.state.otpCode
+        const iduser = dataObj.iduser
+        const codeConfirm = dataObj.code
+        console.warn(iduser,'kiye')
+        if (code ==  codeConfirm) {
+            await this.props.dispatch(izin({iduser:iduser,code:codeConfirm}))
             .then(res => {
                 console.log(res)
-                this.props.navigation.navigate('HomeStack')
+                let ket = res.action.payload.data.ket
+                let nama = res.action.payload.data.nama
+                let kontak = res.action.payload.data.kontak
+                let email = res.action.payload.data.email
+                let id = res.action.payload.data.id
+                let status = res.action.payload.data.status
+                if(ket == 'menuju halaman home premium'){
+                    AsyncStorage.setItem('id',JSON.stringify(id))
+                    AsyncStorage.setItem('nama',JSON.stringify(nama))
+                    AsyncStorage.setItem('kontak',JSON.stringify(kontak))
+                    AsyncStorage.setItem('status',JSON.stringify(status))
+                    AsyncStorage.setItem('email',JSON.stringify(email))
+                this.props.navigation.navigate('appStackNavigator',{iduser})
+                }else{
+                    this.props.navigation.navigate('NewPin',{iduser})
+                }
+                 
             })
             .catch(err => {
+                const idUser = this.props.users.errMessage
                 console.log(err)
             })
             
@@ -58,7 +79,6 @@ class Otp extends Component{
     }
 
     render(){
-        console.warn(this.state.otpCode)
         const { code } = this.state
         return(
             <View style={{flex:1}}>

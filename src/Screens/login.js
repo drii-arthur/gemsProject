@@ -17,6 +17,7 @@ class Login extends Component{
             showToast: false
         }
     }
+    
 
     handleInput = (teks, name) => {
         this.setState({
@@ -24,43 +25,74 @@ class Login extends Component{
         })
     }
 
+    componentDidMount = async () => {
+        const token = await AsyncStorage.getItem('id')
+        if(token === null){
+            console.warn(token)
+        }else{
+            this.props.navigation.navigate('appStackNavigator')
+        }
+        return token
+    }
+
     handleLogin =  async () => {
         let phone = this.state.phone
         await this.props.dispatch(login({phone:phone}))
         .then(res => {
             const dataObj = res.action.payload.data   
-            let active = dataObj.userku.active
-            let id = dataObj.userku.id
-            let code = dataObj.auh.code
-            // AsyncStorage.setItem('code',code) 
-            if(active === 0){          
-                this.props.navigation.navigate('Otp',{code})      
-            }else{
-                this.props.navigation.navigate('HomeStack')
+            let id = dataObj.id
+            let nama = dataObj.nama
+            let kontak = dataObj.kontak
+            let status = dataObj.status
+            let email = dataObj.email
+            let idKontak = dataObj.idkontak1
+            let idKontak2 = dataObj.idkontak2
+            let idUser = dataObj.iduser
+            if(id != undefined){
+                    AsyncStorage.setItem('id',JSON.stringify(id))
+                    AsyncStorage.setItem('nama',JSON.stringify(nama))
+                    AsyncStorage.setItem('kontak',JSON.stringify(kontak))
+                    AsyncStorage.setItem('status',JSON.stringify(status))
+                    AsyncStorage.setItem('email',JSON.stringify(email))
+                    console.warn(dataObj.id,id)
+                    Toast.show({
+                    text:'Login sukses',
+                    buttonText: "Okay",
+                    type: "success",
+                    position:'top',
+                    duration:1000,
+                    style:styles.toast
+                })
+                this.props.navigation.navigate('appStackNavigator')
             }
-            Toast.show({
-            text:'Login sukses',
-            buttonText: "Okay",
-            type: "success",
-            position:'top',
-            duration:2000,
-            style:styles.toast 
-             })  
+                
+             
+             if(idKontak != undefined || idKontak2 != undefined){
+                    this.props.navigation.navigate('Register',{idKontak,idKontak2})                    
+             }
+             if(idUser !== undefined){
+                 this.props.navigation.navigate('Otp',{dataObj})
+             }  
         })
-        .catch(() => {
-            this.props.navigation.navigate('Register',{phone})
+        .catch((err) => {
+            console.log(err)
             Toast.show({
             text: this.props.users.errMessage,
-            buttonText: "Okay",
             type: "warning",
             position:'top',
             duration:2000,
-            style:styles.toast,
-        })
+            style:styles.toast
 
+        })
         })
     }
     render(){
+        // const token = AsyncStorage.getItem('id')
+        // console.warn(token,'data token')
+        // if(token !== null){
+        //     this.props.navigation.navigate('appStackNavigator')
+        // }
+        // else{}
         return(
             // container
             <ScrollView>
@@ -74,19 +106,6 @@ class Login extends Component{
                 <View style={styles.wrapperInput}>
                     <View style={{flexDirection:'row',borderBottomColor:'#bdc3c7',
                      borderBottomWidth:1,}}>
-                        {/* <View style={{flex:1}}>
-                            <Picker style={styles.dropdown}
-                    selectedValue={this.state.numberCode}
-                    onValueChange={(itemValue, itemIndex) => {
-                        console.log(itemValue);
-
-                        this.setState({ numberCode: itemValue })
-                    }
-                    }
-                    >
-                    <Picker.Item label="+62" value="+62" style={{width:200}} />
-                    </Picker>
-                        </View> */}
                 <View style={{width:'100%'}}> 
                     <TextInput 
                     onChangeText={(teks) => {this.handleInput(teks,'phone')}}
@@ -99,7 +118,7 @@ class Login extends Component{
                     <TouchableOpacity 
                     onPress={this.handleLogin}
                     style={styles.button}>
-                        <Text style={styles.textButton}>MASUK</Text>
+                        <Text style={[styles.textButton,{borderRadius:0}]}>MASUK</Text>
                     </TouchableOpacity>
                 
                 </View>
@@ -144,15 +163,12 @@ const styles = StyleSheet.create({
         backgroundColor:'#39afb5',
         borderRadius:25,
         marginTop:30,
-        elevation:3
+        elevation:3,
+        marginBottom:5
     },
     textButton:{
         color:'#fff',
-        fontSize:14,
+        fontSize:16,
         fontWeight:'700'
     },
-    toast:{
-    borderRadius:25,
-    marginHorizontal:30
-  },
 })

@@ -11,7 +11,7 @@ const OvoFeatures = (props) => {
             onPress={props.route}
             style={styles.wrapperIcon}>
             <Image
-                    style={{width:'60%',height:'75%'}}
+                    style={props.styles}
                     source={props.image}
                 />
             </TouchableOpacity>
@@ -26,16 +26,16 @@ class ContentFeatures extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.wrapper}>
-                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='Pulsa' route={() => {this.props.navigation.navigate('Pulsa')}}/>
-                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='Paket Data' route={() => {this.props.navigation.navigate('PaketData')}} />
-                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='PLN' route={() => {this.props.navigation.navigate('Pln')}} />
-                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='BPJS' route={() => {this.props.navigation.navigate('Bpjs')}} />
+                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='Pulsa' route={() => {this.props.navigation.navigate('Pulsa')}} styles={{width:'50%',height:'60%'}}/>
+                    <OvoFeatures image={require('../Assets/Icons/Paket_icon.png')} title='Paket Data' route={() => {this.props.navigation.navigate('PaketData')}} styles={{width:'60%',height:'50%'}} />
+                    <OvoFeatures image={require('../Assets/Icons/PLN_icon.png')} title='PLN' route={() => {this.props.navigation.navigate('Pln')}} styles={{width:'50%',height:'60%'}} />
+                    <OvoFeatures image={require('../Assets/Icons/BPJS_icon.png')} title='BPJS' route={() => {this.props.navigation.navigate('Bpjs')}} styles={{width:'50%',height:'60%'}} />
                 </View>
                 <View style={styles.wrapper}>
-                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='ASURANSI' route={() => {this.props.navigation.navigate('Asuransi')}} />
-                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='PDAM'route={() => {this.props.navigation.navigate('Pdam')}} />
-                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='Internet' route={() => {this.props.navigation.navigate('Internet')}} />
-                    <OvoFeatures image={require('../Assets/Icons/Pulsa_icon_2.png')} title='Lainnya'  />
+                    <OvoFeatures image={require('../Assets/Icons/Asuransi_icon.png')} title='ASURANSI' route={() => {this.props.navigation.navigate('Asuransi')}} styles={{width:'50%',height:'60%'}} />
+                    <OvoFeatures image={require('../Assets/Icons/PDAM_icon.png')} title='PDAM'route={() => {this.props.navigation.navigate('Pdam')}} styles={{width:'50%',height:'60%'}} />
+                    <OvoFeatures image={require('../Assets/Icons/Internet_icon.png')} title='Internet' route={() => {this.props.navigation.navigate('Internet')}} styles={{width:'60%',height:'50%'}} />
+                    <OvoFeatures image={require('../Assets/Icons/Lainnya_icon.png')} title='Lainnya' styles={{width:'50%',height:'60%'}}  />
                 </View>
             </View>
 
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginTop: 50,
+        marginTop: 40,
         marginHorizontal: 10
     },
     wrapper: {
@@ -60,11 +60,11 @@ const styles = StyleSheet.create({
     wrapperIcon: {
         width: 60,
         height: 60,
-        // borderWidth: 1,
-        // borderColor: '#c5f5fb',
-        // borderRadius: 50,
+        borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
+        // elevation:2,
+        backgroundColor:'#fff'
     },
     text: {
         fontSize: 11,

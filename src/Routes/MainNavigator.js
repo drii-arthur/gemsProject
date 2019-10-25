@@ -25,35 +25,7 @@ import Bpjs from '../Screens/bpjs'
 import Internet from '../Screens/internet'
 import Pdam from '../Screens/pdam'
 import Asuransi from '../Screens/asuransi'
-// const HomeStack = createStackNavigator({
-//     Home:{screen:HomePage}
-// },{
-//     initialRouteName:'Home',
-// headerMode:'none'})
-
-// const TransactionsStack = createStackNavigator({
-//     Transaction:{screen:Transactions}
-// },{
-// headerMode:'none',
-// initialRouteName:'Transaction'})
-
-// const ScanStack = createStackNavigator({
-//     Scan:{screen:ScanScreen}
-// },{
-// headerMode:'none',
-// initialRouteName:'Scan'
-// })
-
-// const DealsStack = createStackNavigator({
-//     Deals:{screen:Deals}
-// },{
-// headerMode:'none'})
-
-// const AkunStack = createStackNavigator({
-//     Akun:{screen:Accounts}
-// },{
-// headerMode:'none',
-// initialRouteName:'Akun'})
+import ContactList from '../Screens/contact'
 
 const AuthStack = createStackNavigator({
     Login,
@@ -62,7 +34,7 @@ const AuthStack = createStackNavigator({
     NewPin
 },{
     headerMode:'none',
-    initialRouteName:'NewPin'
+    initialRouteName:'Login'
     
 })
 
@@ -88,9 +60,10 @@ const appStack = createBottomTabNavigator ({
         screen: ScanScreen,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => (
-                // <FAB snackOffset={10} buttonColor="#39afb5" iconTextColor="#fff" onClickAction={() => {console.log("FAB pressed")}} visible={true} iconTextComponent={<Icon name="md-qr-scanner"/>}  />
-                <View style={{width:'80%',height:'90%',borderBottomLeftRadius:120,borderBottomRightRadius:120,poisition:'absolute',top:-2,left:1,borderWidth:7,borderColor:'#f9f9f7',borderTopWidth:0,elevation:2}}>
-                <Icon size={26} name='md-qr-scanner' color={'#fff'} style={{backgroundColor:'#39afb5',textAlign:'center',paddingHorizontal:11,borderRadius:120,marginHorizontal:-10,paddingVertical:10,poisition:'absolute',top:-25,left:10,width:'100%',elevation:5}} />
+                <View style={{width:'100%',height:'95%',borderBottomLeftRadius:150,borderBottomRightRadius:150,poisition:'absolute',top:-1.3,borderWidth:12,                        borderColor:'#f9f9f7',borderTopWidth:2}}>
+                    <View style={{backgroundColor:'#39afb5',justifyContent:'center',alignItems:'center',borderRadius:48/2,poisition:'absolute',top:-25,left:0,width:48,height:48}}>
+                    <Icon size={26} name='md-qr-scanner' color={'#fff'} />
+                    </View>
                 </View>
             ),
         },
@@ -127,11 +100,12 @@ const appStack = createBottomTabNavigator ({
             fontWeight: '700'
         },
         style: {
-            backgroundColor: '#ffffffff',
-            elevation: 5,
+            backgroundColor: 'transparent',
             height: 55,
             paddingVertical: 0,
-            marginTop:10
+            position:'relative',
+            borderTopWidth:0.5,
+            borderTopColor:'rgba(189, 195, 199,0.5)'
         },
         indicatorStyle: {
             height: 0,
@@ -149,23 +123,19 @@ const appStackNavigator = createStackNavigator({
     Bpjs,
     Asuransi,
     Pdam,
-    Internet
+    Internet,
+    ContactList
 },{
-    headerMode:'none'
+    headerMode:'none',
 })
 
 
 const switchNavigator = createSwitchNavigator({
 appStackNavigator,
-// HomeStack,
-// TransactionsStack,
-// ScanStack,
-// DealsStack,
-// AkunStack,
 AuthStack
 },
 {
-    initialRouteName : 'appStackNavigator'
+    initialRouteName : 'AuthStack'
 })
 
 const AppContainer = createAppContainer(switchNavigator)

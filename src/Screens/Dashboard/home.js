@@ -1,5 +1,6 @@
 import React from 'react'
 import {View,Text,StatusBar,StyleSheet,Dimensions,Image,ImageBackground,ScrollView,TouchableOpacity} from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import ContentFeatures from '../../Components/contentFeatures'
 import Banner from '../../Components/banner'
 import CardsMerchant from '../../Components/merchantContent'
@@ -12,14 +13,15 @@ import SvgUri from 'react-native-svg-uri-reborn'
 
 const {height} = Dimensions.get('window')
 class HomePage extends React.Component{
+    
+
     render(){
         return(
             <View style={{flex:1,zIndex:-1}}>
                 <StatusBar backgroundColor='#39afb5' />
-                <View style={styles.header}>
                 
                 <ImageBackground source={require('../../Assets/Images/Header.png')}
-                imageStyle={{borderBottomRightRadius:30,borderBottomLeftRadius:30}}
+                imageStyle={{borderBottomRightRadius:120,borderBottomLeftRadius:120,transform:[{scaleX:1.5}]}}
                  style={styles.header}>
                 <View style={{paddingHorizontal:20,paddingVertical:10,flexDirection:'row'}}>
                 <View style={{flex:1,paddingVertical:0}}>
@@ -37,7 +39,6 @@ class HomePage extends React.Component{
                 </View>
                 </View>
                 </ImageBackground>
-                </View>
                 
                 <View style={styles.conWrapperSaldo}>
                 <LinearGradient  colors={[ '#39AFB5','#39AFB5','#7ed6df']}  style={styles.saldo} >
@@ -99,9 +100,7 @@ class HomePage extends React.Component{
 
 const styles = StyleSheet.create({
     header:{
-        height:height/6,
-        borderBottomLeftRadius:120,
-        borderBottomRightRadius:120,
+        height:height/5,
         position:'relative'
     },
     saldo:{
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
     conWrapperSaldo:{
         position:'absolute',
         left:0,
-        top:70,
+        top:90,
         paddingHorizontal:20,
         backgroundColor:'transparent',
         height:height/9,

@@ -57,15 +57,13 @@ class CardPulsa extends Component{
                 
             ],
             check:'',
-            showCard:false
+            showCard:false,
         }
     }
 
-    
-
-
     render(){
         let check = this.props.check
+        let contacts = this.props.getContact
         return(
             <View style={{flex:1}}>
             {check.length >= 4 ?
@@ -82,11 +80,11 @@ class CardPulsa extends Component{
                     <Text style={styles.textJumlah}>{item.jumlah} <Text style={{fontSize:10,marginBottom:50}}>K</Text></Text>
                     {
                     check.substring(0,4) == '0813' ||
-                    check.substring(0,4) == '0812' ||
-                    check.substring(0,4) == '0811' ||
-                    check.substring(0,4) == '0822' ||
-                    check.substring(0,4) == '0853' ||
-                    check.substring(0,4) == '0852' ||
+                    check.substring(0,4) == '0812' ||  
+                    check.substring(0,4) == '0811' ||    
+                    check.substring(0,4) == '0822' ||    
+                    check.substring(0,4) == '0853' ||    
+                    check.substring(0,4) == '0852' ||    
                     check.substring(0,4) == '0823' ?
                     (<Image style={{height:30,width:60}} source={{uri:'https://1.bp.blogspot.com/-C64gdRuVaJM/XW4zTQRSZgI/AAAAAAAABAg/mrYpbD-rYkkmIzv9PZRaK99pDvhpueCLwCLcBGAs/s400/Logo%2BTelkomsel%2BTerbaru.png'}} />) : null }
                     {
@@ -103,6 +101,7 @@ class CardPulsa extends Component{
                     check.substring(0,4) == '0878' ||  
                     check.substring(0,4) == '0859' ||  
                     check.substring(0,4) == '0818' ||  
+                    check.substring(0,4) == '0819' ||  
                     check.substring(0,4) == '0817'  ?
                     (<Image style={{height:30,width:30}} source={{uri:'https://upload.wikimedia.org/wikipedia/id/thumb/b/ba/XL_Axiata.svg/1076px-XL_Axiata.svg.png'}} />) : null }
                     
@@ -114,7 +113,54 @@ class CardPulsa extends Component{
                 ) 
             }}
             />
-         : null } 
+         : null }
+
+         {contacts != undefined ?
+            <FlatList
+            style={{alignSelf:'center'}}
+            data={this.state.data}
+            numColumns={2}
+            keyExtractor={(item) => item.id}
+            onEndReachedThreshold={0.2}
+            renderItem={({item}) => {
+                return(
+                    <View style={styles.containerCard}>
+                    <View style={{justifyContent:'space-between',flexDirection:'row',alignItems:'center'}}>
+                    <Text style={styles.textJumlah}>{item.jumlah} <Text style={{fontSize:10,marginBottom:50}}>K</Text></Text>
+                    {
+                    contacts.substring(0,4) == '0813' || 
+                    contacts.substring(0,4) == '0812' ||   
+                    contacts.substring(0,4) == '0811' ||    
+                    contacts.substring(0,4) == '0822' ||    
+                    contacts.substring(0,4) == '0853' ||    
+                    contacts.substring(0,4) == '0852' ?
+                    (<Image style={{height:30,width:60}} source={{uri:'https://1.bp.blogspot.com/-C64gdRuVaJM/XW4zTQRSZgI/AAAAAAAABAg/mrYpbD-rYkkmIzv9PZRaK99pDvhpueCLwCLcBGAs/s400/Logo%2BTelkomsel%2BTerbaru.png'}} />) : null }
+                    {
+                    contacts.substring(0,4) == '0857' ||
+                    contacts.substring(0,4) == '0855' ||
+                    contacts.substring(0,4) == '0858' ||
+                    contacts.substring(0,4) == '0814' ||
+                    contacts.substring(0,4) == '0815' ||
+                    contacts.substring(0,4) == '0816' ||
+                    contacts.substring(0,4) == '0856' ?
+                    (<Image style={{height:16,width:60}} source={{uri:'https://upload.wikimedia.org/wikipedia/id/thumb/3/3f/Indosat_Logo.svg/1280px-Indosat_Logo.svg.png'}} />) : null }
+                    {
+                    contacts.substring(0,4) == '0877' ||   
+                    contacts.substring(0,4) == '0878' ||  
+                    contacts.substring(0,4) == '0859' ||  
+                    contacts.substring(0,4) == '0818' ||
+                    contacts.substring(0,4) == '0817' ?
+                    (<Image style={{height:30,width:30}} source={{uri:'https://upload.wikimedia.org/wikipedia/id/thumb/b/ba/XL_Axiata.svg/1076px-XL_Axiata.svg.png'}} />) : null }
+                    
+                    </View>
+                        <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
+                    <Text style={styles.textPrice}>{item.price}</Text>
+                    
+                    </View>
+                ) 
+            }}
+            />
+         : null }  
             </View>
         )
         

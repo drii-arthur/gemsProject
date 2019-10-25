@@ -4,6 +4,10 @@ import {View,Text,ImageBackground,Dimensions,Image} from 'react-native'
 const {height,width} = Dimensions.get('window')
 class CardAccounts extends React.Component{
     render(){
+        const nama = this.props.nama
+        const kontak = this.props.kontak
+        const email = this.props.kontak
+        const status = this.props.status
         return(
             <View style={{backgroundColor:'#ecf0f1'}}>
                 <View style={{padding:15}}>
@@ -29,14 +33,17 @@ class CardAccounts extends React.Component{
                             />
                         </View>
                         <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                            <Text style={{color:'#fff',letterSpacing:1}}>Sehren</Text>
-                            <Text style={{color:'#fff',letterSpacing:1,fontSize:25}}>0812-1234-5678</Text>
+                            <Text style={{color:'#fff',letterSpacing:1}}>{nama}</Text>
+                            <Text style={{color:'#fff',letterSpacing:1,fontSize:25}}>{kontak}</Text>
                         </View>
                     </View>
 
                     <View style={{flexDirection:'row',paddingHorizontal:20,paddingVertical:10}}>
                         <View style={{flex:1}}>
-                            <Text style={{fontWeight:'bold',color:'#fff',letterSpacing:1}}>MEMBER SINCE</Text>
+                        {status == 0 ? 
+                            <Text style={{fontWeight:'bold',color:'#fff',letterSpacing:1}}>Non Premium</Text>
+                            : <Text style={{fontWeight:'bold',color:'#fff',letterSpacing:1}}>Premium</Text>
+                            }
                         </View>
                         <View>
                             <Text style={{fontWeight:'bold',color:'#fff',letterSpacing:1}}>8/1/2019</Text>

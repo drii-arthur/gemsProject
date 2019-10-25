@@ -19,6 +19,19 @@ export const signup = (data) => {
     export const izin = (data) => {
         return {
             type: 'IZIN',
-            payload:axios.post(`${url}/izin`,data)
+            payload:axios.post(`${url}/otp`,data)
+        }
+    }
+
+    export const pin = (data) => {
+        return {
+            type: 'PIN',
+            payload:axios.post(`${url}/pin`,data)
+        }
+    }
+    export const logout = (data) => {
+        return {
+            type: 'LOGOUT',
+            payload:axios.post(`${url}/getout`,data)
         }
     }

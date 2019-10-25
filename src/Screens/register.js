@@ -18,7 +18,7 @@ class Register extends Component{
         super(props)
         this.state = {
             name:'',
-            phone:this.props.navigation.getParam('phone'),
+            phone:this.props.navigation.getParam('idKontak') || this.props.navigation.getParam('idKontak2'),
             email:''
         }
     }
@@ -33,15 +33,17 @@ class Register extends Component{
         await this.props.dispatch(signup({
             name:this.state.name,
             email:this.state.email,
-            phone:this.state.phone,
+            id_phone:this.state.phone,
         }))
         .then(res => {
             const dataObj = res.action.payload.data
-            let code = dataObj.auh.code
-            this.props.navigation.navigate('Otp',{code})
-            console.log(res.action.payload.data)
+            this.props.navigation.navigate('Otp',{dataObj})
+            console.log(res.action.payload.data,'this is data')
+            console.log(code)
         })
         .catch(err => {
+            const otpCode = this.props.users.errMessage
+            console.log(this.props.users.errMessage)
             console.log(err)
         })
     }
