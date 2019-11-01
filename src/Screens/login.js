@@ -5,7 +5,8 @@ import {login} from '../Public/Actions/users'
 import {connect} from 'react-redux'
 import AsyncStorage from '@react-native-community/async-storage'
 import {Toast} from 'native-base'
-
+import PhoneInput from 'react-native-phone-input'
+import ModalPickerImage from './modalPickerImage'
 
 const {height} = Dimensions.get('window')
 class Login extends Component{
@@ -14,7 +15,7 @@ class Login extends Component{
         this.state = {
             numberCode: '',
             phone:'',
-            showToast: false
+            showToast: false,
         }
     }
     
@@ -27,16 +28,23 @@ class Login extends Component{
 
     componentDidMount = async () => {
         const token = await AsyncStorage.getItem('id')
-        if(token === null){
-            console.warn(token)
-        }else{
-            this.props.navigation.navigate('appStackNavigator')
+        if(token !== null){
+             this.props.navigation.navigate('appStackNavigator')
         }
         return token
     }
 
     handleLogin =  async () => {
         let phone = this.state.phone
+        if(phone.length < 10 || phone.length > 14){
+            Toast.show({
+            text: 'nomor tidak valid',
+            type: "danger",
+            position:'top',
+            duration:1500,
+            style:styles.toast
+            })
+        }else{
         await this.props.dispatch(login({phone:phone}))
         .then(res => {
             const dataObj = res.action.payload.data   
@@ -50,8 +58,8 @@ class Login extends Component{
             let idUser = dataObj.iduser
             if(id != undefined){
                     AsyncStorage.setItem('id',JSON.stringify(id))
-                    AsyncStorage.setItem('nama',JSON.stringify(nama))
-                    AsyncStorage.setItem('kontak',JSON.stringify(kontak))
+                    AsyncStorage.setItem('nama',nama)
+                    AsyncStorage.setItem('kontak',kontak)
                     AsyncStorage.setItem('status',JSON.stringify(status))
                     AsyncStorage.setItem('email',JSON.stringify(email))
                     console.warn(dataObj.id,id)
@@ -85,14 +93,9 @@ class Login extends Component{
 
         })
         })
+        }
     }
     render(){
-        // const token = AsyncStorage.getItem('id')
-        // console.warn(token,'data token')
-        // if(token !== null){
-        //     this.props.navigation.navigate('appStackNavigator')
-        // }
-        // else{}
         return(
             // container
             <ScrollView>
@@ -105,14 +108,24 @@ class Login extends Component{
                 {/* input */}
                 <View style={styles.wrapperInput}>
                     <View style={{flexDirection:'row',borderBottomColor:'#bdc3c7',
-                     borderBottomWidth:1,}}>
-                <View style={{width:'100%'}}> 
+                        borderBottomWidth:1,}}>
+                    <PhoneInput 
+                        ref={(ref) => {
+                        this.phone = ref;
+                        }}
+                        initialCountry='id'
+                        getISOCode='+62'
+                        allowZeroAfterCountryCode={false}
+                    />
+
                     <TextInput 
-                    onChangeText={(teks) => {this.handleInput(teks,'phone')}}
-                    style={styles.input}
-                    placeholder='Nomer Ponsel'
-                    keyboardType='numeric'
-                    /></View>
+                        onChangeText={(teks) => {this.handleInput(teks,'phone')}}
+                        style={styles.input}
+                        placeholder='Nomer Ponsel'
+                        keyboardType='numeric'
+                    >
+                    <Text>+62</Text>
+                    </TextInput>
                     </View>
                     
                     <TouchableOpacity 
@@ -148,7 +161,6 @@ const styles = StyleSheet.create({
         flex:1,
     },
     input:{
-        position:'relative',
         paddingLeft:10
     },
     dropdown:{

@@ -4,6 +4,7 @@ import {Input} from 'react-native-elements'
 import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
 import RNPickerSelect from 'react-native-picker-select'
+import Header from '../Components/header'
 
 
 class Asuransi extends Component{
@@ -26,13 +27,8 @@ class Asuransi extends Component{
     render(){
         console.log(this.state.phone)
         return(
-            <View style={{flex:1}}>
-            <View style={styles.header}>
-            <Icon name={'ios-arrow-back'} size={24} color='#fff' onPress={() => {this.props.navigation.goBack()}} />
-                <Text style={styles.text}>
-                PDAM
-                </Text>
-            </View>
+            <View style={{flex:1,marginTop:25}}>
+                <Header title='PDAM' />
             <View style={styles.wrapperInput}>
             <RNPickerSelect
             style={{backgroundColor:'red',borderBottomWidth:1,borderBottomColor:'red'}}
@@ -63,18 +59,6 @@ class Asuransi extends Component{
 export default Asuransi
 
 const styles = StyleSheet.create({
-    header:{
-        backgroundColor:'#39AFB5',
-        paddingVertical:12,
-        paddingHorizontal:20,
-        elevation:4,
-        flexDirection:'row'
-    },
-    text:{
-        color:'#fff',
-        fontSize:18,
-        marginLeft:20
-    },
     wrapperInput:{
         paddingHorizontal:10,
         marginTop:50,

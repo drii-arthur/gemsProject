@@ -115,7 +115,7 @@ class CardPulsa extends Component{
             />
          : null }
 
-         {contacts != undefined ?
+         {contacts != undefined && contacts.length >= 4 ?
             <FlatList
             style={{alignSelf:'center'}}
             data={this.state.data}

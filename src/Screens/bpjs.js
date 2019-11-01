@@ -4,6 +4,7 @@ import {Input} from 'react-native-elements'
 import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
 import RNPickerSelect from 'react-native-picker-select'
+import Header from '../Components/header'
 
 
 class Bpjs extends Component{
@@ -26,13 +27,8 @@ class Bpjs extends Component{
     render(){
         console.log(this.state.phone)
         return(
-            <View style={{flex:1}}>
-            <View style={styles.header}>
-            <Icon name={'ios-arrow-back'} size={24} color='#fff' onPress={() => {this.props.navigation.goBack()}} />
-                <Text style={styles.text}>
-                Bpjs
-                </Text>
-            </View>
+            <View style={{flex:1,marginTop:25}}>
+                <Header title='BPJS' />            
             <View style={styles.wrapperInput}>
 
             <RNPickerSelect

@@ -4,6 +4,7 @@ import {Input} from 'react-native-elements'
 import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
 import RNPickerSelect from 'react-native-picker-select'
+import Header from '../Components/header'
 
 
 class Pln extends Component{
@@ -27,13 +28,8 @@ class Pln extends Component{
     render(){
         console.log(this.state.phone)
         return(
-            <View style={{flex:1}}>
-            <View style={styles.header}>
-            <Icon name={'ios-arrow-back'} size={24} color='#fff' onPress={() => {this.props.navigation.goBack()}} />
-                <Text style={styles.text}>
-                PLN
-                </Text>
-            </View>
+            <View style={{flex:1,marginTop:25}}>
+                <Header title='PLN' />
             <View style={styles.wrapperInput}>
             <Text style={{color:'#39afb5',alignSelf:'flex-start',marginLeft:10,fontWeight:'bold',fontSize:15}}>
             Jenis Layanan
@@ -72,18 +68,6 @@ class Pln extends Component{
 export default Pln
 
 const styles = StyleSheet.create({
-    header:{
-        backgroundColor:'#39AFB5',
-        paddingVertical:12,
-        paddingHorizontal:20,
-        elevation:4,
-        flexDirection:'row'
-    },
-    text:{
-        color:'#fff',
-        fontSize:18,
-        marginLeft:20
-    },
     wrapperInput:{
         paddingHorizontal:10,
         marginTop:50,

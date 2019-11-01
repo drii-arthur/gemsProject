@@ -4,6 +4,7 @@ import {Input} from 'react-native-elements'
 import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
 import CardPulsa from '../Components/cardPulsa.js'
+import Header from '../Components/header'
 
 
 class PaketData extends Component{
@@ -26,13 +27,8 @@ class PaketData extends Component{
     render(){
         console.log(this.state.phone)
         return(
-            <View style={{flex:1}}>
-            <View style={styles.header}>
-            <Icon name={'ios-arrow-back'} size={24} color='#fff' onPress={() => {this.props.navigation.goBack()}} />
-                <Text style={styles.text}>
-                Paket Data
-                </Text>
-            </View>
+            <View style={{flex:1,marginTop:25}}>
+                <Header title='Paket Data' />
             <View style={styles.wrapperInput}>
             <Input
             inputContainerStyle={{borderBottomColor:'#ecf0f1'}}

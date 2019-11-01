@@ -57,8 +57,8 @@ class Otp extends Component{
                 let status = res.action.payload.data.status
                 if(ket == 'menuju halaman home premium'){
                     AsyncStorage.setItem('id',JSON.stringify(id))
-                    AsyncStorage.setItem('nama',JSON.stringify(nama))
-                    AsyncStorage.setItem('kontak',JSON.stringify(kontak))
+                    AsyncStorage.setItem('nama',nama)
+                    AsyncStorage.setItem('kontak',kontak)
                     AsyncStorage.setItem('status',JSON.stringify(status))
                     AsyncStorage.setItem('email',JSON.stringify(email))
                 this.props.navigation.navigate('appStackNavigator',{iduser})

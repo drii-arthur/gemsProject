@@ -1,32 +1,13 @@
 import React from 'react'
-import {View,Text,ImageBackground,StatusBar,ScrollView,FlatList,TouchableOpacity} from 'react-native'
+import {View,Text,ImageBackground,StatusBar,ScrollView,FlatList,TouchableOpacity,StyleSheet,Button} from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import {logout} from '../Public/Actions/users'
 import {connect} from 'react-redux'
 import CardAccounts from '../Components/cardAccount'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
+// import ListinProfile from '../Components/listInProfile'
 
-  const list = [
-  {
-    name: 'Payment Cards',
-  },
-  {
-    name: 'Change Pin',
-  },
-   {
-    name: 'Change Profil Picture',
-  },
-   {
-    name: 'Help',
-  },
-   {
-    name: 'Terms & Conditions',
-  },
-   {
-    name: 'Privacy Police',
-  }
-]
 
 class Accounts extends React.Component{
   constructor(props){
@@ -36,21 +17,11 @@ class Accounts extends React.Component{
       nama: '',
       kontak:'',
       email:'',
-      status:''
+      status:'',
+
     }
   }
 
-
-keyExtractor = (item, index) => index.toString()
-
-renderItem = ({ item }) => (
-  <ListItem
-    title={item.name}
-    subtitle={item.subtitle}
-    bottomDivider
-    chevron
-  />
-)
 
 componentDidMount = async() => {
   const nama = await AsyncStorage.getItem('nama')
@@ -87,32 +58,12 @@ _handleLogout = async () => {
 }
     render(){
       const {nama} = this.state
-      console.warn(nama)
-      console.warn(this.state.token)
         return(
-            <View style={{flex:1}}>
-                <StatusBar backgroundColor='#39afb5' />
-                <CardAccounts nama={nama} kontak={this.state.kontak} email={this.state.email} status={this.state.status} />
-                <View style={{flex:1,backgroundColor:'#dfe4ea'}}>
-                <View style={{paddingHorizontal:15,backgroundColor:'#fff',flexDirection:'row',alignItems:'center',paddingVertical:5,marginBottom:10}}>
-                <View style={{flexDirection:'row',flex:1,alignItems:'center'}}>
-                <Icon name={'md-gift'} size={30} color={'orange'} />
-                <Text style={{fontSize:17,marginLeft:10,color:'#505050',fontFamily:'roboto'}}>GEM Referral Kode</Text>
+            <View style={{flex:1,marginTop:25}}>
+              <StatusBar backgroundColor='#39afb5' />
+                <CardAccounts nama={nama} kontak={this.state.kontak} email={this.state.email} status={this.state.status} logout={this._handleLogout} />
+                <View style={{flex:1,backgroundColor:'#f9f9f7'}}>
                 </View>
-                <View>
-                <Text  style={{fontSize:17,marginLeft:10,color:'#505050',fontFamily:'roboto'}}>1234567</Text>
-                </View>     
-                </View>
-                <FlatList
-                    style={{color:'#505050'}}
-                    keyExtractor={this.keyExtractor}
-                    data={list}
-                    renderItem={this.renderItem}
-                    />
-                    <TouchableOpacity style={{paddingHorizontal:15,paddingVertical:5,backgroundColor:'#fff',marginTop:10}} onPress={this._handleLogout}>
-                    <Text  style={{fontSize:17,color:'#505050',fontFamily:'roboto'}}>Logout</Text>
-                    </TouchableOpacity>
-                 </View>
             </View>
         )
     }
@@ -124,3 +75,17 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(Accounts)
+const styles = StyleSheet.create({
+    modal: {
+    justifyContent: 'center',
+    alignItems: 'center'
+    },
+    modal3: {
+    height: 300,
+    width: 300
+    },
+    text: {
+    color: "black",
+    fontSize: 22
+  }
+})

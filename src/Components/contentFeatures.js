@@ -35,7 +35,7 @@ class ContentFeatures extends React.Component {
                     <OvoFeatures image={require('../Assets/Icons/Asuransi_icon.png')} title='ASURANSI' route={() => {this.props.navigation.navigate('Asuransi')}} styles={{width:'50%',height:'60%'}} />
                     <OvoFeatures image={require('../Assets/Icons/PDAM_icon.png')} title='PDAM'route={() => {this.props.navigation.navigate('Pdam')}} styles={{width:'50%',height:'60%'}} />
                     <OvoFeatures image={require('../Assets/Icons/Internet_icon.png')} title='Internet' route={() => {this.props.navigation.navigate('Internet')}} styles={{width:'60%',height:'50%'}} />
-                    <OvoFeatures image={require('../Assets/Icons/Lainnya_icon.png')} title='Lainnya' styles={{width:'50%',height:'60%'}}  />
+                    <OvoFeatures image={require('../Assets/Icons/Lainnya_icon.png')} title='Lainnya' styles={{width:'50%',height:'60%'}} route={() => {this.props.navigation.navigate('More')}} />
                 </View>
             </View>
 
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginTop: 40,
+        marginTop: 30,
         marginHorizontal: 10
     },
     wrapper: {

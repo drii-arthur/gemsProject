@@ -1,5 +1,6 @@
 import React from 'react'
 import {View,Text,TextInput,TouchableOpacity} from 'react-native'
+import CardSaldo from '../Components/cardSaldoTopup'
 
 class TarikSaldo extends React.Component{
     render(){
@@ -16,15 +17,9 @@ class TarikSaldo extends React.Component{
                     </TextInput>
                 </View>
 
-                <View style={{borderColor:'#a4b0be',borderWidth:1,padding:10,borderRadius:10,marginVertical:10,alignItems:'center',backgroundColor:'#39afb5',elevation:3}}>
-                    <Text style={{color:'#fff',fontWeight:'bold'}}>SALDO GEMS CASH</Text>
-                    <View style={{paddingVertical:10}}>
-                        <Text style={{fontSize:12,color:'yellow'}}>Rp.</Text>
-                        <Text style={{fontSize:16,color:'yellow',marginLeft:18,marginTop:-15,fontWeight:'bold'}}>2.000.000</Text>
-                    </View>
-                </View>
+                <CardSaldo />
 
-                <View>                
+                <View style={{marginTop:20}}>                
                     <Text>Select Bank Account</Text>                    
                     <View style={{alignItems:'center',marginTop:10,}}>
                     <TouchableOpacity>

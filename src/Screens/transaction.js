@@ -49,6 +49,7 @@ export default Transactions
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop:25
     },
     scene: {
         flex: 1,

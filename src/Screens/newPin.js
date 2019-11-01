@@ -3,6 +3,7 @@ import { View, Text, StatusBar, StyleSheet, KeyboardAvoidingView, Keyboard } fro
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 import { withNavigation } from 'react-navigation'
 import {pin} from '../Public/Actions/users'
+import AsyncStorage from '@react-native-community/async-storage'
 import {connect} from 'react-redux'
 
 const color = '#39afb5'
@@ -37,6 +38,16 @@ class NewPin extends Component {
             await this.props.dispatch(pin({pin:this.state.code,pin_confirm:confirmCode,iduser:this.state.iduser}))
             .then(res => {
                 console.warn(res)
+                let nama = res.action.payload.data.name
+                let kontak = res.action.payload.data.kontak
+                let email = res.action.payload.data.email
+                let id = res.action.payload.data.id
+                let status = res.action.payload.data.status
+                    AsyncStorage.setItem('id',JSON.stringify(id))
+                    AsyncStorage.setItem('nama',nama)
+                    AsyncStorage.setItem('kontak',kontak)
+                    AsyncStorage.setItem('status',JSON.stringify(status))
+                    AsyncStorage.setItem('email',JSON.stringify(email))
                 this.props.navigation.navigate('appStackNavigator')
             })
             .catch(err => {

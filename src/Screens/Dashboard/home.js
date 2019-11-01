@@ -18,12 +18,12 @@ class HomePage extends React.Component{
     render(){
         return(
             <View style={{flex:1,zIndex:-1}}>
-                <StatusBar backgroundColor='#39afb5' />
+                <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.3)" translucent={true} />
                 
                 <ImageBackground source={require('../../Assets/Images/Header.png')}
                 imageStyle={{borderBottomRightRadius:120,borderBottomLeftRadius:120,transform:[{scaleX:1.5}]}}
                  style={styles.header}>
-                <View style={{paddingHorizontal:20,paddingVertical:10,flexDirection:'row'}}>
+                <View style={{paddingHorizontal:20,paddingVertical:35,flexDirection:'row'}}>
                 <View style={{flex:1,paddingVertical:0}}>
                 <Icon  name={'logo-playstation'} size={34} color={'#fff'} />
                 </View>
@@ -47,7 +47,7 @@ class HomePage extends React.Component{
                         {/* button top up saldo cash */}
                         <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                         <Text style={{color:'#fff'}}>SALDO CASH</Text>
-                         <TouchableOpacity style={{borderWidth:1,borderColor:'#fff',padding:3,borderRadius:5,marginLeft:7}}>
+                         <TouchableOpacity style={{borderWidth:1,borderColor:'#fff',padding:3,borderRadius:5,marginLeft:7}} onPress={() => {this.props.navigation.navigate('TopUp')}}>
                         <Text style={{color:'#fff',fontSize:11}}>TOP UP</Text>
                         </TouchableOpacity> 
                         </View>
@@ -100,7 +100,7 @@ class HomePage extends React.Component{
 
 const styles = StyleSheet.create({
     header:{
-        height:height/5,
+        height:height/4.5,
         position:'relative'
     },
     saldo:{

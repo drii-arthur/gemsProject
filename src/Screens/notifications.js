@@ -34,7 +34,7 @@ class Notification extends Component{
     }
     render(){
         return(
-            <View style={{flex:1}}>
+            <View style={{flex:1,marginTop:25}}>
             <View style={styles.header}>
             <Icon name={'ios-arrow-back'} size={24} color='#fff' onPress={() => {this.props.navigation.goBack()}} />
                 <Text style={styles.text}>

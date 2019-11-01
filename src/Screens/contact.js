@@ -6,7 +6,8 @@ import {
     Text,
     Platform,
     PermissionsAndroid,
-    TouchableOpacity
+    TouchableOpacity,
+    StatusBar
 } from 'react-native';
 import Contacts from 'react-native-contacts';
 import { SearchBar } from 'react-native-elements';
@@ -79,6 +80,7 @@ class ContactList extends React.Component {
 
         return (
             <View style={styles.container}>
+            <StatusBar backgroundColor='#39afb5' />
             <View style={styles.header}>
             <TouchableOpacity onPress={() => {this.props.navigation.goBack()}}>
             <Icon name={'ios-arrow-back'} size={24} color={'#fff'} />
@@ -146,6 +148,7 @@ const styles = StyleSheet.create({
         marginBottom:10,
         height:55,
         backgroundColor:'#39afb5',
-        alignItems:'center'
+        alignItems:'center',
+        marginTop:20
     }
 })

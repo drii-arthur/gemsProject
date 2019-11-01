@@ -6,7 +6,7 @@ const BannerContent = (props) => {
     return(
             <View style={styles.wrapper} >
                     <Image
-                        style={styles.image}
+                        style={[styles.image]}
                         source={props.image} />
             </View>
         )
@@ -21,7 +21,7 @@ export default class BannerInfo extends React.Component {
     render() {
        
         return (
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ paddingHorizontal: 15 }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ paddingHorizontal: 15, }}>
                         <BannerContent image={require('../Assets/Images/Banner.png')} />
                         <BannerContent image={require('../Assets/Images/Banner2.png')} />
                         <BannerContent image={require('../Assets/Images/Banner3.png')} />
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         marginRight: 8,
         elevation: 5,
         borderRadius:10,
-        marginRight:20,
+        marginRight:10,
         marginBottom:10
     },
     image: {

@@ -4,6 +4,7 @@ import {Input} from 'react-native-elements'
 import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
 import RNPickerSelect from 'react-native-picker-select'
+import Header from '../Components/header'
 
 
 class Internet extends Component{
@@ -26,13 +27,8 @@ class Internet extends Component{
     render(){
         console.log(this.state.phone)
         return(
-            <View style={{flex:1}}>
-            <View style={styles.header}>
-            <Icon name={'ios-arrow-back'} size={24} color='#fff' onPress={() => {this.props.navigation.goBack()}} />
-                <Text style={styles.text}>
-                Internet
-                </Text>
-            </View>
+            <View style={{flex:1,marginTop:25}}>
+            <Header title={'Internet'} />
             <View style={styles.wrapperInput}>
             <RNPickerSelect
             style={{backgroundColor:'red',borderBottomWidth:1,borderBottomColor:'red'}}

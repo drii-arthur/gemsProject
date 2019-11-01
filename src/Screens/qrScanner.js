@@ -8,27 +8,33 @@ import {View,
     TouchableOpacity,
     Linking} from 'react-native'
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import BarcodeMask from 'react-native-barcode-mask'
 
 class ScanScreen extends Component{
     onSuccess = (e) => {
-        Linking
-          .openURL(e.data)
-          .catch(err => console.error('An error occured', err))
+      alert('this data',e.data)
+        // Linking
+        //   .openURL(e.data)
+          // .catch(err => console.error('An error occured', err))
+    }
+    reactivate = () => {
+      this._setScanning(true)
     }
     render(){
         return(
             <QRCodeScanner
             onRead={this.onSuccess}
             showMarker={true}
+            customMarker={
+              <BarcodeMask
+              animatedLineColor='#e74c3c'
+              edgeColor='#39afb5'
+              />
+            }
             markerStyle={{borderRadius:5,borderWidth:5,borderColor:'#39afb5'}}
             // flashMode={QRCodeScanner.Constants.FlashMode.torch}
-            containerStyle={{backgroundColor:'tomato'}}
-            cameraStyle={{height:'100%'}}      
-            bottomContent={
-              <TouchableOpacity style={styles.buttonTouchable}>
-                <Text style={styles.buttonText}>OK. Got it!</Text>
-              </TouchableOpacity>
-            }
+            cameraStyle={{height:'100%'}}
+            isRepeatScan={true}   
           />
         );
       }

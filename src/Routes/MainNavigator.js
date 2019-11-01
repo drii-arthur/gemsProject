@@ -4,8 +4,6 @@ import {createAppContainer,createSwitchNavigator,} from 'react-navigation'
 import {createBottomTabNavigator} from 'react-navigation-tabs'
 import {createStackNavigator} from 'react-navigation-stack'
 import Icon from 'react-native-vector-icons/Ionicons'
-import FAB from 'react-native-fab'
-import Mask from "react-native-mask"
 
 import HomePage from '../Screens/Dashboard/home'
 import Deals from '../Screens/deals'
@@ -26,6 +24,15 @@ import Internet from '../Screens/internet'
 import Pdam from '../Screens/pdam'
 import Asuransi from '../Screens/asuransi'
 import ContactList from '../Screens/contact'
+import PrivacyPolice from '../Screens/privacyPolice'
+import TermsConditions from '../Screens/termsCondition'
+import Help from '../Screens/help'
+import More from '../Screens/lainnya'
+import TopUp from '../Screens/topUp'
+import Debit from '../Screens/debit'
+import TopUpAtm from '../Screens/topupAtm'
+import UpgradePremium from '../Screens/upgradePremium'
+
 
 const AuthStack = createStackNavigator({
     Login,
@@ -124,7 +131,15 @@ const appStackNavigator = createStackNavigator({
     Asuransi,
     Pdam,
     Internet,
-    ContactList
+    ContactList,
+    PrivacyPolice,
+    TermsConditions,
+    Help,
+    More,
+    TopUp,
+    Debit,
+    TopUpAtm,
+    UpgradePremium
 },{
     headerMode:'none',
 })
@@ -135,7 +150,7 @@ appStackNavigator,
 AuthStack
 },
 {
-    initialRouteName : 'AuthStack'
+    initialRouteName : 'appStackNavigator'
 })
 
 const AppContainer = createAppContainer(switchNavigator)

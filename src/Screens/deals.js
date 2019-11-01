@@ -4,7 +4,7 @@ import {View,Text} from 'react-native'
 class Deals extends React.Component{
     render(){
         return(
-            <View style={{flex:1}}>
+            <View style={{flex:1,marginTop:25}}>
                 <View style={{flex:1}}>
                 <Text>Deals Pages</Text>
                 </View>
