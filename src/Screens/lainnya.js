@@ -14,8 +14,8 @@ const List = (props) => {
 class More extends React.Component{
     render(){
         return(
-            <View style={{flex:1,marginTop:25}}>
-            <StatusBar backgroundColor='#39afb5' transculent={false} />
+            <View style={{flex:1}}>
+            <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.1)" translucent={true} />
                 <Header title='Semua Kategory' />
                 <View style={{flex:1}}>
                 <List icon={require('../Assets/Icons/Pulsa_icon_2.png')} title='Pulsa' route={() => this.props.navigation.navigate('Pulsa')} />

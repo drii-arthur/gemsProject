@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     conWrapperSaldo:{
         position:'absolute',
         left:0,
-        top:90,
+        top:height/6.5,
         paddingHorizontal:20,
         backgroundColor:'transparent',
         height:height/9,

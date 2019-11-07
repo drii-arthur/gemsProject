@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import { View,Text,StyleSheet,FlatList } from "react-native"
+import { View,Text,StyleSheet,FlatList,StatusBar } from "react-native"
 import {Input} from 'react-native-elements'
 import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
@@ -27,9 +27,13 @@ class Asuransi extends Component{
     render(){
         console.log(this.state.phone)
         return(
-            <View style={{flex:1,marginTop:25}}>
+            <View style={{flex:1}}>
+            <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.1)" translucent={true} />
                 <Header title='PDAM' />
             <View style={styles.wrapperInput}>
+             <Text style={{color:'#39afb5',alignSelf:'flex-start',marginLeft:10,fontWeight:'bold',fontSize:15}}>
+            Jenis Layanan
+            </Text>
             <RNPickerSelect
             style={{backgroundColor:'red',borderBottomWidth:1,borderBottomColor:'red'}}
             onValueChange={(value) => console.warn(value)}
@@ -42,13 +46,12 @@ class Asuransi extends Component{
             <Input
             inputContainerStyle={{borderBottomColor:'#ecf0f1'}}
             keyboardType='numeric'
-            label='Pilih Produk Listrik PLN'
+            label='Masukan Nomor PDAM Anda'
             labelStyle={{color:'#39afb5',fontSize:14}}
-            placeholder='Masukan No hp anda'
+            placeholder='xxxx xxxx xxxx xxxx'
             inputStyle={styles.textinput}
             onChangeText={(teks) => {this.checkNumber(teks,'phone')}}
             // value={this.state.phone}
-            rightIcon={<Font name={'address-book'} size={24} color='#39AFB5' />}
             />
             </View>
             </View>

@@ -7,7 +7,7 @@ import QRCode from 'react-native-qrcode-svg'
 
 const List = (props) => {
     return(
-        <TouchableOpacity style={{paddingHorizontal:15,paddingVertical:15,backgroundColor:'#fff',flexDirection:'row',justifyContent:'space-between',borderBottomColor:'#ecf0f1',borderBottomWidth:1}} onPress={props.route}>
+        <TouchableOpacity style={[styles.List,props.s]} onPress={props.route}>
             <Text  style={{fontSize:17,color:'#505050',fontFamily:'roboto'}}>{props.title}</Text>
             <Icon name={'ios-arrow-forward'} size={16} color='grey' />
 
@@ -47,7 +47,7 @@ class CardAccounts extends React.Component{
         return(
             <View style={{backgroundColor:'#f9f9f7'}}>
                 <View style={{padding:15}}>
-                    <ImageBackground
+                    {/* <ImageBackground
                     source={require('../Assets/Images/Card_bg.png')}
                     style={{width:'100%',height:height/3.3}}
                     imageStyle={{borderRadius:10}}
@@ -75,10 +75,17 @@ class CardAccounts extends React.Component{
                         size={80}
                         />
                         </TouchableOpacity>
+                        {kontak != '' ? 
                         <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
                             <Text style={{color:'#fff',letterSpacing:1}}>{nama}</Text>
                             <Text style={{color:'#fff',letterSpacing:1,fontSize:22}}>{kontak}</Text>
                         </View>
+                        : 
+                        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                            <Text style={{color:'#fff',letterSpacing:1}}>User</Text>
+                            <Text style={{color:'#fff',letterSpacing:1,fontSize:22}}>xxxx-xxxx-xxxx</Text>
+                        </View>
+                        }
                     </View>
 
                     <View style={{flexDirection:'row',paddingHorizontal:20,paddingVertical:10}}>
@@ -92,7 +99,43 @@ class CardAccounts extends React.Component{
                         </View>
                     </View>
                     
-                    </ImageBackground>
+                    </ImageBackground> */}
+
+                    <View style={{height:height/3.3,backgroundColor:'#fff',position:'relative',borderRadius:10,elevation:2}}>
+                        <View style={{height:'40%',backgroundColor:'cyan',borderTopLeftRadius:10,borderTopRightRadius:10}}>
+                        <Text style={{textAlign:'center',marginTop:20}}> GEMS</Text>
+                        </View>
+                        <View style={{height:'50%',marginTop:-50,flexDirection:'row',paddingHorizontal:20}}>
+                            <View style={{height:100,backgroundColor:'#fff',width:100,borderRadius:100/2,borderWidth:5,borderColor:'#fff'}}>
+                                <Image source={{uri:'https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png'}} style={{width:'100%',height:'100%',borderRadius:100/2}} />
+                            </View>
+                            <View style={{flex:1,margin:20,justifyContent:'center'}}>
+                                <Text style={{fontSize:18,fontWeight:'bold',marginTop:45}}>Nama cccccc ccvvbb</Text>
+                                <Text>xxxx-xxxx-xxxx</Text>
+                            </View>
+                        </View>
+                        <View style={{flex:1,marginTop:10,flexDirection:'row',borderRadius:10,padding:5}}>
+                            <View style={{flex:1,padding:5,justifyContent:'center',alignItems:'center',padding: 5,}}>
+                                <Text>Upgrade Premium</Text>
+                            </View>
+                            <View style={{flex:1,borderLeftWidth: 1,borderLeftColor:'#000',justifyContent: 'center',alignItems: 'center',}}>
+                                <Text>Meber since</Text>
+                                <Text>09-09-2019</Text>
+                            </View>
+                            <View style={{flex:1,marginTop:-height/14,alignItems:'center',justifyContent:'center'}}>
+                                <TouchableOpacity onPress={() => this.refs.modal3.open()
+                            }>
+                            <QRCode
+                                value="jancook"
+                                logo={require('../Assets/Icons/logoscan.png')}
+                                logoSize={14}
+                                size={60}
+                                />
+                            </TouchableOpacity>
+                            
+                            </View>
+                        </View>
+                    </View>
                 </View>
                 <ScrollView>
                     <List title='Payment Cards' />
@@ -100,7 +143,7 @@ class CardAccounts extends React.Component{
                     <List title='Help' route={() => {this.props.navigation.navigate('Help')}} />
                     <List title='Terms & Conditions' route={() => {this.props.navigation.navigate('TermsConditions')}} />
                     <List title='Privacy Police' route={() => {this.props.navigation.navigate('PrivacyPolice')}} />
-                    <List title='Logout' route={logout} />
+                    <List title='Logout' route={logout} s={{marginTop:5}} />
                 </ScrollView>
                 <Modal style={[styles.modal, styles.modal3]} position={"center"} ref={"modal3"} isDisabled={this.state.isDisabled}>
                     <Text style={styles.text}>Scan Code</Text>
@@ -136,6 +179,15 @@ const styles = StyleSheet.create({
     },
     bottomText: {
         marginTop:25
+    },
+    List:{
+        paddingHorizontal:15,
+        paddingVertical:15,
+        backgroundColor:'#fff',
+        flexDirection:'row',
+        justifyContent:'space-between',
+        borderBottomColor:'#ecf0f1',
+        borderBottomWidth:1
     }
 
 })

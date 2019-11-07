@@ -26,13 +26,13 @@ class PrivacyPolice extends React.Component{
     }
     render(){
         return(
-            <View style={{flex:1,marginTop:25}}>
-           <StatusBar backgroundColor='#39afb5' />
+            <View style={{flex:1}}>
+            <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.1)" translucent={true} />
                 <Header title='Privacy & Police' />
                 
                 <View style={{flex:1}}>
                     <WebView 
-                    source={{ uri: 'https://facebook.github.io/react-native/' }}
+                    source={{ uri: 'https://gems.id/privacy.html' }}
                     onLoadStart={() => {this.showLoading()}}
                     onLoad={() => {this.hideLoading()}}
                     style={{ flex: 1 }}

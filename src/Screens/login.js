@@ -44,7 +44,16 @@ class Login extends Component{
             duration:1500,
             style:styles.toast
             })
-        }else{
+        }else if(phone.substr(3,1) == 0){
+            Toast.show({
+            text: 'Harap Tidak Memasukan Angka 0 setelah kode negara',
+            type: "danger",
+            position:'top',
+            duration:1500,
+            style:styles.toast
+            })
+        }
+        else{
         await this.props.dispatch(login({phone:phone}))
         .then(res => {
             const dataObj = res.action.payload.data   
@@ -119,7 +128,7 @@ class Login extends Component{
                     />
 
                     <TextInput 
-                        onChangeText={(teks) => {this.handleInput(teks,'phone')}}
+                        onChangeText={(teks) => this.handleInput(teks,'phone')}
                         style={styles.input}
                         placeholder='Nomer Ponsel'
                         keyboardType='numeric'

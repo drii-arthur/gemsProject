@@ -10,7 +10,7 @@ export default class CardsMerchant extends React.Component {
             product: [
                 {
                     id: 1,
-                    image: 'http://katalogpromosi.com/wp-content/uploads/2019/03/yoshinoya_26052019.jpg',
+                    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSL1HbA31_pQcwzjRNYwCM0JhpK3nl9CFeSwGlABhIjxz1ZYbGv',
                     merchant: 'One Dim Sum',
                     jarak:1.5
                 },
@@ -37,7 +37,7 @@ export default class CardsMerchant extends React.Component {
                         <View style={styles.wrapper} key={index}>
                             <Image
                                 style={styles.image}
-                                source={require('../Assets/Images/Merchant1.png')} />
+                                source={{uri:`${item.image}`}} />
                             <View>
                                 <Text style={styles.voucher}>{item.merchant}</Text>
                                 <Text style={styles.price}>{item.jarak} km</Text>

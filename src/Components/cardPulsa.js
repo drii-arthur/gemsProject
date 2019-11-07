@@ -1,13 +1,21 @@
 import React,{Component} from 'react'
 import {View,Text,TouchableOpacity,FlatList,StyleSheet,Dimensions,Image} from 'react-native'
+import Modal from 'react-native-modalbox'
 import LinearGradient from 'react-native-linear-gradient'
+import PayConfirm from '../Components/payConfirm'
 
-
+const color = '#39afb5'
+const colorP = '#485460'
 const {width,height} = Dimensions.get('window')
 class CardPulsa extends Component{
     constructor(){
         super()
         this.state = {
+            // phone:'',
+            // isOpen: false,
+            // isDisabled: false,
+            // swipeToClose: true,
+            // sliderValue: 0.3,
             data:[
                 {
                 id:1,
@@ -62,6 +70,7 @@ class CardPulsa extends Component{
     }
 
     render(){
+        const press = this.props.press
         let check = this.props.check
         let contacts = this.props.getContact
         return(
@@ -75,7 +84,7 @@ class CardPulsa extends Component{
             onEndReachedThreshold={0.2}
             renderItem={({item}) => {
                 return(
-                    <View style={styles.containerCard}>
+                    <TouchableOpacity onPress={press} style={styles.containerCard}>
                     <View style={{justifyContent:'space-between',flexDirection:'row',alignItems:'center'}}>
                     <Text style={styles.textJumlah}>{item.jumlah} <Text style={{fontSize:10,marginBottom:50}}>K</Text></Text>
                     {
@@ -109,13 +118,13 @@ class CardPulsa extends Component{
                         <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
                     <Text style={styles.textPrice}>{item.price}</Text>
                     
-                    </View>
+                    </TouchableOpacity>
                 ) 
             }}
             />
          : null }
 
-         {contacts != undefined && contacts.length >= 4 ?
+         {contacts !== undefined && check == '' ?
             <FlatList
             style={{alignSelf:'center'}}
             data={this.state.data}
@@ -124,7 +133,7 @@ class CardPulsa extends Component{
             onEndReachedThreshold={0.2}
             renderItem={({item}) => {
                 return(
-                    <View style={styles.containerCard}>
+                    <TouchableOpacity onPress={press} style={styles.containerCard}>
                     <View style={{justifyContent:'space-between',flexDirection:'row',alignItems:'center'}}>
                     <Text style={styles.textJumlah}>{item.jumlah} <Text style={{fontSize:10,marginBottom:50}}>K</Text></Text>
                     {
@@ -156,11 +165,12 @@ class CardPulsa extends Component{
                         <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
                     <Text style={styles.textPrice}>{item.price}</Text>
                     
-                    </View>
+                    </TouchableOpacity>
                 ) 
             }}
             />
          : null }  
+         {/* <PayConfirm  /> */}
             </View>
         )
         
@@ -188,5 +198,5 @@ const styles = StyleSheet.create({
         color:'#535c68',
         marginLeft:14,
         marginTop:-15
-    }
+    },
 })

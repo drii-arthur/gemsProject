@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import { View,Text,StyleSheet,FlatList } from "react-native"
+import { View,Text,StyleSheet,FlatList,StatusBar } from "react-native"
 import {Input} from 'react-native-elements'
 import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
@@ -27,7 +27,8 @@ class Internet extends Component{
     render(){
         console.log(this.state.phone)
         return(
-            <View style={{flex:1,marginTop:25}}>
+            <View style={{flex:1}}>
+                <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.1)" translucent={true} />            
             <Header title={'Internet'} />
             <View style={styles.wrapperInput}>
             <RNPickerSelect

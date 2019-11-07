@@ -25,8 +25,9 @@ export default withNavigation(Header)
 
 const styles = StyleSheet.create({
      header:{
+        paddingTop:25,
         backgroundColor:'#39AFB5',
-        height:55,
+        height:75,
         elevation:4,
         flexDirection:'row',
         alignItems:'center'

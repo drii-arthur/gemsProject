@@ -20,7 +20,7 @@ class Transactions extends React.Component{
     render(){
         return(
             <View style={styles.container}>
-                 <StatusBar backgroundColor='#39afb5' />
+                 <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.2)" translucent={true} />
                  <TabView style={{ backgroundColor: '#fff' }}
         navigationState={this.state}
         renderScene={SceneMap({
@@ -49,14 +49,14 @@ export default Transactions
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop:25
     },
     scene: {
         flex: 1,
     },
     tabNav: {
         backgroundColor: '#39afb5',
-        paddingVertical: 0
+        paddingTop: 25,
+
     },
     labelStyle: {
         fontSize: 14,
