@@ -18,8 +18,10 @@ class Register extends Component{
         super(props)
         this.state = {
             name:'',
-            phone:this.props.navigation.getParam('idKontak') || this.props.navigation.getParam('idKontak2'),
-            email:''
+            code:this.props.navigation.getParam('codeConfirm'),
+            email:'',
+            status:1,
+            token:this.props.users.token
         }
     }
 
@@ -30,14 +32,14 @@ class Register extends Component{
     }
 
     handleRegister = async () => {
-        await this.props.dispatch(signup({
+        await this.props.dispatch(signup({ 
             name:this.state.name,
+            otp:this.state.code,
             email:this.state.email,
-            id_phone:this.state.phone,
-        }))
+            status:this.state.status}))
         .then(res => {
             const dataObj = res.action.payload.data
-            this.props.navigation.navigate('Otp',{dataObj})
+            // this.props.navigation.navigate('Otp',{dataObj})
             console.log(res.action.payload.data,'this is data')
             console.log(code)
         })
@@ -49,22 +51,17 @@ class Register extends Component{
     }
 
     render(){
+        console.warn(this.state.token,'oooo');
+        
+        console.warn(this.state.name);
+        
+        
         return(
             <View style={{flex: 1}}>
              <StatusBar backgroundColor='#39afb5' />
             <View style={{ alignItems: 'center',flex:1,justifyContent:'center' }}>
                 <Text style={{color:'#39afb5',fontSize:18,}}>Buat <Text style={{fontWeight:'bold'}}> Akun</Text></Text>
                 <View style={{height:2,width:50,backgroundColor:'#39afb5',marginTop:10,marginBottom:30}}></View>
-                {this.state.phone != '' ? 
-                <Text
-                 style={styles.TextInput}
-                >{this.state.phone}</Text> : 
-                <TextInput placeholder='Nomor Ponsel'
-                onChangeText={(teks) => {this.handleInput(teks,'phone')}}
-                keyboardType={'numeric'}
-                style={styles.TextInput}
-                />
-                }
                 
                 <TextInput placeholder='Nama Lengkap'
                 onChangeText={(teks) => {this.handleInput(teks,'name')}}

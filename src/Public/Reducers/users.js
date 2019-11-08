@@ -2,7 +2,8 @@ const initialState = {
     userList: [],
     isLoading:false,
     isRejected:false,
-    isFullFilled:false
+    isFullFilled:false,
+    token:''
 }
 
 const users = (state = initialState , action) => {
@@ -28,6 +29,7 @@ const users = (state = initialState , action) => {
                 ...state,
                 isRejected:false,
                 isFullFilled:true,
+                token:action.payload.data.data.token
             }
             // izin akses
         case 'IZIN_PENDING':

@@ -27,11 +27,13 @@ class Login extends Component{
     }
 
     componentDidMount = async () => {
-        const token = await AsyncStorage.getItem('id')
+        const token = await AsyncStorage.getItem('token')
         if(token !== null){
              this.props.navigation.navigate('appStackNavigator')
         }
         return token
+        console.warn(token,'kiye');
+        
     }
 
     handleLogin =  async () => {
@@ -56,22 +58,17 @@ class Login extends Component{
         else{
         await this.props.dispatch(login({phone:phone}))
         .then(res => {
-            const dataObj = res.action.payload.data   
+            const dataObj = res.action.payload.data.data
             let id = dataObj.id
-            let nama = dataObj.nama
-            let kontak = dataObj.kontak
-            let status = dataObj.status
-            let email = dataObj.email
-            let idKontak = dataObj.idkontak1
-            let idKontak2 = dataObj.idkontak2
-            let idUser = dataObj.iduser
-            if(id != undefined){
-                    AsyncStorage.setItem('id',JSON.stringify(id))
-                    AsyncStorage.setItem('nama',nama)
-                    AsyncStorage.setItem('kontak',kontak)
-                    AsyncStorage.setItem('status',JSON.stringify(status))
-                    AsyncStorage.setItem('email',JSON.stringify(email))
-                    console.warn(dataObj.id,id)
+            let otp = dataObj.otp
+            let token = dataObj.token
+        
+                        console.warn(token,'token'); 
+                    AsyncStorage.setItem('token',JSON.stringify(token))
+                    // AsyncStorage.setItem('kontak',kontak)
+                    // AsyncStorage.setItem('status',JSON.stringify(status))
+                    // AsyncStorage.setItem('email',JSON.stringify(email))
+                    // console.warn(dataObj.id,id)
                     Toast.show({
                     text:'Login sukses',
                     buttonText: "Okay",
@@ -80,16 +77,7 @@ class Login extends Component{
                     duration:1000,
                     style:styles.toast
                 })
-                this.props.navigation.navigate('appStackNavigator')
-            }
-                
-             
-             if(idKontak != undefined || idKontak2 != undefined){
-                    this.props.navigation.navigate('Register',{idKontak,idKontak2})                    
-             }
-             if(idUser !== undefined){
-                 this.props.navigation.navigate('Otp',{dataObj})
-             }  
+                this.props.navigation.navigate('appStackNavigator',{dataObj})
         })
         .catch((err) => {
             console.log(err)

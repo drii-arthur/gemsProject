@@ -14,6 +14,13 @@ import SvgUri from 'react-native-svg-uri-reborn'
 const {height} = Dimensions.get('window')
 class HomePage extends React.Component{
     
+    componentDidMount(){
+        const token = AsyncStorage.getItem('token')
+        if(token !== null){
+                console.warn(token,'kiyeee')
+        }
+        
+    }
 
     render(){
         return(

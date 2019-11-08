@@ -40,38 +40,20 @@ class Otp extends Component{
     
 
     pinInput = React.createRef();
-    _checkCode = async (code) => {
+    _checkCode = (code) => {
         const dataObj = this.state.otpCode
-        const iduser = dataObj.iduser
-        const codeConfirm = dataObj.code
-        console.warn(iduser,'kiye')
-        if (code ==  codeConfirm) {
-            await this.props.dispatch(izin({iduser:iduser,code:codeConfirm}))
-            .then(res => {
-                console.log(res)
-                let ket = res.action.payload.data.ket
-                let nama = res.action.payload.data.nama
-                let kontak = res.action.payload.data.kontak
-                let email = res.action.payload.data.email
-                let id = res.action.payload.data.id
-                let status = res.action.payload.data.status
-                if(ket == 'menuju halaman home premium'){
-                    AsyncStorage.setItem('id',JSON.stringify(id))
-                    AsyncStorage.setItem('nama',nama)
-                    AsyncStorage.setItem('kontak',kontak)
-                    AsyncStorage.setItem('status',JSON.stringify(status))
-                    AsyncStorage.setItem('email',JSON.stringify(email))
-                this.props.navigation.navigate('appStackNavigator',{iduser})
-                }else{
-                    this.props.navigation.navigate('NewPin',{iduser})
-                }
-                 
-            })
-            .catch(err => {
-                const idUser = this.props.users.errMessage
-                console.log(err)
-            })
-            
+        const codeConfirm = dataObj.otp
+        const customer = dataObj.customer
+        console.warn(codeConfirm,'code');
+        console.warn(customer,'ccus');
+        
+        
+        if (code ==  codeConfirm ){
+            if(customer !== null){
+                this.props.navigation.navigate('appStackNavigator')
+            }else{
+                this.props.navigation.navigate('Register',{codeConfirm})
+            }
         } else {
             this.pinInput.current.shake()
                 .then(() => this.setState({ code: '' }))

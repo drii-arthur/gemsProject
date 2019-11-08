@@ -1,18 +1,24 @@
 import axios from 'axios'
+import AsyncStorage from '@react-native-community/async-storage'
 
-const url = `http://192.168.100.130:8081/api`
+const url = `http://43.230.131.177/api`
 
-export const signup = (data) => {
+export const signup = (data) => { 
     return {
         type: 'SIGNUP',
-        payload: axios.post(`${url}/signup`, data)
+        payload: axios.post(`${url}/admin/v1/register`,data,{
+            headers:{
+                Accept :'application/json',
+                Authorized:`Bearer ${AsyncStorage.getItem('token')}`
+            }
+        })
     }
 }
 
     export const login = (data) => {
     return {
         type: 'LOGIN',
-        payload: axios.post(`${url}/signin`, data)
+        payload: axios.post(`${url}/login`, data)
 
     }
 }
