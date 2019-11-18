@@ -8,6 +8,8 @@ import {
     ScrollView,
     StatusBar
 } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
+
 // import { ProgressSteps, ProgressStep } from 'react-native-progress-steps'
 
 import {signup} from '../Public/Actions/users'
@@ -21,7 +23,7 @@ class Register extends Component{
             code:this.props.navigation.getParam('codeConfirm'),
             email:'',
             status:1,
-            token:this.props.users.token
+            token:this.props.navigation.getParam('token')
         }
     }
 
@@ -36,12 +38,19 @@ class Register extends Component{
             name:this.state.name,
             otp:this.state.code,
             email:this.state.email,
-            status:this.state.status}))
+            status:this.state.status},
+            this.state.token
+            ))
         .then(res => {
-            const dataObj = res.action.payload.data
-            // this.props.navigation.navigate('Otp',{dataObj})
-            console.log(res.action.payload.data,'this is data')
-            console.log(code)
+            const dataObj = res.action.payload.data.data
+            const token2 = dataObj.token
+            const statustype = dataObj.status
+            const name = dataObj.name
+            console.warn(statustype,'status2');
+            
+            AsyncStorage.setItem('accountType',(statustype))
+            AsyncStorage.setItem('name',(name))
+            this.props.navigation.navigate('NewPin',{token2})
         })
         .catch(err => {
             const otpCode = this.props.users.errMessage
@@ -51,11 +60,6 @@ class Register extends Component{
     }
 
     render(){
-        console.warn(this.state.token,'oooo');
-        
-        console.warn(this.state.name);
-        
-        
         return(
             <View style={{flex: 1}}>
              <StatusBar backgroundColor='#39afb5' />

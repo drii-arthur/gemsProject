@@ -54,8 +54,11 @@ class Bpjs extends Component{
             {this.state.noBpjs == data.nomor ? this.refs.modal3.open()      
             : null
             }
-            {this.state.noBpjs !== data.nomor && this.state.noBpjs.length == 12 ? (<View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                <Image source={{uri:'https://cdn.dribbble.com/users/340507/screenshots/5901764/oops.png'}} style={{width:250,height:200}} />
+            {this.state.noBpjs !== data.nomor && this.state.noBpjs.length == 12 ? (<View style={{flex:1,justifyContent:'center',alignItems:'center',}}>
+                <View style={{width:200,height:200,marginBottom:20}}>
+                <Image source={require('../Assets/Images/Notfound.png')} style={{width:undefined,height:undefined,flex:1}} resizeMode='contain' />
+                </View>
+                <Text style={{color:'#505050'}}>Data Tidak Di Temukan !!!</Text>
             </View>):null}
 
             <Modal style={[styles.modal, styles.modal3]} position={"bottom"} ref={"modal3"} isDisabled={this.state.isDisabled}>

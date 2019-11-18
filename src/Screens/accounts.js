@@ -14,9 +14,8 @@ class Accounts extends React.Component{
     super(props)
     this.state = {
       token:'',
-      nama: '',
-      kontak:'',
-      email:'',
+      name: '',
+      phone:'',
       status:'',
 
     }
@@ -24,31 +23,39 @@ class Accounts extends React.Component{
 
 
 componentDidMount = async() => {
-  const nama = await AsyncStorage.getItem('nama')
-  const kontak = await AsyncStorage.getItem('kontak')
-  const status = await AsyncStorage.getItem('status')
-  const email = await AsyncStorage.getItem('email')
-  if(nama != null || kontak != null || status != null || email != null){
+  const name = await AsyncStorage.getItem('name')
+  const phone = await AsyncStorage.getItem('phone')
+  await AsyncStorage.getItem('accountType',(err,res) => {
+    console.log(res)
+    if(res){
+      this.setState({
+        status:res
+      })
+    }
+    
+  })
+  if(name != null || phone != null){
     this.setState({
-      nama:nama,
-      kontak:kontak,
-      status:status,
-      email:email
+      name:name,
+      phone:phone,
     })
   }
 }
 
 _handleLogout = async () => {
-  const value = await AsyncStorage.getItem('id')
+  const value = await AsyncStorage.getItem('token')
   if(value !== null){
     console.warn(value,'this here')
     this.setState({
-        token: Number(value)
+        token: value
       })
     }
-  await this.props.dispatch(logout({iduser:this.state.token}))
+  await this.props.dispatch(logout(value))
   .then(res => {
-    AsyncStorage.removeItem('id')
+    AsyncStorage.removeItem('token')
+    AsyncStorage.removeItem('name')
+    AsyncStorage.removeItem('phone')
+    AsyncStorage.removeItem('status')
     this.props.navigation.navigate('AuthStack')
   })
   .catch(err => {
@@ -57,11 +64,11 @@ _handleLogout = async () => {
   return value
 }
     render(){
-      const {nama} = this.state
+      console.warn(this.state.status)
         return(
             <View style={{flex:1,marginTop:25}}>
-              <StatusBar backgroundColor='#39afb5' />
-                <CardAccounts nama={nama} kontak={this.state.kontak} email={this.state.email} status={this.state.status} logout={this._handleLogout} />
+              <StatusBar barStyle="dark-content" backgroundColor="#39afb5" translucent={true} />
+                <CardAccounts name={this.state.name} phone={this.state.phone} status={this.state.status} logout={this._handleLogout} />
                 <View style={{flex:1,backgroundColor:'#f9f9f7'}}>
                 </View>
             </View>

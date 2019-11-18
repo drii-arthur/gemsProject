@@ -150,7 +150,7 @@ appStackNavigator,
 AuthStack
 },
 {
-    initialRouteName : 'AuthStack'
+    initialRouteName : 'appStackNavigator'
 })
 
 const AppContainer = createAppContainer(switchNavigator)

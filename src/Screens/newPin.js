@@ -14,7 +14,7 @@ class NewPin extends Component {
             code: '',
             confirmCode:'',
             confirmPin:false,
-            iduser:this.props.navigation.getParam('iduser')
+            token:this.props.navigation.getParam('token2')
         }
     }
 
@@ -35,19 +35,9 @@ class NewPin extends Component {
 
     _checkCode = async (confirmCode) => {
         if (confirmCode == this.state.code) {
-            await this.props.dispatch(pin({pin:this.state.code,pin_confirm:confirmCode,iduser:this.state.iduser}))
+            await this.props.dispatch(pin({pin:this.state.code,
+            pin_confirm:confirmCode},this.state.token))
             .then(res => {
-                console.warn(res)
-                let nama = res.action.payload.data.name
-                let kontak = res.action.payload.data.kontak
-                let email = res.action.payload.data.email
-                let id = res.action.payload.data.id
-                let status = res.action.payload.data.status
-                    AsyncStorage.setItem('id',JSON.stringify(id))
-                    AsyncStorage.setItem('nama',nama)
-                    AsyncStorage.setItem('kontak',kontak)
-                    AsyncStorage.setItem('status',JSON.stringify(status))
-                    AsyncStorage.setItem('email',JSON.stringify(email))
                 this.props.navigation.navigate('appStackNavigator')
             })
             .catch(err => {

@@ -29,7 +29,7 @@ const users = (state = initialState , action) => {
                 ...state,
                 isRejected:false,
                 isFullFilled:true,
-                token:action.payload.data.data.token
+                token:action.payload.data.token
             }
             // izin akses
         case 'IZIN_PENDING':

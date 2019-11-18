@@ -41,8 +41,10 @@ class NotifHistory extends Component{
         return(
             <View style={{flex:1}}>
             {this.state.data == '' ?
-                <View style={{flex:1,justifyContent:'center'}}>
-             <Image source={require('../Assets/Images/ifnull.png')} style={{width:200,height:250}} /> 
+                <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+            <View style={{width:250,height:225,marginBottom:15}}>
+                <Image source={require('../Assets/Images/Notfound.png')} style={{width:undefined,height:undefined,flex:1}} resizeMode='contain' />
+                </View> 
              <Text style={{color:'grey',textAlign:'center'}}>Belum Ada History Nih!!!</Text>
              </View>
              

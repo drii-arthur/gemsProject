@@ -27,12 +27,13 @@ class Login extends Component{
     }
 
     componentDidMount = async () => {
-        const token = await AsyncStorage.getItem('token')
-        if(token !== null){
-             this.props.navigation.navigate('appStackNavigator')
-        }
-        return token
-        console.warn(token,'kiye');
+        const token = AsyncStorage.getItem('token',(err,res) => {
+            console.log(res,'token')
+            if(res){
+                this.props.navigation.navigate('appStackNavigator')
+            }
+
+        })
         
     }
 
@@ -57,14 +58,16 @@ class Login extends Component{
         }
         else{
         await this.props.dispatch(login({phone:phone}))
-        .then(res => {
+        .then(async (res) => {
             const dataObj = res.action.payload.data.data
             let id = dataObj.id
             let otp = dataObj.otp
             let token = dataObj.token
-        
-                        console.warn(token,'token'); 
-                    AsyncStorage.setItem('token',JSON.stringify(token))
+                    
+                    console.warn(token,'token')
+                    if(typeof token === 'string'){ 
+                    await AsyncStorage.setItem('token',(token))
+                    }
                     // AsyncStorage.setItem('kontak',kontak)
                     // AsyncStorage.setItem('status',JSON.stringify(status))
                     // AsyncStorage.setItem('email',JSON.stringify(email))
@@ -77,7 +80,8 @@ class Login extends Component{
                     duration:1000,
                     style:styles.toast
                 })
-                this.props.navigation.navigate('appStackNavigator',{dataObj})
+                    this.props.navigation.navigate('Otp',{dataObj})
+                
         })
         .catch((err) => {
             console.log(err)

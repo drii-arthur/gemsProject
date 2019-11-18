@@ -13,7 +13,7 @@ const List = (props) => {
             <Icon name={props.icon} size={20} color={props.color} />
             <Text  style={{fontSize:17,color:'#505050',fontFamily:'roboto',marginLeft:15}}>{props.title}</Text>
             </View>
-            <Icon name={'ios-arrow-forward'} size={16} color={color} />
+            {/* <Icon name={'ios-arrow-forward'} size={16} color={color} /> */}
 
         </TouchableOpacity>
     )
@@ -43,11 +43,14 @@ class CardAccounts extends React.Component{
     }
     render(){
         const logout = this.props.logout
-        const nama = this.props.nama
-        const kontak = this.props.kontak
-        const email = this.props.kontak
+        const name = this.props.name
+        const phone = this.props.phone
         const status = this.props.status
         const modal = this.props.ref
+        console.warn(name,'name');
+        console.warn(phone,'phone');
+        console.warn(status,'status1');
+        
         return(
             <View style={{backgroundColor:'#f9f9f7'}}>
                 <View style={{padding:15,zIndex:-1}}>
@@ -106,24 +109,44 @@ class CardAccounts extends React.Component{
                     </ImageBackground> */}
 
                     <View style={{height:height/3.3,backgroundColor:'#fff',position:'relative',borderRadius:10,elevation:2}}>
-                        <View style={{height:'40%',backgroundColor:'cyan',borderTopLeftRadius:10,borderTopRightRadius:10}}>
-                        <Text style={{textAlign:'center',marginTop:20}}> GEMS</Text>
+                        <View style={{height:'45%',backgroundColor:'cyan',borderTopLeftRadius:10,borderTopRightRadius:10,alignItems: 'flex-end',paddingHorizontal: 16,}}>
+                            <View style={{width:75,height:50}}>
+                                <Image source={require('../Assets/Icons/Logo_gems.png')} style={{flex:1,width:undefined,height:undefined}} resizeMode='contain' />
+                            </View>
                         </View>
                         <View style={{height:'50%',marginTop:-50,flexDirection:'row',paddingHorizontal:10}}>
                             <View style={{height:100,backgroundColor:'#fff',width:100,borderRadius:100/2,borderWidth:5,borderColor:'#fff'}}>
                                 <Image source={{uri:'https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png'}} style={{width:'100%',height:'100%',borderRadius:100/2}} />
                             </View>
                             <View style={{flex:1,margin:20,justifyContent:'center'}}>
-                                <Text style={{fontSize:17,fontWeight:'bold',marginTop:45}}>Nama cccccc ccvvbb</Text>
+                            {name != '' ?
+                                <>
+                                <Text style={{fontSize:17,fontWeight:'bold',marginBottom:10}}>{name}</Text>
+                                <Text>{phone}</Text>
+                                </>
+                                : 
+                                <>                           
+                                <Text style={{fontSize:17,fontWeight:'bold',marginTop:25}}>Account</Text>
                                 <Text>xxxx-xxxx-xxxx</Text>
+                                </>
+                            }
                             </View>
                         </View>
                         <View style={{flex:1,marginTop:10,flexDirection:'row',borderRadius:10,padding:5}}>
-                            <View style={{flex:1,padding:5,justifyContent:'center',alignItems:'center',padding: 5}}>
+                            {status == '1' ?
+                            <TouchableOpacity 
+                            onPress={() => this.props.navigation.navigate('UpgradePremium')}
+                            style={{flex:1,padding:5,justifyContent:'center',alignItems:'center',padding: 5}}>
                                 <Text>Upgrade Premium</Text>
+                            </TouchableOpacity>
+                            :
+                            <View  style={{flex:1,padding:5,justifyContent:'center',alignItems:'flex-start',padding: 5}}>
+                            <Text>account type</Text>
+                            <Text>PREMIUM</Text>
                             </View>
-                            <View style={{flex:1,borderLeftWidth: 1,borderLeftColor:'#000',justifyContent: 'center',alignItems: 'center',}}>
-                                <Text>Meber since</Text>
+                            }
+                            <View style={{flex:1,borderLeftWidth: 1,borderLeftColor:'#000',justifyContent: 'center',alignItems: 'flex-start',paddingLeft:10}}>
+                                <Text>Member since</Text>
                                 <Text>09-09-2019</Text>
                             </View>
                             <View style={{flex:1,marginTop:-height/14,alignItems:'center',justifyContent:'flex-end',paddingBottom: 10,}}>

@@ -44,15 +44,18 @@ class Otp extends Component{
         const dataObj = this.state.otpCode
         const codeConfirm = dataObj.otp
         const customer = dataObj.customer
-        console.warn(codeConfirm,'code');
-        console.warn(customer,'ccus');
-        
+        const token = dataObj.token
+        const phone = dataObj.phone
+        const status = dataObj.status
         
         if (code ==  codeConfirm ){
             if(customer !== null){
+                AsyncStorage.setItem('name',(customer.name))
+                AsyncStorage.setItem('phone',(phone))
+                AsyncStorage.setItem('status',(status))
                 this.props.navigation.navigate('appStackNavigator')
             }else{
-                this.props.navigation.navigate('Register',{codeConfirm})
+                this.props.navigation.navigate('Register',{codeConfirm,token})
             }
         } else {
             this.pinInput.current.shake()

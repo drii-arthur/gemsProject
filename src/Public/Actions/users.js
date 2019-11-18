@@ -3,13 +3,13 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 const url = `http://43.230.131.177/api`
 
-export const signup = (data) => { 
+export const signup = (data,token) => { 
     return {
         type: 'SIGNUP',
-        payload: axios.post(`${url}/admin/v1/register`,data,{
+        payload: axios.post(`${url}/admin/v1/register`,data,{      
             headers:{
                 Accept :'application/json',
-                Authorized:`Bearer ${AsyncStorage.getItem('token')}`
+                Authorization:`Bearer ${token}`
             }
         })
     }
@@ -29,15 +29,25 @@ export const signup = (data) => {
         }
     }
 
-    export const pin = (data) => {
+    export const pin = (data,token) => {
         return {
             type: 'PIN',
-            payload:axios.post(`${url}/pin`,data)
+            payload:axios.post(`${url}/admin/v1/pin`,data,{
+                headers:{
+                Accept :'application/json',
+                Authorization:`Bearer ${token}`
+            }
+            })
         }
     }
-    export const logout = (data) => {
+    export const logout = (token) => {
         return {
             type: 'LOGOUT',
-            payload:axios.post(`${url}/getout`,data)
+            payload:axios.post(`${url}/getout`,{
+                headers:{
+                Accept :'application/json',
+                Authorization:`Bearer ${token}`
+            }
+            })
         }
     }

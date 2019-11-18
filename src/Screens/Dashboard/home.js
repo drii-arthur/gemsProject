@@ -8,19 +8,19 @@ import BannerInfo from '../../Components/bannerInfo'
 import Icon from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient'
 import {withNavigation} from "react-navigation"
-import SvgUri from 'react-native-svg-uri-reborn'
 
-
-const {height} = Dimensions.get('window')
+const {height,width} = Dimensions.get('window')
 class HomePage extends React.Component{
     
-    componentDidMount(){
-        const token = AsyncStorage.getItem('token')
-        if(token !== null){
-                console.warn(token,'kiyeee')
-        }
-        
-    }
+    // componentDidMount(){
+    //     const token = AsyncStorage.getItem('token',(err,res) => {
+    //         console.log(res,'token')
+    //         if(err){
+    //             this.props.navigation.navigate('AuthStack')
+    //         }
+
+    //     })
+    // }
 
     render(){
         return(
@@ -31,16 +31,11 @@ class HomePage extends React.Component{
                 imageStyle={{borderBottomRightRadius:120,borderBottomLeftRadius:120,transform:[{scaleX:1.5}]}}
                  style={styles.header}>
                 <View style={{paddingHorizontal:20,paddingVertical:35,flexDirection:'row'}}>
-                <View style={{flex:1,paddingVertical:0}}>
-                <Icon  name={'logo-playstation'} size={34} color={'#fff'} />
+                <View style={{flex:1,paddingVertical:5}}>
+                <Image source={require('../../Assets/Icons/Logo_gems.png')} style={{width:width/3.5,height:25}}/>
                 </View>
                 <View style={{flexDirection:'row'}}>
-                 <SvgUri
-                    fill='#fff'
-                    width="24"
-                    height="24"
-                    source={require('../../Assets/Icons/Wallet_icon.svg')}
-                />
+                <Icon name={'md-wallet'} size={24} color='#fff' />
                 <Icon  name={'md-notifications'} size={24} color={'#fff'} onPress={() => {this.props.navigation.navigate('Notification')}
                 } style={{marginLeft:10}} />
                 </View>

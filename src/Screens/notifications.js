@@ -4,6 +4,8 @@ import Icon  from "react-native-vector-icons/Ionicons";
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view'
 import Notif from '../Screens/notifNotif'
 import NotifHistory from '../Screens/notifHistory'
+import Header from '../Components/header'
+
 
 class Notification extends Component{
     constructor(props){
@@ -34,13 +36,8 @@ class Notification extends Component{
     }
     render(){
         return(
-            <View style={{flex:1,marginTop:25}}>
-            <View style={styles.header}>
-            <Icon name={'ios-arrow-back'} size={24} color='#fff' onPress={() => {this.props.navigation.goBack()}} />
-                <Text style={styles.text}>
-                Notifikasi
-                </Text>
-            </View>
+            <View style={{flex:1}}>
+                <Header title='Notifications'  />
             <TabView style={{ backgroundColor: '#fff' }}
         navigationState={this.state}
         renderScene={SceneMap({
