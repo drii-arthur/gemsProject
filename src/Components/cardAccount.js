@@ -47,72 +47,22 @@ class CardAccounts extends React.Component{
         const phone = this.props.phone
         const status = this.props.status
         const modal = this.props.ref
-        console.warn(name,'name');
-        console.warn(phone,'phone');
-        console.warn(status,'status1');
         
         return(
             <View style={{backgroundColor:'#f9f9f7'}}>
                 <View style={{padding:15,zIndex:-1}}>
-                    {/* <ImageBackground
-                    source={require('../Assets/Images/Card_bg.png')}
-                    style={{width:'100%',height:height/3.3}}
+                    
+                    <View style={{height:height/3.3,backgroundColor:'#fff',position:'relative',borderRadius:10,elevation:2}}>
+                        <View style={{height:'45%',backgroundColor:'#39afb5',borderTopLeftRadius:10,borderTopRightRadius:10}}>
+                        <ImageBackground
+                    source={require('../Assets/Images/atas-43.png')}
+                    style={{width:'100%',alignItems: 'flex-end',height:undefined,flex:1,paddingHorizontal:15}}
                     imageStyle={{borderRadius:10}}
                     >
-                    <View style={{flexDirection:'row',paddingHorizontal:20,paddingVertical:15}}>
-                        <View style={{flex:1}}>
-                            <Text style={{fontWeight:'bold',color:'#fff',letterSpacing:1}}>GEMS</Text>
-                        </View>
-                        {status == 0 ? 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('UpgradePremium')}>
-                            <Text style={{fontWeight:'bold',color:'#fff',letterSpacing:1}}>UPGRADE TO PREMIUM</Text>
-                        </TouchableOpacity>
-                        : null
-                        }
-                        
-                    </View>
-
-                    <View style={{flexDirection:'row',paddingHorizontal:20,paddingVertical:10}} >
-                        <TouchableOpacity style={{width:width/4,height:height/9,justifyContent:'center',alignItems:'center',marginRight:5}} onPress={() => this.refs.modal3.open()
-                        }>
-                        <QRCode
-                        value="jancook"
-                        logo={require('../Assets/Icons/logoscan.png')}
-                        logoSize={24}
-                        size={80}
-                        />
-                        </TouchableOpacity>
-                        {kontak != '' ? 
-                        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                            <Text style={{color:'#fff',letterSpacing:1}}>{nama}</Text>
-                            <Text style={{color:'#fff',letterSpacing:1,fontSize:22}}>{kontak}</Text>
-                        </View>
-                        : 
-                        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                            <Text style={{color:'#fff',letterSpacing:1}}>User</Text>
-                            <Text style={{color:'#fff',letterSpacing:1,fontSize:22}}>xxxx-xxxx-xxxx</Text>
-                        </View>
-                        }
-                    </View>
-
-                    <View style={{flexDirection:'row',paddingHorizontal:20,paddingVertical:10}}>
-                        <View style={{flex:1}}>
-                        {status == 0 ? 
-                            <Text style={{fontWeight:'bold',color:'#fff',letterSpacing:1}}>Non Premium</Text>
-                            : <Text style={{fontWeight:'bold',color:'#fff',letterSpacing:1}}>Premium</Text>
-                            }
-                        </View>
-                        <View>
-                        </View>
-                    </View>
-                    
-                    </ImageBackground> */}
-
-                    <View style={{height:height/3.3,backgroundColor:'#fff',position:'relative',borderRadius:10,elevation:2}}>
-                        <View style={{height:'45%',backgroundColor:'cyan',borderTopLeftRadius:10,borderTopRightRadius:10,alignItems: 'flex-end',paddingHorizontal: 16,}}>
                             <View style={{width:75,height:50}}>
                                 <Image source={require('../Assets/Icons/Logo_gems.png')} style={{flex:1,width:undefined,height:undefined}} resizeMode='contain' />
                             </View>
+                            </ImageBackground>
                         </View>
                         <View style={{height:'50%',marginTop:-50,flexDirection:'row',paddingHorizontal:10}}>
                             <View style={{height:100,backgroundColor:'#fff',width:100,borderRadius:100/2,borderWidth:5,borderColor:'#fff'}}>
@@ -126,7 +76,7 @@ class CardAccounts extends React.Component{
                                 </>
                                 : 
                                 <>                           
-                                <Text style={{fontSize:17,fontWeight:'bold',marginTop:25}}>Account</Text>
+                                <Text style={{fontSize:17,fontWeight:'bold',marginTop:40}}>Account</Text>
                                 <Text>xxxx-xxxx-xxxx</Text>
                                 </>
                             }
@@ -166,7 +116,7 @@ class CardAccounts extends React.Component{
                 </View>
                 <ScrollView>
                     <List title='Multi Channel' icon={'md-watch'} color={color} />
-                    <List title='Change Pin' icon={'md-key'} color={color} route={() => {this.props.navigation.navigate('NewPin')}} />
+                    <List title='Change Pin' icon={'md-key'} color={color} route={() => {this.props.navigation.navigate('ChangePin')}} />
                     <List title='Help' icon={'md-help-circle'} color={color} route={() => {this.props.navigation.navigate('Help')}} />
                     <List title='Terms & Conditions' icon={'ios-paper'} color={color} route={() => {this.props.navigation.navigate('TermsConditions')}} />
                     <List title='Privacy Police' icon={'ios-card'} color={color} route={() => {this.props.navigation.navigate('PrivacyPolice')}} />

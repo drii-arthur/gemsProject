@@ -14,7 +14,8 @@ class NewPin extends Component {
             code: '',
             confirmCode:'',
             confirmPin:false,
-            token:this.props.navigation.getParam('token2')
+            token:this.props.navigation.getParam('token2'),
+            perangkat:'Mobile'
         }
     }
 
@@ -36,7 +37,7 @@ class NewPin extends Component {
     _checkCode = async (confirmCode) => {
         if (confirmCode == this.state.code) {
             await this.props.dispatch(pin({pin:this.state.code,
-            pin_confirm:confirmCode},this.state.token))
+            pin_confirm:confirmCode,perangkat:this.state.perangkat},this.state.token))
             .then(res => {
                 this.props.navigation.navigate('appStackNavigator')
             })

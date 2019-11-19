@@ -126,6 +126,7 @@ class CardPulsa extends Component{
 
          {contacts !== undefined && check == '' ?
             <FlatList
+            showsVerticalScrollIndicator={false}
             style={{alignSelf:'center'}}
             data={this.state.data}
             numColumns={2}

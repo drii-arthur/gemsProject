@@ -7,13 +7,12 @@ class TarikSaldo extends React.Component{
         return(
             <View style={{flex:1,paddingHorizontal:15,paddingVertical:10}}>
 
-                <View>
+                <View style={{marginTop:15}}>
                     <Text>Nominal Withdraw</Text>
                     <TextInput
-                     placeholder='08XX-XXXX-XXXX'
+                     placeholder='Masukan Nominal...'
                      keyboardType='numeric'
-                     style={{borderBottomWidth:1,borderBottomColor:'#a4b0be',alignItems:'center',paddingVertical:10,borderRadius:5,marginBottom:10}}>
-                        <Text style={{fontSize:16,color:'#000',textAlign:'center'}}>Rp </Text>
+                     style={{borderBottomWidth:1,borderBottomColor:'#f9f9f7',alignItems:'center',paddingVertical:10,borderRadius:5,marginBottom:10}}>
                     </TextInput>
                 </View>
 

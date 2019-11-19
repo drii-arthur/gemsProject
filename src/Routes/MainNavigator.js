@@ -32,6 +32,7 @@ import TopUp from '../Screens/topUp'
 import Debit from '../Screens/debit'
 import TopUpAtm from '../Screens/topupAtm'
 import UpgradePremium from '../Screens/upgradePremium'
+import ChangePin from '../Screens/changePin';
 
 
 const AuthStack = createStackNavigator({
@@ -139,7 +140,8 @@ const appStackNavigator = createStackNavigator({
     TopUp,
     Debit,
     TopUpAtm,
-    UpgradePremium
+    UpgradePremium,
+    ChangePin
 },{
     headerMode:'none',
 })
@@ -150,7 +152,7 @@ appStackNavigator,
 AuthStack
 },
 {
-    initialRouteName : 'appStackNavigator'
+    initialRouteName : 'AuthStack'
 })
 
 const AppContainer = createAppContainer(switchNavigator)

@@ -16,8 +16,7 @@ class Accounts extends React.Component{
       token:'',
       name: '',
       phone:'',
-      status:'',
-
+      status:1,
     }
   }
 
@@ -50,7 +49,7 @@ _handleLogout = async () => {
         token: value
       })
     }
-  await this.props.dispatch(logout(value))
+  await this.props.dispatch(logout(this.state.token))
   .then(res => {
     AsyncStorage.removeItem('token')
     AsyncStorage.removeItem('name')

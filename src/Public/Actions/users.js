@@ -43,7 +43,7 @@ export const signup = (data,token) => {
     export const logout = (token) => {
         return {
             type: 'LOGOUT',
-            payload:axios.post(`${url}/getout`,{
+            payload:axios.post(`${url}/admin/v1/logout`,{
                 headers:{
                 Accept :'application/json',
                 Authorization:`Bearer ${token}`

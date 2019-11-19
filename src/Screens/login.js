@@ -15,6 +15,7 @@ class Login extends Component{
         this.state = {
             numberCode: '',
             phone:'',
+            perangkat:'Mobile',
             showToast: false,
         }
     }
@@ -57,7 +58,7 @@ class Login extends Component{
             })
         }
         else{
-        await this.props.dispatch(login({phone:phone}))
+        await this.props.dispatch(login({phone:phone,perangkat:this.state.perangkat}))
         .then(async (res) => {
             const dataObj = res.action.payload.data.data
             let id = dataObj.id

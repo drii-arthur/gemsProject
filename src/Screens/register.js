@@ -23,7 +23,8 @@ class Register extends Component{
             code:this.props.navigation.getParam('codeConfirm'),
             email:'',
             status:1,
-            token:this.props.navigation.getParam('token')
+            token:this.props.navigation.getParam('token'),
+            perangkat:'Mobile'
         }
     }
 
@@ -38,18 +39,23 @@ class Register extends Component{
             name:this.state.name,
             otp:this.state.code,
             email:this.state.email,
-            status:this.state.status},
+            status:this.state.status,
+            perangkat:this.state.perangkat
+            },
             this.state.token
             ))
         .then(res => {
             const dataObj = res.action.payload.data.data
             const token2 = dataObj.token
-            const statustype = dataObj.status
+            const statustype = dataObj.role
             const name = dataObj.name
+            const phone = dataObj.phone
             console.warn(statustype,'status2');
             
             AsyncStorage.setItem('accountType',(statustype))
             AsyncStorage.setItem('name',(name))
+            AsyncStorage.setItem('phone',(phone))
+            AsyncStorage.setItem('token',(token2))
             this.props.navigation.navigate('NewPin',{token2})
         })
         .catch(err => {

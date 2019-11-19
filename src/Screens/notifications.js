@@ -18,6 +18,34 @@ class Notification extends Component{
             ]
         }
     }
+//         OneSignal.init("6b9223a6-9c22-4883-9ce0-cd72cdc761fc");
+
+//     OneSignal.addEventListener('received', this.onReceived);
+//     OneSignal.addEventListener('opened', this.onOpened);
+//     OneSignal.addEventListener('ids', this.onIds);
+//   }
+
+//   componentWillUnmount() {
+//     OneSignal.removeEventListener('received', this.onReceived);
+//     OneSignal.removeEventListener('opened', this.onOpened);
+//     OneSignal.removeEventListener('ids', this.onIds);
+//   }
+
+//   onReceived(notification) {
+//     alert("Notification received: ", notification);
+//   }
+
+//   onOpened(openResult) {
+//     alert('Message: ', openResult.notification.payload.body);
+//     alert('Data: ', openResult.notification.payload.additionalData);
+//     alert('isActive: ', openResult.notification.isAppInFocus);
+//     alert('openResult: ', openResult);
+//   }
+
+//   onIds(device) {
+//     alert('Device info: ', device);
+//   }
+    
 
     // handleOpen = (id) => {
     //     const {todos} = this.state
@@ -37,7 +65,7 @@ class Notification extends Component{
     render(){
         return(
             <View style={{flex:1}}>
-                <Header title='Notifications'  />
+                <Header title='Notifications' />
             <TabView style={{ backgroundColor: '#fff' }}
         navigationState={this.state}
         renderScene={SceneMap({
