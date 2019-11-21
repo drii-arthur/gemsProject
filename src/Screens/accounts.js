@@ -42,25 +42,35 @@ componentDidMount = async() => {
 }
 
 _handleLogout = async () => {
-  const value = await AsyncStorage.getItem('token')
-  if(value !== null){
-    console.warn(value,'this here')
-    this.setState({
-        token: value
-      })
+  const token = await AsyncStorage.getItem('token',(err,res) => {
+    if(res){
+      AsyncStorage.removeItem('token')
+      AsyncStorage.removeItem('name')
+      AsyncStorage.removeItem('phone')
+      AsyncStorage.removeItem('status')
+      this.props.navigation.navigate('AuthStack')
+    }else{
+      alert('gagal cuk')
     }
-  await this.props.dispatch(logout(this.state.token))
-  .then(res => {
-    AsyncStorage.removeItem('token')
-    AsyncStorage.removeItem('name')
-    AsyncStorage.removeItem('phone')
-    AsyncStorage.removeItem('status')
-    this.props.navigation.navigate('AuthStack')
   })
-  .catch(err => {
-    console.log(err)
-  })
-  return value
+//   if(value !== null){
+//     console.warn(value,'this here')
+//     this.setState({
+//         token: value
+//       })
+//     }
+//   await this.props.dispatch(logout(this.state.token))
+//   .then(res => {
+//     AsyncStorage.removeItem('token')
+//     AsyncStorage.removeItem('name')
+//     AsyncStorage.removeItem('phone')
+//     AsyncStorage.removeItem('status')
+//     this.props.navigation.navigate('AuthStack')
+//   })
+//   .catch(err => {
+//     console.log(err)
+//   })
+//   return value
 }
     render(){
       console.warn(this.state.status)

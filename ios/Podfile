@@ -46,6 +46,10 @@ target 'reactapp' do
 
   pod 'react-native-onesignal', :path => '../node_modules/react-native-onesignal'
 
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info-2'
+
+  pod 'react-native-shimmer', :path => '../node_modules/react-native-shimmer'
+
   target 'reactappTests' do
     inherit! :search_paths
     # Pods for testing

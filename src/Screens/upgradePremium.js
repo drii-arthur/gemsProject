@@ -49,7 +49,7 @@ class UpgradePremium extends React.Component{
         const {foto} = this.state
         const modal = this.props.ref
         return(
-            <View style={{flex:1,marginTop:25}}>
+            <View style={{flex:1}}>
            <StatusBar backgroundColor='#198f94' barStyle="light-content" />
                 <Header title='Upgrade Member' />
                 <View style={{backgroundColor:'#f9f9f7',paddingHorizontal:20,paddingVertical:7,marginTop:20,flexDirection:'row',justifyContent:'space-between'}}>

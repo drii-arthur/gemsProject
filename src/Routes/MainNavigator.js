@@ -68,10 +68,11 @@ const appStack = createBottomTabNavigator ({
         screen: ScanScreen,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => (
-                <View style={{width:'100%',height:'95%',borderBottomLeftRadius:150,borderBottomRightRadius:150,poisition:'absolute',top:-1.3,borderWidth:12,                        borderColor:'#f9f9f7',borderTopWidth:2}}>
-                    <View style={{backgroundColor:'#39afb5',justifyContent:'center',alignItems:'center',borderRadius:48/2,poisition:'absolute',top:-25,left:0,width:48,height:48}}>
-                    <Icon size={26} name='md-qr-scanner' color={'#fff'} />
-                    </View>
+                <View style={{flex:1,borderBottomLeftRadius:150,borderBottomRightRadius:150,poisition:'absolute',top:-0.5,left:0,right:0,bottom:0,justifyContent:'center',backgroundColor:'#f9f9f7',padding:10}}>
+                    <View style={{backgroundColor:'#39afb5',justifyContent:'center',alignItems:'center',borderRadius:48/2,poisition:'absolute',top:-15,left:0,width:48,height:48,right:0}}>
+                    <Image source={require('../Assets/Icons/Scan.png')} style={{width:22,height:20}} /> 
+                    {/* <Icon size={26} name='md-qr-scanner' color={'#fff'} /> */}
+                     </View> 
                 </View>
             ),
         },

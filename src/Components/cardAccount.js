@@ -71,7 +71,7 @@ class CardAccounts extends React.Component{
                             <View style={{flex:1,margin:20,justifyContent:'center'}}>
                             {name != '' ?
                                 <>
-                                <Text style={{fontSize:17,fontWeight:'bold',marginBottom:10}}>{name}</Text>
+                                <Text style={{fontSize:17,fontWeight:'bold',marginTop:40}}>{name}</Text>
                                 <Text>{phone}</Text>
                                 </>
                                 : 

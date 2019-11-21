@@ -1,5 +1,5 @@
 import React,{Component,Fragment} from 'react';
-import { View, Text, StatusBar, StyleSheet, KeyboardAvoidingView, Keyboard } from 'react-native'
+import { View, Text, StatusBar, StyleSheet, KeyboardAvoidingView, Keyboard,Dimensions } from 'react-native'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 import { withNavigation } from 'react-navigation'
 import {pin} from '../Public/Actions/users'
@@ -8,8 +8,10 @@ import {connect} from 'react-redux'
 import Header from '../Components/header'
 import {Toast} from 'native-base'
 import Icon from 'react-native-vector-icons/Ionicons'
+import Modal from 'react-native-modalbox'
 
 const color = '#39afb5'
+const {height,width} = Dimensions.get('window')
 class ChangePin extends Component {
     constructor(props) {
         super(props)
@@ -21,8 +23,23 @@ class ChangePin extends Component {
             newPinCode:false,
             token:this.props.navigation.getParam('token2'),
             viewPin:false,
-            hideIcon:false
+            hideIcon:false,
+            isOpen: false,
+            isDisabled: false,
+            // swipeToClose: false,
+            // sliderValue: 0.3
         }
+    }
+    onClose() {
+    console.log('Modal just closed');
+    }
+
+    onOpen() {
+    console.log('Modal just opened');
+    }
+
+    onClosingState(state) {
+    console.log('the open/close of the swipeToClose just changed');
     }
 
 
@@ -75,8 +92,11 @@ class ChangePin extends Component {
 
     changeCode = (confirmCode) => {
         if(confirmCode == this.state.newCode){
-            alert('berhasil')
-            this.props.navigation.goBack()
+            this.refs.modal3.open()
+            setTimeout(() => {
+                this.props.navigation.goBack()
+            }, 4000);
+            // 
         }else{
             Toast.show({
             text: 'Pin Tidak Sama',
@@ -232,6 +252,12 @@ class ChangePin extends Component {
                 }
                 
                 </View>
+                <Modal style={[styles.modal, styles.modal3]} position={"center"} ref={"modal3"} isDisabled={this.state.isDisabled}>
+                    <View style={{width:50,height:50,borderRadius:50/2,borderColor:'#bdc3c7',borderWidth:1,justifyContent:'center',alignItems:'center'}}>
+                    <Icon name='md-checkmark' size={34} color='green' />
+                    </View>
+                    <Text style={[styles.text,styles.bottomText]}>Change Pin SukSes</Text>
+                </Modal>
             </View>
 
         )
@@ -259,5 +285,21 @@ const styles = StyleSheet.create({
         color: color,
         fontSize: 15,
         fontWeight: '700'
-    }
+    },
+    modal: {
+    justifyContent: 'center',
+    alignItems: 'center'
+    },
+    modal3: {
+    height: height/2.5,
+    width: width/1.5
+    },
+    text: {
+    color: '#636e72',
+    fontSize: 16,
+    marginBottom:15
+    },
+    bottomText: {
+        marginTop:25
+    },
 })

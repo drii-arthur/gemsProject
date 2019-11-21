@@ -1,14 +1,18 @@
 import React,{Component} from 'react'
-import { View,Text,StyleSheet,FlatList,Picker,StatusBar,TouchableOpacity,Dimensions } from "react-native"
+import { View,Text,StyleSheet,FlatList,Picker,StatusBar,TouchableOpacity,Dimensions,ActivityIndicator } from "react-native"
 import {Input} from 'react-native-elements'
 import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
 import RNPickerSelect from 'react-native-picker-select'
 import Header from '../Components/header'
 // import PayConfirm from '../Components/payConfirm'
+import CardPulsa from '../Components/cardPulsa'
 import Modal from 'react-native-modalbox'
 import LinearGradient from 'react-native-linear-gradient'
-
+import {pln} from '../Public/Actions/layanan'
+import {connect} from 'react-redux'
+import AsyncStorage from '@react-native-community/async-storage'
+import Shimmer from 'react-native-shimmer'
 
 const color = '#39afb5'
 const colorP = '#485460'
@@ -17,15 +21,38 @@ class Pln extends Component{
     constructor(props){
         super(props)
         this.state = {
-           noMeter:'',
-           payAs:'',
-           prabayar:false,
-           isOpen: false,
+            noMeter:'',
+            payAs:'',
+            prabayar:false,
+            isOpen: false,
             isDisabled: false,
             swipeToClose: true,
             sliderValue: 0.3,
-            coverScreen:false
+            coverScreen:false,
+            data:[],
+            token:'',
+            isLoading:false
         }
+    }
+
+    componentDidMount = async () => {
+        this.setState({
+            isLoading:true
+        })
+        await AsyncStorage.getItem('token',(err,res) => {
+            if(res){
+                this.setState({token:res})
+            }
+        })
+        await this.props.dispatch(pln(this.state.token))
+        .then(res => {
+            console.log(res.action.payload.data)
+            this.setState({data:res.action.payload.data.data,isLoading:false})
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
     }
 
 
@@ -33,6 +60,9 @@ class Pln extends Component{
         this.props.navigation.goBack()
     }
     render(){
+        const {data} = this.state
+        console.log(data,'data pln');
+        
         return(
             <View style={{flex:1}}>
                  <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.2)" translucent={true} />            
@@ -43,7 +73,7 @@ class Pln extends Component{
             </Text>
             <RNPickerSelect
             onValueChange={(value) => {
-                if(value == 'Prabayar'){
+                if(value == 'pasca bayar'){
                     this.setState({
                         prabayar:true
                     })
@@ -93,8 +123,39 @@ class Pln extends Component{
                         <Text style={{color:'#fff',fontWeight:'bold',fontSize:16,letterSpacing:1.2}}>Konfirmasi</Text>
                     </LinearGradient>
                 </TouchableOpacity> */}
-            
             </View>
+
+            {/* <View style={{backgroundColor:'red',flex:1}}></View> */}
+
+            {this.state.isLoading ? 
+                <Shimmer direction="down">
+                <Text>Loading...</Text>
+            </Shimmer>
+            :
+            <FlatList
+            style={{alignSelf:'center'}}
+            data={data}
+            numColumns={2}
+            keyExtractor={(item) => item.id}
+            onEndReachedThreshold={0.2}
+            renderItem = {({item}) => {
+                return(
+                    <View style={{height:height/8,
+                width:width/2.3,
+                elevation:4,
+                margin:5,
+                backgroundColor:'#fff',
+                padding:10,
+                borderRadius:5}}>
+            <Text>{item.description}</Text>
+            <Text>{item.price}</Text>
+            
+                    
+                    </View>
+                )
+            }}
+    />  }
+            
             {this.state.noMeter.length == 10 ? this.refs.modal3.open() : null}
             <Modal 
             style={[styles.modal, styles.modal3]} position={"bottom"} ref={"modal3"} isDisabled={this.state.isDisabled}>
@@ -135,14 +196,17 @@ class Pln extends Component{
     }
 }
 
-export default Pln
+const mapStateToProps = state => {
+    return {
+        layanan: state.layanan
+    };
+};
+
+export default connect(mapStateToProps)(Pln)
 
 const styles = StyleSheet.create({
     wrapperInput:{
-        paddingHorizontal:10,
-        marginTop:50,
-        alignItems:'center',
-        marginBottom:20
+        marginTop:25,paddingLeft:5,paddingRight:15,marginBottom:20
     },
     textinput:{
         color:'#505050'

@@ -3,12 +3,14 @@ import { View,Text,StyleSheet,FlatList,StatusBar,Dimensions,TouchableOpacity,Scr
 import {Input} from 'react-native-elements'
 import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
-import CardPulsa from '../Components/cardPulsa.js'
+import CardPulsa from '../Components/cardPulsa'
 import Header from '../Components/header'
 import LinearGradient from 'react-native-linear-gradient'
 import Modal from 'react-native-modalbox'
 import RNPickerSelect from 'react-native-picker-select'
-
+import AsyncStorage from '@react-native-community/async-storage'
+import {pulsa} from '../Public/Actions/layanan'
+import {connect} from 'react-redux'
 
 const color = '#39afb5'
 const colorP = '#485460'
@@ -17,17 +19,48 @@ class Pulsa extends Component{
     constructor(props){
         super(props)
         this.state = {
-             
             phone:'',
             isOpen: false,
             isDisabled: false,
             swipeToClose: true,
             sliderValue: 0.3,
             payAs:'',
+            pulsa:[],
+            token:'',
+            prabayar:false,
+            type:'REGULER',
+            provider:'TELKOMSEL'
         //    contact: this.props.navigation.getParam('nomor')
         }
     }
 
+    // validateNumber = async () => {
+    //     let phone = this.state.phone
+    //     if(
+    //         phone.substring(0,4) == '0813' ||
+    //         phone.substring(0,4) == '0812' ||  
+    //         phone.substring(0,4) == '0811' ||    
+    //         phone.substring(0,4) == '0822' ||    
+    //         phone.substring(0,4) == '0853' ||    
+    //         phone.substring(0,4) == '0852' ||    
+    //         phone.substring(0,4) == '0823' 
+    //         ) {
+    //             this.setState({
+    //                 type: 'REGULER',
+    //                 provider:'TELKOMSEL'
+    //             })
+    //         }
+
+    //         await this.props.dispatch(pulsa(this.state.type,this.state.provider,this.state.token))
+    //     .then(res => {
+    //         console.log(res)
+    //         this.setState({pulsa:res.action.payload.data.data})
+    //     })
+    //     .catch(err => {
+    //         console.log(err)
+    //     })
+
+    // }
 
     checkNumber = (teks,name) => {
         let contact = this.props.navigation.getParam('nomor')
@@ -40,31 +73,38 @@ class Pulsa extends Component{
         this.setState({
             [name]:teks,
         })
+        // this.validateNumber()
     }
 
-    // componentWillMount(){
-    //     const phoneNumber = this.props.navigation.getParam('nomor')
-    //     if(phoneNumber !== undefined) {
-    //         this.setState({
-    //             contact:phoneNumber
-    //         })
-    //         console.warn(this.state.contact,'contact')
-    //     }
-    //     else{
-    //         this.setState({
-    //             contact:''
-    //         })
-    //     }
+    componentDidMount = async () => {
+        const token = await AsyncStorage.getItem('token',(err,res) => {
+            if(res){
+                this.setState({
+                    token:res
+                })
+            }
+
+            this.props.dispatch(pulsa(this.state.type,this.state.provider,this.state.token))
+        .then(res => {
+            console.log(res)
+            this.setState({pulsa:res.action.payload.data.data})
+        })
+        .catch(err => {
+            console.log(err)
+        })
+        })
         
-    // }
+        
+    }
+
 
     goBack = () => {
         this.props.navigation.goBack()
     }
     render(){
-        const price = this.props.price
-        console.warn(price)
-        const {data} = this.state
+        const {pulsa} = this.state
+        console.log(pulsa,'data pulsa');
+        
         const contact = this.props.navigation.getParam('nomor')
         const {phone} = this.state
         console.warn(phone);
@@ -122,7 +162,7 @@ class Pulsa extends Component{
             }
             
             </View>
-            <CardPulsa check={this.state.phone} getContact={contact} press={() => this.refs.modal3.open()}/>
+            <CardPulsa check={this.state.phone} pulsa={pulsa} prabayar={this.state.prabayar} getContact={contact} press={() => this.refs.modal3.open()}/>
              <Modal style={[styles.modal, styles.modal3]} position={"bottom"} ref={"modal3"} isDisabled={this.state.isDisabled}>
                 <View style={{height:6,justifyContent:'center',alignItems:'center',marginTop:5}}>
                 <View style={{backgroundColor:'grey',height:3,width:width/10}}></View>
@@ -183,7 +223,13 @@ class Pulsa extends Component{
     }
 }
 
-export default Pulsa
+const mapStateToProps = state => {
+    return {
+        layanan: state.layanan
+    };
+};
+
+export default connect(mapStateToProps)(Pulsa)
 
 const styles = StyleSheet.create({
     wrapperInput:{

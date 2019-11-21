@@ -9,7 +9,7 @@ class TopUpAtm extends React.Component{
         const item = this.props.navigation.getParam('item')
         const title = item.name
         return(
-            <View style={{flex:1,marginTop:25}}>
+            <View style={{flex:1}}>
             <StatusBar backgroundColor='#39AFB5' transculent={false} barStyle="dark-content" />
                 <Header title={title} />
 

@@ -70,15 +70,17 @@ class CardPulsa extends Component{
     }
 
     render(){
+        const data = this.props.pulsa
+        const prabayar = this.props.prabayar
         const press = this.props.press
         let check = this.props.check
         let contacts = this.props.getContact
         return(
             <View style={{flex:1}}>
-            {check.length >= 4 ?
+            {check.length >= 4 && prabayar == true ?
             <FlatList
             style={{alignSelf:'center'}}
-            data={this.state.data}
+            data={data}
             numColumns={2}
             keyExtractor={(item) => item.id}
             onEndReachedThreshold={0.2}
@@ -86,7 +88,7 @@ class CardPulsa extends Component{
                 return(
                     <TouchableOpacity onPress={press} style={styles.containerCard}>
                     <View style={{justifyContent:'space-between',flexDirection:'row',alignItems:'center'}}>
-                    <Text style={styles.textJumlah}>{item.jumlah} <Text style={{fontSize:10,marginBottom:50}}>K</Text></Text>
+                    <Text style={styles.textJumlah}>{item.description} </Text>
                     {
                     check.substring(0,4) == '0813' ||
                     check.substring(0,4) == '0812' ||  
@@ -191,7 +193,7 @@ const styles = StyleSheet.create({
         borderRadius:5
     },
     textJumlah:{
-        fontSize:18,
+        fontSize:11,
         fontWeight:'700',
         color:'#39afb5'
     },

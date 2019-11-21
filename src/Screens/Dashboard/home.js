@@ -8,7 +8,9 @@ import BannerInfo from '../../Components/bannerInfo'
 import Icon from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient'
 import {withNavigation} from "react-navigation"
+import DeviceInfo from 'react-native-device-info-2'
 
+const apiLevel = DeviceInfo.getDeviceLocale()
 const {height,width} = Dimensions.get('window')
 class HomePage extends React.Component{
     
@@ -23,6 +25,7 @@ class HomePage extends React.Component{
     // }
 
     render(){
+        console.warn(apiLevel,'api')
         return(
             <View style={{flex:1,zIndex:-1}}>
                 <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.3)" translucent={true} />

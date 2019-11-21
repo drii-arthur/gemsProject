@@ -2,6 +2,7 @@ import React from 'react'
 import Icon  from "react-native-vector-icons/Ionicons"
 import {View,Text,StatusBar,StyleSheet,Image,ScrollView,Dimensions,FlatList,TouchableOpacity} from 'react-native'
 import CardSaldo from '../Components/cardSaldoTopup'
+import Header from '../Components/header'
 
 const OptionsTopUp = (props) => {
     return(
@@ -41,15 +42,10 @@ class TopUp extends React.Component{
 
     render(){
         return(
-            <View style={{flex:1,marginTop:25}}>
+            <View style={{flex:1}}>
             <StatusBar backgroundColor='#39AFB5' transculent={false} barStyle="dark-content" />
-            {/* start heder */}
-            <View style={styles.header}>
-            <Icon name={'ios-arrow-back'} size={24} color='#fff' onPress={() => {this.props.navigation.goBack()}} />
-                <Text style={styles.text}>
-                Top Up
-                </Text>
-            </View>
+            
+            <Header title='Top up' />
              {/* end of header */}
 
             
@@ -105,13 +101,6 @@ class TopUp extends React.Component{
 export default TopUp
 
 const styles = StyleSheet.create({
-     header:{
-        backgroundColor:'#39AFB5',
-        paddingVertical:12,
-        paddingHorizontal:20,
-        elevation:4,
-        flexDirection:'row',
-    },
     text:{
         color:'#fff',
         fontSize:18,

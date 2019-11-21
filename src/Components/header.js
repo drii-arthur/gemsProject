@@ -1,9 +1,9 @@
 import React from 'react'
 import Icon  from "react-native-vector-icons/Ionicons"
-import {View,Text,StyleSheet,TouchableOpacity} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Dimensions} from 'react-native'
 import {withNavigation} from 'react-navigation'
 
-
+const {height} = Dimensions.get('window')
 class Header extends React.Component{
     render(){
 
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
      header:{
         paddingTop:25,
         backgroundColor:'#39AFB5',
-        height:75,
+        height:height/9,
         elevation:4,
         flexDirection:'row',
         alignItems:'center'
