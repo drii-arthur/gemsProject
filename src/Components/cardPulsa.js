@@ -16,54 +16,6 @@ class CardPulsa extends Component{
             // isDisabled: false,
             // swipeToClose: true,
             // sliderValue: 0.3,
-            data:[
-                {
-                id:1,
-                jumlah:'15',
-                price:15000
-                },
-                {
-                id:2,
-                jumlah:'20',
-                price:15000
-                },
-                {
-                id:3,
-                jumlah:'25',
-                price:15000
-                },
-                {
-                id:4,
-                jumlah:'30',
-                price:15000
-                },
-                {
-                id:5,
-                jumlah:'40',
-                price:15000
-                },
-                {
-                id:6,
-                jumlah:'50',
-                price:15000
-                },
-                {
-                id:7,
-                jumlah:'75',
-                price:15000
-                },
-                {
-                id:8,
-                jumlah:'100',
-                price:15000
-                },
-                {
-                id:9,
-                jumlah:'150',
-                price:15000
-                },
-                
-            ],
             check:'',
             showCard:false,
         }
@@ -86,9 +38,13 @@ class CardPulsa extends Component{
             onEndReachedThreshold={0.2}
             renderItem={({item}) => {
                 return(
-                    <TouchableOpacity onPress={press} style={styles.containerCard}>
-                    <View style={{justifyContent:'space-between',flexDirection:'row',alignItems:'center'}}>
+                    <TouchableOpacity onPress={press} style={styles.containerCard}
+                    >
                     <Text style={styles.textJumlah}>{item.description} </Text>
+                    <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
+                    <Text style={styles.textPrice}>{item.price}</Text>
+                    <View style={{alignItems:'flex-end'}}>
+                    
                     {
                     check.substring(0,4) == '0813' ||
                     check.substring(0,4) == '0812' ||  
@@ -117,8 +73,7 @@ class CardPulsa extends Component{
                     (<Image style={{height:30,width:30}} source={{uri:'https://upload.wikimedia.org/wikipedia/id/thumb/b/ba/XL_Axiata.svg/1076px-XL_Axiata.svg.png'}} />) : null }
                     
                     </View>
-                        <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
-                    <Text style={styles.textPrice}>{item.price}</Text>
+                        
                     
                     </TouchableOpacity>
                 ) 
@@ -136,9 +91,13 @@ class CardPulsa extends Component{
             onEndReachedThreshold={0.2}
             renderItem={({item}) => {
                 return(
-                    <TouchableOpacity onPress={press} style={styles.containerCard}>
-                    <View style={{justifyContent:'space-between',flexDirection:'row',alignItems:'center'}}>
+                    <TouchableOpacity onPress={press} style={styles.containerCard} >
+                    
                     <Text style={styles.textJumlah}>{item.jumlah} <Text style={{fontSize:10,marginBottom:50}}>K</Text></Text>
+                    <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
+                    <Text style={styles.textPrice}>{item.price}</Text>
+                    
+                    <View style={{alignItems:'center'}}>
                     {
                     contacts.substring(0,4) == '0813' || 
                     contacts.substring(0,4) == '0812' ||   
@@ -163,10 +122,8 @@ class CardPulsa extends Component{
                     contacts.substring(0,4) == '0818' ||
                     contacts.substring(0,4) == '0817' ?
                     (<Image style={{height:30,width:30}} source={{uri:'https://upload.wikimedia.org/wikipedia/id/thumb/b/ba/XL_Axiata.svg/1076px-XL_Axiata.svg.png'}} />) : null }
-                    
                     </View>
-                        <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
-                    <Text style={styles.textPrice}>{item.price}</Text>
+    
                     
                     </TouchableOpacity>
                 ) 
@@ -193,9 +150,10 @@ const styles = StyleSheet.create({
         borderRadius:5
     },
     textJumlah:{
-        fontSize:11,
+        fontSize:12,
         fontWeight:'700',
-        color:'#39afb5'
+        color:'#39afb5',
+        marginBottom:5
     },
     textPrice:{
         color:'#535c68',

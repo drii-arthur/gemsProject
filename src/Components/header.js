@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
      header:{
         paddingTop:25,
         backgroundColor:'#39AFB5',
-        height:height/9,
+        height:height/8.5,
         elevation:4,
         flexDirection:'row',
         alignItems:'center'

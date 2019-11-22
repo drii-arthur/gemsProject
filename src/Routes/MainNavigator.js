@@ -33,6 +33,7 @@ import Debit from '../Screens/debit'
 import TopUpAtm from '../Screens/topupAtm'
 import UpgradePremium from '../Screens/upgradePremium'
 import ChangePin from '../Screens/changePin';
+import Games from '../Screens/games';
 
 
 const AuthStack = createStackNavigator({
@@ -142,7 +143,8 @@ const appStackNavigator = createStackNavigator({
     Debit,
     TopUpAtm,
     UpgradePremium,
-    ChangePin
+    ChangePin,
+    Games
 },{
     headerMode:'none',
 })
