@@ -63,6 +63,10 @@ class Otp extends Component{
         }
     }
 
+    componentDidMount = () => {
+        alert(this.state.otpCode.otp)
+    } 
+
     render(){
         const { code } = this.state
         return(

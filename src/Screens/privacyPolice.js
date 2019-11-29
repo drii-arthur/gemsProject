@@ -58,6 +58,3 @@ class PrivacyPolice extends React.Component{
 }
 
 export default PrivacyPolice
-
-const styles = StyleSheet.create({
-})

@@ -2,12 +2,14 @@ import React from 'react'
 import {View,Text,Dimensions} from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import Barcode from 'react-native-barcode-builder'
+import Header from '../Components/header'
 
 const {height,width} = Dimensions.get('window')
 class QrCode extends React.Component{
     render(){
         return(
             <View>
+            <Header title='Barcode'/>
                <View style={{justifyContent:'center',marginVertical:50,alignItems:'center'}}>
                    <Text>
                        Scan QR Code ini Untuk Melakukan Transaksi

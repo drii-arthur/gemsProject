@@ -31,7 +31,7 @@ class Asuransi extends Component{
             <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.1)" translucent={true} />
                 <Header title='Asuransi' />
             <View style={styles.wrapperInput}>
-             <Text style={{color:'#39afb5',alignSelf:'flex-start',marginLeft:10,fontWeight:'bold',fontSize:15}}>
+             <Text style={styles.text}>
             Jenis Layanan
             </Text>
             <RNPickerSelect
@@ -71,13 +71,15 @@ const styles = StyleSheet.create({
         flexDirection:'row'
     },
     text:{
-        color:'#fff',
-        fontSize:18,
-        marginLeft:20
+        color:'#39afb5',
+        alignSelf:'flex-start',
+        marginLeft:10,
+        fontWeight:'bold',
+        fontSize:15
     },
     wrapperInput:{
         paddingHorizontal:10,
-        marginTop:50,
+        marginTop:25,
         alignItems:'center',
         marginBottom:20
     },

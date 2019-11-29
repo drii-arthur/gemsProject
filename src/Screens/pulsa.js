@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import { View,Text,StyleSheet,FlatList,StatusBar,Dimensions,TouchableOpacity,ScrollView,Image,Picker } from "react-native"
+import { View,Text,StyleSheet,FlatList,StatusBar,Dimensions,TouchableOpacity,ScrollView,Image,Picker,RefreshControl } from "react-native"
 import {Input} from 'react-native-elements'
 import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
@@ -11,9 +11,15 @@ import RNPickerSelect from 'react-native-picker-select'
 import AsyncStorage from '@react-native-community/async-storage'
 import {pulsa} from '../Public/Actions/layanan'
 import {connect} from 'react-redux'
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button'
+
 
 const color = '#39afb5'
 const colorP = '#485460'
+const radio_props = [
+{label: 'Prabayar ', value: 0 },
+{label: 'Pasca bayar', value: 1 }
+]
 const {height,width} = Dimensions.get('window')
 class Pulsa extends Component{
     constructor(props){
@@ -28,52 +34,76 @@ class Pulsa extends Component{
             pulsa:[],
             token:'',
             prabayar:false,
-            type:'REGULER',
-            provider:'TELKOMSEL'
-        //    contact: this.props.navigation.getParam('nomor')
+            type:'',
+            provider:'',
+            value:0,
+            price:'',
+            desc:'',
+            refreshing:false
+            
         }
     }
 
-    // validateNumber = async () => {
-    //     let phone = this.state.phone
-    //     if(
-    //         phone.substring(0,4) == '0813' ||
-    //         phone.substring(0,4) == '0812' ||  
-    //         phone.substring(0,4) == '0811' ||    
-    //         phone.substring(0,4) == '0822' ||    
-    //         phone.substring(0,4) == '0853' ||    
-    //         phone.substring(0,4) == '0852' ||    
-    //         phone.substring(0,4) == '0823' 
-    //         ) {
-    //             this.setState({
-    //                 type: 'REGULER',
-    //                 provider:'TELKOMSEL'
-    //             })
-    //         }
-
-    //         await this.props.dispatch(pulsa(this.state.type,this.state.provider,this.state.token))
-    //     .then(res => {
-    //         console.log(res)
-    //         this.setState({pulsa:res.action.payload.data.data})
-    //     })
-    //     .catch(err => {
-    //         console.log(err)
-    //     })
-
-    // }
+    _DeletedInput = () => {
+        this.setState({
+            phone:''
+        })
+    }
 
     checkNumber = (teks,name) => {
-        let contact = this.props.navigation.getParam('nomor')
-        if(contact != undefined){
-            this.setState({
-                [name]:contact,
-                phone:''
-            })
-        }
-        this.setState({
+       this.setState({
             [name]:teks,
         })
-        // this.validateNumber()
+        if(teks.substring(0,4) == '0813' ||
+                teks.substring(0,4) == '0812' ||  
+                teks.substring(0,4) == '0811' ||    
+                teks.substring(0,4) == '0822' ||    
+                teks.substring(0,4) == '0853' ||    
+                teks.substring(0,4) == '0852' ||    
+                teks.substring(0,4) == '0823' ){
+                    const provider = "TELKOMSEL"
+                    const type = "REGULER"
+                    this.setState({
+                        provider:provider,
+                        type:type
+                    })
+                }
+        else if(teks.substring(0,4) == '0817' ||
+                teks.substring(0,4) == '0877' ||  
+                teks.substring(0,4) == '0878' ||    
+                teks.substring(0,4) == '0819' ||    
+                teks.substring(0,4) == '0818' ||    
+                teks.substring(0,4) == '0859'){
+                    const provider = "XL"
+                    const type = "REGULER"
+                    this.setState({
+                        provider:provider,
+                        type:type
+                    })
+                }
+        else if(teks.substring(0,4) == '0855' ||
+                teks.substring(0,4) == '0856' ||  
+                teks.substring(0,4) == '0857' ||    
+                teks.substring(0,4) == '0858' ||        
+                teks.substring(0,4) == '0815'){
+                    const provider = "INDOSAT"
+                    const type = "REGULER"
+                    this.setState({
+                        provider:provider,
+                        type:type
+                    })
+                }
+        if(teks.length >= 4) {
+        this.props.dispatch(pulsa(this.state.type,this.state.provider,this.state.token))
+        .then(res => {
+            console.log(res)
+            this.setState({pulsa:res.action.payload.data.data})
+        })
+        .catch(err => {
+            console.log(err)
+        })
+        }
+        
     }
 
     componentDidMount = async () => {
@@ -82,20 +112,106 @@ class Pulsa extends Component{
                 this.setState({
                     token:res
                 })
-            }
+            }else{console.log(err)}                   
+            })
+        const subs = 
+            this.props.navigation.addListener('didFocus', () => {
+                this.onRefresh()
+                this.getDataNumber()
+                this.getData()
+            })
 
-            this.props.dispatch(pulsa(this.state.type,this.state.provider,this.state.token))
-        .then(res => {
-            console.log(res)
-            this.setState({pulsa:res.action.payload.data.data})
-        })
-        .catch(err => {
-            console.log(err)
-        })
-        })
-        
-        
+            this.getDataNumber() 
+            this.getData()   
+        }
+    componentWillUnMount (){
+        subs.remove()
     }
+
+    getData = () => {
+        if(this.state.phone.substring(0,4) == '0813' ||
+                this.state.phone.substring(0,4) == '0812' ||  
+                this.state.phone.substring(0,4) == '0811' ||    
+                this.state.phone.substring(0,4) == '0822' ||    
+                this.state.phone.substring(0,4) == '0853' ||    
+                this.state.phone.substring(0,4) == '0852' ||    
+                this.state.phone.substring(0,4) == '0823' ){
+                    const provider = "TELKOMSEL"
+                    const type = "REGULER"
+                    this.setState({
+                        provider:provider,
+                        type:type
+                    })
+                    console.log('haii')
+                this.props.dispatch(pulsa(this.state.type,this.state.provider,this.state.token))
+                .then(res => {
+                    this.setState({pulsa:res.action.payload.data.data})
+                })
+                .catch(err => {
+            console.log(err)
+            })
+                }
+            if(this.state.phone.substring(0,4) == '0817' ||
+                this.state.phone.substring(0,4) == '0877' ||  
+                this.state.phone.substring(0,4) == '0878' ||    
+                this.state.phone.substring(0,4) == '0819' ||    
+                this.state.phone.substring(0,4) == '0818' ||    
+                this.state.phone.substring(0,4) == '0859'){
+                    const provider = "XL"
+                    const type = "REGULER"
+                    this.setState({
+                        provider:provider,
+                        type:type
+                    })
+                this.props.dispatch(pulsa(this.state.type,this.state.provider,this.state.token))
+                .then(res => {
+                    this.setState({pulsa:res.action.payload.data.data})
+                })
+                .catch(err => {
+                console.log(err)
+                })
+                }
+            if(this.state.phone.substring(0,4) == '0855' ||
+                this.state.phone.substring(0,4) == '0856' ||  
+                this.state.phone.substring(0,4) == '0857' ||    
+                this.state.phone.substring(0,4) == '0858' ||        
+                this.state.phone.substring(0,4) == '0815'){
+                    const provider = "INDOSAT"
+                    const type = "REGULER"
+                    this.setState({
+                        provider:provider,
+                        type:type
+                    })
+                    this.props.dispatch(pulsa(this.state.type,this.state.provider,this.state.token))
+                    .then(res => {
+                    this.setState({pulsa:res.action.payload.data.data})
+                    })
+                    .catch(err => {
+                    console.log(err)
+                    })
+                    
+                }
+    }
+
+
+        getDataNumber =  () => {
+            let contact = this.props.navigation.getParam('nomor')
+            if(contact != undefined){
+            this.setState({
+                phone:contact
+            })
+            }
+        }
+
+        onRefresh = async () => {
+            this.setState({
+                refreshing:true
+            },() => {setTimeout(() => {
+                this.setState({
+                    refreshing:false
+                })
+            }, 2000);})
+        }
 
 
     goBack = () => {
@@ -103,77 +219,118 @@ class Pulsa extends Component{
     }
     render(){
         const {pulsa} = this.state
-        console.log(pulsa,'data pulsa');
-        
-        const contact = this.props.navigation.getParam('nomor')
         const {phone} = this.state
-        console.warn(phone);
+        console.log(phone);
         
         return(
             <View style={{flex:1}}>
             <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.1)" translucent={true} />
                 <Header title='Pulsa' />
-                <View style={{marginTop:25,paddingLeft:5,paddingRight:15}}>
-                 <Text style={{color:'#39afb5',alignSelf:'flex-start',marginLeft:15,fontWeight:'bold',fontSize:15}}>
-            Jenis Layanan
-            </Text>
-                <RNPickerSelect
-            onValueChange={(value) => {
-                if(value == 'Prabayar'){
-                    this.setState({
-                        prabayar:true
-                    })
-                }else{
-                    this.setState({prabayar:false})
-                }
-                console.warn(value)}}
-            items={[
-                { label: 'Prabayar', value: 'Prabayar' },
-                { label: 'Pasca Bayar', value: 'pasca bayar' },
-            ]}
-            />
+                <View style={styles.wrapperInput}>
+                <View style={{marginHorizontal:10,marginBottom:10,borderBottomColor:'#ecf0f1',borderBottomWidth:1,paddingVertical:10}}>
+                 <Text style={{color:'#39afb5',fontWeight:'bold',fontSize:15,marginBottom:10}}>
+                    Jenis Layanan
+                </Text>
+                
+            <RadioForm
+                        radio_props={radio_props}
+                        initial={0}
+                        labelStyle={{marginRight:20}}
+                        style={{width:'100%',marginLeft:10}}
+                        buttonSize={10}
+                        buttonInnerColor='red'
+                        selectedButtonColor={'#198f94'}
+                        formHorizontal={true}
+                        labelHorizontal={true}
+                        onPress={(value) => {this.setState({value:value})}}
+                        animation={true}
+                        buttonColor={'#198f94'}
+                    />
+                    </View>
+
+                
             </View>
 
-            <View style={styles.wrapperInput}>
-            {contact !== '' ? 
+            <View style={[styles.wrapperInput,{marginTop:10}]}>
+            
             <Input
-            inputContainerStyle={{borderBottomColor:'#ecf0f1'}}
+            inputContainerStyle={{borderBottomColor:'#ecf0f1',position:'relative'}}
             keyboardType='numeric'
             label='Phone Number'
             labelStyle={{color:color,fontSize:14}}
             placeholder='Masukan No hp anda'
             inputStyle={styles.textinput}
             onChangeText={(teks) => {this.checkNumber(teks,'phone')}}
-            rightIcon={<Font name={'address-book'} size={24} color={color} onPress={() => {this.props.navigation.navigate('ContactList')}} />}
-            >
-            <Text>{contact}</Text>
-            </Input>
-            :
-            <Input
-            inputContainerStyle={{borderBottomColor:'#ecf0f1'}}
-            keyboardType='numeric'
-            label='Phone Number'
-            labelStyle={{color:color,fontSize:14}}
-            placeholder='Masukan No hp anda'
-            inputStyle={styles.textinput}
-            onChangeText={(teks) => {this.checkNumber(teks,'phone')}}
+            value={phone}
             rightIcon={<Font name={'address-book'} size={24} color={color} onPress={() => {this.props.navigation.navigate('ContactList')}} />}
             />
-            }
-            
+            {phone.length != '' ? 
+            <Icon name='ios-close' size={20} color='#fff' style={{position:'absolute',top:35,right:60,width:20,height:20,backgroundColor:'grey',textAlign:'center',borderRadius:25/2}} onPress={() => {this._DeletedInput()}} />
+            :null}
             </View>
-            <CardPulsa check={this.state.phone} pulsa={pulsa} prabayar={this.state.prabayar} getContact={contact} press={() => this.refs.modal3.open()}/>
-             <Modal style={[styles.modal, styles.modal3]} position={"bottom"} ref={"modal3"} isDisabled={this.state.isDisabled}>
+
+
+            {phone.length >= 5 && this.state.value == 0 ?
+            <FlatList
+            refreshControl={        
+                <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
+            }
+            style={{alignSelf:'center'}}
+            data={this.state.pulsa}
+            numColumns={2}
+            keyExtractor={(item,index) => index}
+            onEndReachedThreshold={0.2}
+            renderItem={({item,index}) => {
+                return(
+                    <TouchableOpacity onPress={() => {this.setState({
+                        
+                        price:item.price,
+                        desc:item.description,
+                        provider:item.operator
+                    }),this.refs.modal3.open()}} style={styles.containerCard}
+                    key={index}
+                    >
+                    <Text style={styles.textJumlah}>{item.description} </Text>
+                    <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
+                    <Text style={styles.textPrice}>{item.price}</Text>
+                    <View style={{alignItems:'flex-end'}}>
+                    
+                    {
+                    item.operator == 'TELKOMSEL' ?
+                    (<Image style={{height:30,width:60}} source={{uri:'https://1.bp.blogspot.com/-C64gdRuVaJM/XW4zTQRSZgI/AAAAAAAABAg/mrYpbD-rYkkmIzv9PZRaK99pDvhpueCLwCLcBGAs/s400/Logo%2BTelkomsel%2BTerbaru.png'}} />) : null }
+                    {
+                    item.operator == 'INDOSAT' ?
+                    (<Image style={{height:16,width:60}} source={{uri:'https://upload.wikimedia.org/wikipedia/id/thumb/3/3f/Indosat_Logo.svg/1280px-Indosat_Logo.svg.png'}} />) : null }
+                    {
+                    item.operator == 'XL'?
+                    (<Image style={{height:25,width:25}} source={{uri:'https://upload.wikimedia.org/wikipedia/id/thumb/b/ba/XL_Axiata.svg/1076px-XL_Axiata.svg.png'}} />) : null }
+                    
+                    </View>
+                        
+                    
+                    </TouchableOpacity>
+                ) 
+            }}
+            />
+         : null }
+
+            {/* <CardPulsa 
+            check={this.state.phone} 
+            pulsa={pulsa} 
+            prabayar={this.state.value} 
+            getContact={contact} 
+            press={() => {this.refs.modal3.open()}} 
+            price={this.state.price}
+            desc={this.state.desc} /> */}
+            <Modal style={[styles.modal, styles.modal3]} position={"bottom"} ref={"modal3"} isDisabled={this.state.isDisabled}>
                 <View style={{height:6,justifyContent:'center',alignItems:'center',marginTop:5}}>
                 <View style={{backgroundColor:'grey',height:3,width:width/10}}></View>
                 </View>
                     <Text style={[styles.text]}>Konfirmasi Pembayaran</Text>
-                    <Text style={styles.textP} >Nomor Telpon : <Text style={{fontWeight:'700'}}>{phone || contact}</Text></Text>
+                    <Text style={styles.textP} >Nomor Telpon : <Text style={{fontWeight:'700'}}>{phone}</Text></Text>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                         <Text style={styles.textP}>Operator : </Text>
-                        <Image 
-                         style={{height:35,width:60}}
-                        source={{uri:'https://1.bp.blogspot.com/-C64gdRuVaJM/XW4zTQRSZgI/AAAAAAAABAg/mrYpbD-rYkkmIzv9PZRaK99pDvhpueCLwCLcBGAs/s400/Logo%2BTelkomsel%2BTerbaru.png'}}  />
+                    <Text>{this.state.provider}</Text>
                     </View>
 
                     <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
@@ -194,16 +351,16 @@ class Pulsa extends Component{
                     
                     <Text style={{fontSize:16,color:color,fontWeight:'700',marginBottom:5}}>Detail</Text>
                     <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:10}}>
-                    <Text style={styles.textP}>Pulsa</Text>
-                    <Text style={styles.textP}>20.000{this.props.price}</Text>
+                    <Text style={styles.textP}>Pembayaran</Text>
+                    <Text style={styles.textP}>{this.state.desc}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',borderBottomWidth:1,borderBottomColor:'#f9f9f7',paddingBottom:3,paddingHorizontal:10}}>
                     <Text style={styles.textP}>Harga</Text>
-                    <Text style={styles.textP}>20.000{this.props.data}</Text>
+                    <Text style={styles.textP}>{this.state.price}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',paddingRight:12}}>
                     <Text style={{fontSize:18,color:colorP,fontWeight:'700'}}>Total</Text>
-                    <Text style={{fontSize:18,color:colorP,fontWeight:'700'}}>20.000</Text>
+                        <Text style={{fontSize:18,color:colorP,fontWeight:'700'}}>{this.state.price}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                         <TouchableOpacity 
@@ -233,12 +390,9 @@ export default connect(mapStateToProps)(Pulsa)
 
 const styles = StyleSheet.create({
     wrapperInput:{
-        paddingHorizontal:10,
-        marginVertical:20,
-        alignItems:'center'
+        marginTop:25,paddingLeft:5,paddingRight:10,marginBottom:5
     },
-    textinput:{
-    },
+
     modal: {
         paddingTop:5,
         paddingHorizontal:16,
@@ -259,5 +413,25 @@ const styles = StyleSheet.create({
     textP:{
         color:colorP,
         marginBottom:5
-    }
+    },
+    containerCard:{
+        height:height/8,
+        width:width/2.3,
+        elevation:4,
+        margin:5,
+        backgroundColor:'#fff',
+        padding:10,
+        borderRadius:5
+    },
+    textJumlah:{
+        fontSize:12,
+        fontWeight:'700',
+        color:'#39afb5',
+        marginBottom:5
+    },
+    textPrice:{
+        color:'#535c68',
+        marginLeft:14,
+        marginTop:-15
+    },
 })

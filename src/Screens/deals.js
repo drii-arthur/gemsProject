@@ -98,8 +98,8 @@ class Deals extends React.Component{
                 <Animated.View
                 style={{
                     height:height/6,
-                    transform:[{translateY:headerY}],
-                    zIndex:+1000,
+                    // transform:[{translateY:headerY}],
+                    // zIndex:+1000,
                     position: 'absolute',
                     top:headerY,
                     left:0,
@@ -114,13 +114,6 @@ class Deals extends React.Component{
                     height:height/6,
                 }}
                 />
-                {/* <ImageBackground 
-                    source={{uri:'https://img.freepik.com/free-vector/gradient-geometric-shape-background_78532-374.jpg?size=626&ext=jpg'}} 
-                    style={{height:height/6,marginBottom:16,width:'100%'}}>
-                    <View style={{height:'100%',backgroundColor:'rgba(46, 204, 113,0.6)',justifyContent:'flex-end',paddingLeft:20,paddingBottom:20}}>
-                    <Text style={{color:'#fff',fontSize:18,fontWeight:'700',letterSpacing:1}}>DEALS</Text>
-                    </View>
-                </ImageBackground> */}
                 </Animated.View>
 
                 <Animated.View 

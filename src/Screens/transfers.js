@@ -1,14 +1,22 @@
 import React from 'react'
-import {View,Text,TextInput} from 'react-native'
+import {
+    View,
+    Text,
+    TextInput,
+    StyleSheet,
+    ScrollView
+    } from 'react-native'
 import CardSaldo from '../Components/cardSaldoTopup'
+import Header from '../Components/header'
 
 class Transfer extends React.Component{
     render(){
         return(
-            <View style={{flex:1,paddingHorizontal:15,paddingVertical:10}}>
-
-                <View style={{marginTop:20}}>
-                    <Text>No Ponsel Antar GEMS</Text>
+            <ScrollView style={{flex:1}}>
+                <Header title='Transfer' />
+                <CardSaldo />
+                <View style={s.wrapperInput}>
+                    <Text style={s.label}>No Ponsel Antar GEMS</Text>
                     <TextInput
                     placeholder='08XX-XXXX-XXXX'
                      keyboardType='numeric'
@@ -17,8 +25,8 @@ class Transfer extends React.Component{
                     </TextInput>
                 </View>
 
-                <View>
-                    <Text>Nominal Transfer</Text>
+                <View style={[s.wrapperInput,{marginTop:10}]}>
+                    <Text style={s.label}>Nominal Transfer</Text>
                     <TextInput
                      keyboardType='numeric'
                      placeholder='Min Transfer 50000'
@@ -26,8 +34,8 @@ class Transfer extends React.Component{
                     </TextInput>
                 </View>
 
-                 <View>
-                    <Text>Pesan</Text>
+                 <View style={[s.wrapperInput,{marginTop:10}]}>
+                    <Text style={s.label}>Pesan</Text>
                     <TextInput
                      placeholder='Masukan Pesan Anda'
                      numberOfLines={5}
@@ -37,11 +45,21 @@ class Transfer extends React.Component{
                     />
                 </View>
 
-               <CardSaldo />
 
-            </View>
+            </ScrollView>
         )
     }
 }
 
 export default Transfer
+
+const s = StyleSheet.create({
+    wrapperInput:{
+        marginTop:25,
+        paddingHorizontal:15
+    },
+    label:{
+        color:'#39afb5',
+        fontWeight:'700'
+    }
+})

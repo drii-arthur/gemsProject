@@ -95,21 +95,6 @@ class Pln extends Component{
             </View>
             
             
-            {/* <RNPickerSelect
-            onValueChange={(value) => {
-                if(value == 'pasca bayar'){
-                    this.setState({
-                        prabayar:true
-                    })
-                }else{
-                    this.setState({prabayar:false})
-                }
-                console.warn(value)}}
-            items={[
-                { label: 'Prabayar', value: 'Prabayar' },
-                { label: 'Pasca Bayar', value: 'pasca bayar' },
-            ]}
-            /> */}
 
         {this.state.value == 1 ? 
             (<>
@@ -140,16 +125,9 @@ class Pln extends Component{
             value={this.state.noMeter}
             />
 
-            {/* <TouchableOpacity 
-                onPress={() => this.refs.modal3.open()}
-                style={{width:'47%',alignItems:'center',borderRadius:25,elevation:2,marginTop:20}} >
-                    <LinearGradient colors={[ '#39AFB5','#1e90ff']} style={{paddingVertical:10,width:'100%',alignItems:'center',borderRadius:25}}>
-                        <Text style={{color:'#fff',fontWeight:'bold',fontSize:16,letterSpacing:1.2}}>Konfirmasi</Text>
-                    </LinearGradient>
-                </TouchableOpacity> */}
             </View>
             {this.state.require ? 
-            <View style={{backgroundColor:'rgba(231, 76, 60,0.2)',height:30,alignItems:'center',marginBottom:10,marginHorizontal:15,paddingHorizontal:10,flexDirection:'row',position:'relative',borderRadius:2,borderColor:'rgba(192, 57, 43,1.0)',borderWidth:1}}>
+            <View style={styles.errNotif}>
             <View style={{position:'absolute',top:-10,left:13}}>
                 <Icon name='md-arrow-dropup' size={15} color='rgba(192, 57, 43,1.0)' />
             </View>
@@ -192,7 +170,7 @@ class Pln extends Component{
                     </TouchableOpacity>
                 )
             }}
-    />  : null }
+            />  : null }
     
             
             {/* {this.state.noMeter.length == 10 ? this.refs.modal3.open() : null} */}
@@ -201,7 +179,7 @@ class Pln extends Component{
                 <View style={{backgroundColor:'grey',height:3,width:width/10}}></View>
                 </View>
                     <Text style={[styles.text]}>Konfirmasi Pembayaran</Text>
-    <Text style={styles.textP} >Nomor Meter : <Text style={{fontWeight:'700'}}>{this.state.noMeter}</Text></Text>
+                    <Text style={styles.textP} >Nomor Meter : <Text style={{fontWeight:'700'}}>{this.state.noMeter}</Text></Text>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                         <Text style={styles.textP}>Jenis Layanan : </Text>
                     <Text style={{fontWeight:'700',color:colorP}}>{this.state.value == 0 ? "Prabayar" : "Pasca Bayar"}</Text>
@@ -299,5 +277,18 @@ const styles = StyleSheet.create({
         backgroundColor:'#fff',
         padding:10,
         borderRadius:5,
+        },
+    errNotif:{
+        backgroundColor:'rgba(231, 76, 60,0.2)',
+        height:30,
+        alignItems:'center',
+        marginBottom:10,
+        marginHorizontal:15,
+        paddingHorizontal:10,
+        flexDirection:'row',
+        position:'relative',
+        borderRadius:2,
+        borderColor:'rgba(192, 57, 43,1.0)',
+        borderWidth:1
         }
 })

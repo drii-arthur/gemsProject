@@ -7,11 +7,14 @@ import {
     Platform,
     PermissionsAndroid,
     TouchableOpacity,
-    StatusBar
+    StatusBar,
+    Dimensions
 } from 'react-native';
 import Contacts from 'react-native-contacts';
 import { SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons'
+
+const {height,width} = Dimensions.get('window')
 class ContactList extends React.Component {
 
     constructor(props) {
@@ -22,6 +25,8 @@ class ContactList extends React.Component {
             searchPlaceholder: "Search",
         }
     }
+
+    
 
     updateSearch = search => {
         const phoneNumberRegex = /\b[\+]?[(]?[0-9]{2,6}[)]?[-\s\.]?[-\s\/\.0-9]{3,15}\b/m;
@@ -58,6 +63,7 @@ class ContactList extends React.Component {
         } else if(Platform.OS === 'ios') {
             this.getList();
         }
+        
     }
 
     getList = () => {
@@ -69,20 +75,23 @@ class ContactList extends React.Component {
             }
         })
 
-        Contacts.getCount(count => {
-            this.setState({ searchPlaceholder: `Search ${count} contacts` });
-        });
+        // Contacts.getCount(count => {
+        //     this.setState({ searchPlaceholder: `Search ${count} contacts` });
+        // });
     }
 
 
     render() {
         const { search } = this.state;
-
+        console.log(JSON.stringify(this.state.contacts,
+        'data'))
         return (
             <View style={styles.container}>
             <StatusBar backgroundColor='#39afb5' />
             <View style={styles.header}>
-            <TouchableOpacity onPress={() => {this.props.navigation.goBack()}}>
+            <TouchableOpacity 
+            style={styles.backIcon}
+            onPress={() => {this.props.navigation.goBack()}}>
             <Icon name={'ios-arrow-back'} size={24} color={'#fff'} />
             </TouchableOpacity>
             
@@ -90,29 +99,29 @@ class ContactList extends React.Component {
             placeholder="Cari Kontak"
             onChangeText={this.updateSearch}
             value={search}
-            containerStyle={{borderWidth:0,marginLeft:25,flex:1,backgroundColor:'transparent',borderBottomWidth:0,borderTopWidth:0,padding:0}}
-            inputContainerStyle={{backgroundColor:'#fff',height:35,marginRight:15,borderRadius:25}}
+            containerStyle={styles.conInput}
+            inputContainerStyle={styles.input}
             />
             </View>
                 <FlatList
                     data={this.state.contacts}
                     //Setting the number of column
                     numColumns={1}
-                    keyExtractor={(item, index) => index}
-                    renderItem={({item}) => {
+                    keyExtractor={(item,index) => index}
+                    renderItem={({item,index}) => {
                       
                         return(
                             <TouchableOpacity style={styles.itemContainer} onPress = {() => { this.props.navigation.navigate('Pulsa',{ nomor : item.phoneNumbers[0].number})
-                            }}>
-                                <View style={{marginRight:15}}>
+                            }} key={index}>
+                                <View style={{marginRight:15,}}>
                                 <Icon name={'md-contact'} size={40} color='grey' />
                             </View>
                             <View>
                                 <Text style={styles.contactName}>
                                     {`${item.givenName} `} {item.familyName}
                                 </Text>
-                                    {item.phoneNumbers.map(phone => (
-                            <Text style={styles.phones}>{phone.label} : {phone.number}</Text>
+                                    {item.phoneNumbers.map((phone,i) => (
+                            <Text style={styles.phones} key={i}>{phone.label} : {phone.number}</Text>
                                 ))}
                             </View>
         </TouchableOpacity>
@@ -143,12 +152,35 @@ const styles = StyleSheet.create({
     },
     header:{
         flexDirection:'row',
-        paddingHorizontal:15,
         elevation:2,
         marginBottom:10,
-        height:55,
+        height:height/11,
         backgroundColor:'#39afb5',
         alignItems:'center',
         marginTop:20
-    }
+    },
+    backIcon:{
+        height:height/11,
+        justifyContent:'center',
+        alignItems:'center',
+        paddingHorizontal: 20,
+    },
+    conInput:{
+        borderWidth:0,
+        flex:1,
+        backgroundColor:'transparent',
+        borderBottomWidth:0,
+        borderTopWidth:0,
+        height:height/15,
+        justifyContent: 'center',
+        alignContent: 'center',
+    },
+    input:{
+        backgroundColor:'#fff',
+        height:height/17,
+        marginRight:15,
+        borderRadius:25,
+        alignItems:'center',
+        paddingTop:3
+        }
 })

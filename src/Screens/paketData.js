@@ -40,7 +40,7 @@ class PaketData extends Component{
             inputStyle={styles.textinput}
             onChangeText={(teks) => {this.checkNumber(teks,'phone')}}
             // value={this.state.phone}
-            rightIcon={<Font name={'address-book'} size={24} color='#39AFB5' />}
+            rightIcon={<Font name={'address-book'} size={24} color='#39AFB5' onPress={() => {this.props.navigation.navigate('ContactList')}} />}
             />
             </View>
             <CardPulsa check={this.state.phone} />
@@ -66,10 +66,8 @@ const styles = StyleSheet.create({
     },
     wrapperInput:{
         paddingHorizontal:10,
-        marginTop:50,
+        marginTop:25,
         alignItems:'center',
         marginBottom:20
-    },
-    textinput:{
     }
 })

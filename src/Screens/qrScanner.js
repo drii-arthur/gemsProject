@@ -12,10 +12,10 @@ import BarcodeMask from 'react-native-barcode-mask'
 
 class ScanScreen extends Component{
     onSuccess = (e) => {
-      alert('this data',e.data)
-        // Linking
+        Linking
+        console.log('this data',JSON.stringify(e.data))
         //   .openURL(e.data)
-          // .catch(err => console.error('An error occured', err))
+          .catch(err => console.error('An error occured', err))
     }
     reactivate = () => {
       this._setScanning(true)
@@ -25,9 +25,10 @@ class ScanScreen extends Component{
             <QRCodeScanner
             onRead={this.onSuccess}
             showMarker={true}
+            ref={(node) => { this.scanner = node }}
             customMarker={
               <BarcodeMask
-              animatedLineColor='#e74c3c'
+              animatedLineColor='#39afb5'
               edgeColor='#39afb5'
               />
             }

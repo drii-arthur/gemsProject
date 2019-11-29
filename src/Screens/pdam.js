@@ -11,14 +11,14 @@ class Asuransi extends Component{
     constructor(props){
         super(props)
         this.state = {
-           phone:''
+           pdam:''
         }
     }
 
     checkNumber = (teks,name) => {
         this.setState({
             [name]:teks
-        },console.log(this.state.phone))
+        },console.log(this.state.pdam))
     }
 
     goBack = () => {
@@ -50,7 +50,7 @@ class Asuransi extends Component{
             labelStyle={{color:'#39afb5',fontSize:14}}
             placeholder='xxxx xxxx xxxx xxxx'
             inputStyle={styles.textinput}
-            onChangeText={(teks) => {this.checkNumber(teks,'phone')}}
+            onChangeText={(teks) => {this.checkNumber(teks,'pdam')}}
             // value={this.state.phone}
             />
             </View>
@@ -64,13 +64,8 @@ export default Asuransi
 const styles = StyleSheet.create({
     wrapperInput:{
         paddingHorizontal:10,
-        marginTop:50,
+        marginTop:30,
         alignItems:'center',
         marginBottom:20
     },
-    textinput:{
-    },
-    picker:{
-        backgroundColor:'tomato'
-    }
 })

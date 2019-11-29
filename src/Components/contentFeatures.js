@@ -1,8 +1,17 @@
 import React from 'react'
-import { View, Text, StyleSheet,Image,TouchableOpacity } from 'react-native'
+import { 
+    View,
+    Text,
+    StyleSheet,
+    Image,
+    TouchableOpacity,
+    Dimensions
+    } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import {withNavigation} from "react-navigation"
 import SvgUri from 'react-native-svg-uri'
+
+const {height} = Dimensions.get('window')
 
 const OvoFeatures = (props) => {
     return (
@@ -48,8 +57,14 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginTop: 30,
-        marginHorizontal: 10
+        backgroundColor:'#fff',
+        paddingVertical: 15,
+        borderTopLeftRadius: height/13,
+        marginTop:-height/12,
+        shadowOpacity: 0.75,
+        shadowRadius: 5,
+        shadowColor: 'red',
+        shadowOffset: { height: 1, width: 5 }
     },
     wrapper: {
         width: '100%',
@@ -60,10 +75,9 @@ const styles = StyleSheet.create({
     wrapperIcon: {
         width: 60,
         height: 60,
-        borderRadius: 50,
+        borderRadius: 75,
         justifyContent: 'center',
         alignItems: 'center',
-        // elevation:2,
         backgroundColor:'#fff'
     },
     text: {

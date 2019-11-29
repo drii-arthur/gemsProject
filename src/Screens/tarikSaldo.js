@@ -1,12 +1,13 @@
 import React from 'react'
 import {View,Text,TextInput,TouchableOpacity} from 'react-native'
+import Header from '../Components/header'
 import CardSaldo from '../Components/cardSaldoTopup'
 
 class TarikSaldo extends React.Component{
     render(){
         return(
-            <View style={{flex:1,paddingHorizontal:15,paddingVertical:10}}>
-
+            <View style={{flex:1}}>
+                <Header title='Withdraw' />
                 <View style={{marginTop:15}}>
                     <Text>Nominal Withdraw</Text>
                     <TextInput

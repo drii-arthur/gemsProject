@@ -32,8 +32,11 @@ import TopUp from '../Screens/topUp'
 import Debit from '../Screens/debit'
 import TopUpAtm from '../Screens/topupAtm'
 import UpgradePremium from '../Screens/upgradePremium'
-import ChangePin from '../Screens/changePin';
-import Games from '../Screens/games';
+import ChangePin from '../Screens/changePin'
+import Games from '../Screens/games'
+import QrCode from '../Screens/qrcode'
+import TarikSaldo from '../Screens/tarikSaldo'
+import Transfer from '../Screens/transfers'
 
 
 const AuthStack = createStackNavigator({
@@ -65,15 +68,18 @@ const appStack = createBottomTabNavigator ({
             ),
         },
     },
-    Scan: {
+    Scan:{
         screen: ScanScreen,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => (
-                <View style={{flex:1,borderBottomLeftRadius:150,borderBottomRightRadius:150,poisition:'absolute',top:-0.5,left:0,right:0,bottom:0,justifyContent:'center',backgroundColor:'#f9f9f7',padding:10}}>
-                    <View style={{backgroundColor:'#39afb5',justifyContent:'center',alignItems:'center',borderRadius:48/2,poisition:'absolute',top:-15,left:0,width:48,height:48,right:0}}>
-                    <Image source={require('../Assets/Icons/Scan.png')} style={{width:22,height:20}} /> 
-                    {/* <Icon size={26} name='md-qr-scanner' color={'#fff'} /> */}
-                     </View> 
+                // <View style={{flex:1,borderBottomLeftRadius:150,borderBottomRightRadius:150,poisition:'absolute',top:-0.5,left:0,right:0,bottom:0,justifyContent:'center',backgroundColor:'#f9f9f7',padding:10}}>
+                //     <View style={{backgroundColor:'#39afb5',justifyContent:'center',alignItems:'center',borderRadius:48/2,poisition:'absolute',top:-15,left:0,width:48,height:48,right:0}}>
+                //     <Image source={require('../Assets/Icons/Scan.png')} style={{width:22,height:20}} /> 
+                //     {/* <Icon size={26} name='md-qr-scanner' color={'#fff'} /> */}
+                //      </View> 
+                // </View>
+                <View style={{flex:1,backgroundColor:'#39afb5',poisition:'absolute',top:0,left:0,right:0,bottom:0,justifyContent:'center',paddingHorizontal:20,borderBottomRightRadius:20,borderTopLeftRadius:20,marginTop:20,paddingVertical:25}}>
+                    <Image source={require('../Assets/Icons/Scan_icon.png')} style={{width:25,height:25}} />
                 </View>
             ),
         },
@@ -144,7 +150,10 @@ const appStackNavigator = createStackNavigator({
     TopUpAtm,
     UpgradePremium,
     ChangePin,
-    Games
+    Games,
+    QrCode,
+    Transfer,
+    TarikSaldo
 },{
     headerMode:'none',
 })

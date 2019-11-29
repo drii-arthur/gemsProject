@@ -11,13 +11,10 @@ class CardPulsa extends Component{
     constructor(){
         super()
         this.state = {
-            // phone:'',
-            // isOpen: false,
-            // isDisabled: false,
-            // swipeToClose: true,
-            // sliderValue: 0.3,
             check:'',
             showCard:false,
+            price:'',
+            desc:''
         }
     }
 
@@ -26,19 +23,23 @@ class CardPulsa extends Component{
         const prabayar = this.props.prabayar
         const press = this.props.press
         let check = this.props.check
-        let contacts = this.props.getContact
         return(
             <View style={{flex:1}}>
-            {check.length >= 4 && prabayar == true ?
+            {check.length >= 4 && prabayar == 0 ?
             <FlatList
             style={{alignSelf:'center'}}
             data={data}
             numColumns={2}
             keyExtractor={(item) => item.id}
             onEndReachedThreshold={0.2}
-            renderItem={({item}) => {
+            renderItem={({item,index}) => {
                 return(
-                    <TouchableOpacity onPress={press} style={styles.containerCard}
+                    <TouchableOpacity onPress={() => {this.setState({
+                        
+                        price:item.price,
+                        desc:item.description
+                    }),press()}} style={styles.containerCard}
+                    key={index}
                     >
                     <Text style={styles.textJumlah}>{item.description} </Text>
                     <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
@@ -79,58 +80,7 @@ class CardPulsa extends Component{
                 ) 
             }}
             />
-         : null }
-
-         {contacts !== undefined && check == '' ?
-            <FlatList
-            showsVerticalScrollIndicator={false}
-            style={{alignSelf:'center'}}
-            data={this.state.data}
-            numColumns={2}
-            keyExtractor={(item) => item.id}
-            onEndReachedThreshold={0.2}
-            renderItem={({item}) => {
-                return(
-                    <TouchableOpacity onPress={press} style={styles.containerCard} >
-                    
-                    <Text style={styles.textJumlah}>{item.jumlah} <Text style={{fontSize:10,marginBottom:50}}>K</Text></Text>
-                    <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
-                    <Text style={styles.textPrice}>{item.price}</Text>
-                    
-                    <View style={{alignItems:'center'}}>
-                    {
-                    contacts.substring(0,4) == '0813' || 
-                    contacts.substring(0,4) == '0812' ||   
-                    contacts.substring(0,4) == '0811' ||    
-                    contacts.substring(0,4) == '0822' ||    
-                    contacts.substring(0,4) == '0853' ||    
-                    contacts.substring(0,4) == '0852' ?
-                    (<Image style={{height:30,width:60}} source={{uri:'https://1.bp.blogspot.com/-C64gdRuVaJM/XW4zTQRSZgI/AAAAAAAABAg/mrYpbD-rYkkmIzv9PZRaK99pDvhpueCLwCLcBGAs/s400/Logo%2BTelkomsel%2BTerbaru.png'}} />) : null }
-                    {
-                    contacts.substring(0,4) == '0857' ||
-                    contacts.substring(0,4) == '0855' ||
-                    contacts.substring(0,4) == '0858' ||
-                    contacts.substring(0,4) == '0814' ||
-                    contacts.substring(0,4) == '0815' ||
-                    contacts.substring(0,4) == '0816' ||
-                    contacts.substring(0,4) == '0856' ?
-                    (<Image style={{height:16,width:60}} source={{uri:'https://upload.wikimedia.org/wikipedia/id/thumb/3/3f/Indosat_Logo.svg/1280px-Indosat_Logo.svg.png'}} />) : null }
-                    {
-                    contacts.substring(0,4) == '0877' ||   
-                    contacts.substring(0,4) == '0878' ||  
-                    contacts.substring(0,4) == '0859' ||  
-                    contacts.substring(0,4) == '0818' ||
-                    contacts.substring(0,4) == '0817' ?
-                    (<Image style={{height:30,width:30}} source={{uri:'https://upload.wikimedia.org/wikipedia/id/thumb/b/ba/XL_Axiata.svg/1076px-XL_Axiata.svg.png'}} />) : null }
-                    </View>
-    
-                    
-                    </TouchableOpacity>
-                ) 
-            }}
-            />
-         : null }  
-         {/* <PayConfirm  /> */}
+            : null }
             </View>
         )
         
