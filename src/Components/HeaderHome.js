@@ -22,7 +22,7 @@ const ListContent = (props) => {
                 <View style={s.wrapIcon}>
                     <Image
                     resizeMode='contain'
-                    style={s.image}
+                    style={{flex:1}}
                     source={props.icon} />
                 </View>
                 <Text style={s.title}>{props.title}</Text>
@@ -48,8 +48,11 @@ class HeaderHome extends Component {
                  end={{x: 0, y: 1}} 
                  colors={['#4BC0C8','#34e7e4','#39afb5']} style={{height:'100%',width:'100%'}}> */}
                 <View style={s.topHeader}>
+                    <View style={{width:width/4.5,height:25}}>
                         <Image 
-                            source={require('../Assets/Icons/Logo_gems.png')} style={{width:width/3.5,height:25}}/>
+                            style={s.image}
+                            source={require('../Assets/Icons/Logo_gems.png')} resizeMode='contain' />
+                    </View>
                         <Icon name={'md-notifications'} 
                     size={26} color={'#fff'} />
                 </View>
@@ -58,10 +61,10 @@ class HeaderHome extends Component {
                 <View 
                 style={s.wrapperSaldo}>
                     <View style={s.right}>
-                    <Text style={s.saldo}>Saldo Gems</Text>
+                        <Text style={s.saldo}>Saldo</Text>
                     <View style={{flexDirection:'row'}}>
-                    <Text style={s.rp}>rp</Text>
-                    <Text style={s.nominal}>1000.000</Text>
+                        <Text style={s.rp}>Rp</Text>
+                        <Text style={s.nominal}>1000.000</Text>
                     </View>
                     </View>
                     <View style={s.kiri}>
@@ -129,11 +132,12 @@ const s = StyleSheet.create({
     },
     content:{
         flex:1,
-        // justifyContent:'center',
         alignItems:'center',
     },
     image:{
-        flex:1
+        flex:1,
+        width:undefined,
+        height:undefined
     },
     title:{
         color:mainColor,
@@ -163,10 +167,14 @@ const s = StyleSheet.create({
     },
     rp:{
         color:'yellow',
-        fontWeight:'700'
+        marginTop:3,
+        marginRight:3,
+        fontSize:11
     },
     nominal:{
         fontSize:24,
+        color:'yellow',
+        fontWeight:'700'
     },
     kiri:{
         flex:1,

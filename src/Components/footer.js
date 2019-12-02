@@ -31,15 +31,18 @@ class Footer extends React.Component{
         return(
             <View style={s.container}>
                 <TabBar title='Home' icon='ios-home' route={() => this.props.navigation.navigate('HomePage')}/>
-                <TabBar title='Wallet' icon='ios-wallet'/>
+                <TabBar title='Wallet' icon='ios-wallet' route={() => {this.props.navigation.navigate('Wallet')}} />
+
                 <LinearGradient 
-                    onPress={() => {this.props.navigation.navigate('ScanScreen')}}
                     style={[s.tabbar,s.scanner]} 
-                    start={{x: 3, y: 1}} 
-                    end={{x: 0, y: 1}} 
-                    colors={['#4BC0C8','#34e7e4','#39afb5']}>
+                    start={{x: 1, y: 0}} 
+                end={{x: 2, y:2}} 
+                colors={['#39afb5','#326db5']}>
+                    <TouchableOpacity onPress={() => {this.props.navigation.navigate('ScanScreen')}}>
                         <Image source={require('../Assets/Icons/Scan_icon.png')} style={{width:30,height:30}} />
+                        </TouchableOpacity>
                 </LinearGradient>
+
                 <TabBar title='Deals' icon='md-pricetags' route={() => {this.props.navigation.navigate('Deals')}}/>           
                 <TabBar title='Akun' icon='md-contact' route={() => {this.props.navigation.navigate('Accounts')}} />           
             </View>

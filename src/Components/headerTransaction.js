@@ -16,9 +16,9 @@ class HeaderTransaction extends React.Component{
 
         return(
             <LinearGradient
-                // start={{x: 5, y: 0}} 
-                // end={{x: 0, y:3}} 
-                colors={['#39afb9','#39afb5']}
+                start={{x: 0, y: 1}} 
+                end={{x: 2, y:1.}} 
+                colors={['#39afb5','#326db5']}
             >
                 <View style={styles.header}>
                 <TouchableOpacity onPress={() => {this.props.navigation.goBack()}} style={styles.button}>
@@ -30,10 +30,10 @@ class HeaderTransaction extends React.Component{
                 </Text>
                 </View>
             
-                <View style={{height:80,width:'100%'}}>
-                    <View style={{height:'70%',paddingHorizontal:20,justifyContent:'center'}}>
-                        <Text style={{color:'#fff',fontSize:10}}>Saldo Gems</Text>
-                        <Text style={{color:'yellow',fontSize:20,fontWeight:'bold',letterSpacing:1.2}}>10.000.000</Text>
+                <View style={styles.wrapperSaldo}>
+                    <View style={styles.saldo}>
+                        <Text style={styles.teksSaldo}>Saldo Gems</Text>
+                        <Text style={styles.teksNominal}>10.000.000</Text>
                     </View>
                     <View style={{height:'30%',backgroundColor:'#fff',borderTopLeftRadius:35}}></View>
                 </View>
@@ -62,5 +62,24 @@ const styles = StyleSheet.create({
         width:40,
         alignItems:'center',
         justifyContent:'center'
+    },
+    wrapperSaldo:{
+        height:80,
+        width:'100%'
+    },
+    saldo:{
+        height:'70%',
+        paddingHorizontal:20,
+        justifyContent:'center'
+    },
+    teksSaldo:{
+        color:'#fff',
+        fontSize:10
+    },
+    teksNominal:{
+        color:'yellow',
+        fontSize:20,
+        fontWeight:'700',
+        letterSpacing:1.2
     }
 })

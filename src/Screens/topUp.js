@@ -46,14 +46,7 @@ class TopUp extends React.Component{
             <View style={{flex:1}}>
             <StatusBar backgroundColor='#39AFB5' transculent={false} barStyle="dark-content" />
             
-            <HeaderTransaction title="Top up" />
-            {/* <Header title='Top up' /> */}
-             {/* end of header */}
-
-            
-            {/* start card saldo */}
-                {/* <CardSaldo /> */}
-            {/* end of card saldo */}
+            <HeaderTransaction title="Top Up" />
 
             <View style={styles.select}>
                 <Text style={styles.textSelect}> Pilih Metode Top up</Text>

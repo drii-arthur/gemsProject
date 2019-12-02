@@ -38,6 +38,7 @@ import Games from '../Screens/games'
 import QrCode from '../Screens/qrcode'
 import TarikSaldo from '../Screens/tarikSaldo'
 import Transfer from '../Screens/transfers'
+import Wallet from '../Screens/wallet'
 
 
 const AuthStack = createStackNavigator({
@@ -143,6 +144,7 @@ const appStackNavigator = createStackNavigator({
     Accounts,
     Notification,
     Pulsa,
+    Wallet,
     PaketData,
     Pln,
     Bpjs,
