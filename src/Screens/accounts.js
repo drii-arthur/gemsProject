@@ -8,6 +8,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
 // import ListinProfile from '../Components/listInProfile'
 
+import Footer from '../Components/footer'
+
 
 class Accounts extends React.Component{
   constructor(props){
@@ -80,6 +82,7 @@ _handleLogout = async () => {
                 <CardAccounts name={this.state.name} phone={this.state.phone} status={this.state.status} logout={this._handleLogout} />
                 <View style={{flex:1,backgroundColor:'#f9f9f7'}}>
                 </View>
+                <Footer/>
             </View>
         )
     }

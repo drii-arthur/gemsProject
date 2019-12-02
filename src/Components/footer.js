@@ -1,89 +1,74 @@
-// import React from 'react'
-// import {View,Text,StatusBar,TextInput,StyleSheet,TouchableOpacity} from 'react-native'
-// import LinearGradient from 'react-native-linear-gradient'
-// import Icon from 'react-native-vector-icons/Ionicons'
-// import Header from '../Components/header'
-// import CardSaldo from '../Components/cardSaldoTopup'
+import React from 'react'
+import {
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    Image,
+    Dimensions
+} from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
+import Icon from 'react-native-vector-icons/Ionicons'
+import {withNavigation} from 'react-navigation'
 
-// class Debit extends React.Component{
-//     render(){
-//         return(
-//             <View style={{flex:1,marginTop:25,}}>
-//             <StatusBar backgroundColor='#39AFB5' transculent={false} barStyle="dark-content" />
-//                 <Header title='Debit  Card' />
 
-//                 {/* main content */}
-//                 <View style={{flex:1}}>
-//                     <CardSaldo />
-//                     {/* start to input debit card */}
-//                     <View style={styles.wrapperInput}>
-//                         <TextInput
-//                             placeholder='Masukan Nominal'
-//                             style={styles.nominalInput}
-//                             keyboardType='numeric'
-//                             />
-//                         <Icon name={"md-cash"} size={18} color='#808e9b' style={styles.iconInput} />
-//                     </View>
+const mainColor = '#39afb5'
+const {height,width} = Dimensions.get('window')
 
-//                         <View style={styles.wrapperInput}>
-//                         <TextInput
-//                             placeholder='Masukan Nomor Kartu'
-//                             style={styles.nominalInput}
-//                             keyboardType='numeric'
-//                             />
-//                         <Icon name={"ios-card"} size={18} color='#808e9b' style={styles.iconInput} />
-//                         </View>
+const TabBar = (props) => {
+    return(
+        <TouchableOpacity 
+            onPress={props.route}
+            style={[s.tabbar]}>
+            <Icon name={props.icon} size={24} color={mainColor} />
+            <Text style={s.text}>{props.title}</Text>
+        </TouchableOpacity>
+    )
+}
 
-//                         <View style={{flexDirection:'row'}}>
-//                             <View style={[styles.wrapperInput,{flex:1}]}>
-//                         <TextInput
-//                             placeholder='Expire date'
-//                             style={styles.nominalInput}
-//                             keyboardType='numeric'
-//                             />
-//                         <Icon name={"ios-calendar"} size={18} color='#808e9b' style={styles.iconInput} />
-//                         </View>
+class Footer extends React.Component{
+    render(){
+        return(
+            <View style={s.container}>
+                <TabBar title='Home' icon='ios-home' route={() => this.props.navigation.navigate('HomePage')}/>
+                <TabBar title='Wallet' icon='ios-wallet'/>
+                <LinearGradient 
+                    onPress={() => {this.props.navigation.navigate('ScanScreen')}}
+                    style={[s.tabbar,s.scanner]} 
+                    start={{x: 3, y: 1}} 
+                    end={{x: 0, y: 1}} 
+                    colors={['#4BC0C8','#34e7e4','#39afb5']}>
+                        <Image source={require('../Assets/Icons/Scan_icon.png')} style={{width:30,height:30}} />
+                </LinearGradient>
+                <TabBar title='Deals' icon='md-pricetags' route={() => {this.props.navigation.navigate('Deals')}}/>           
+                <TabBar title='Akun' icon='md-contact' route={() => {this.props.navigation.navigate('Accounts')}} />           
+            </View>
+        )
+    }
+}
 
-//                         <View style={[styles.wrapperInput,{flex:1,}]}>
-//                         <TextInput
-//                             placeholder='CVV'
-//                             style={[styles.nominalInput,{paddingLeft:10}]}
-//                             keyboardType='numeric'
-//                             />
-//                         </View>
-//                         </View>
+export default withNavigation(Footer)
 
-                        
-//                 </View>
-//                     <View style={{justifyContent:'center',alignItems:'center',height:50,marginBottom:20,}}>
-//                         <LinearGradient colors={[ '#39AFB5','#1e90ff']} style={{paddingVertical:10,width:'80%',alignItems:'center',borderRadius:25,elevation:2}}>
-//                         <TouchableOpacity>
-//                             <Text style={{color:'#fff',fontWeight:'bold',fontSize:16,letterSpacing:1.2}}>Konfirmasi</Text>
-//                         </TouchableOpacity>
-//                         </LinearGradient>
-//                         </View>
-//             </View>
-//         )
-//     }
-// }
-
-// export default Debit
-
-// const styles = StyleSheet.create({
-//     wrapperInput:{
-//         paddingHorizontal:20,
-//         marginTop:20,
-//     },
-//     nominalInput:{
-//         borderBottomWidth:1,
-//         borderBottomColor:'#f9f9f7',
-//         height:50,
-//         paddingLeft:30,
-//         position:'relative'
-//     },
-//     iconInput:{
-//         position:'absolute',
-//         top:17,
-//         left:23
-//     }
-// })
+const s = StyleSheet.create({
+    container:{
+        height:height/12,
+        flexDirection:'row',
+        elevation:15,
+        backgroundColor:'#fff'
+    },
+    tabbar:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    text:{
+        fontSize:13,
+        color:'grey'
+    },
+    scanner:{
+        borderTopLeftRadius:15,
+        borderBottomRightRadius:15,
+        margin:2,
+        marginHorizontal:10
+    }
+})

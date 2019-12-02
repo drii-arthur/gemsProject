@@ -1,16 +1,23 @@
 import React from 'react'
 import {View,Text,StatusBar,StyleSheet,Dimensions,Image,ImageBackground,ScrollView,TouchableOpacity} from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
-import ContentFeatures from '../../Components/contentFeatures'
-import Banner from '../../Components/banner'
-import CardsMerchant from '../../Components/merchantContent'
-import BannerInfo from '../../Components/bannerInfo'
 import Icon from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient'
 import {withNavigation} from "react-navigation"
 import DeviceInfo from 'react-native-device-info-2'
 
 import HeaderHome from '../../Components/HeaderHome'
+import BannerInfo from '../../Components/bannerInfo'
+import ContentFeatures from '../../Components/contentFeatures'
+import Banner from '../../Components/banner'
+import CardsMerchant from '../../Components/merchantContent'
+import Footer from '../../Components/footer'
+
+const Hr = () => {
+    return(
+        <View style={{backgroundColor:'#ecf0f1',height:10,width:width}}></View>
+    )
+}
 
 const apiLevel = DeviceInfo.getDeviceLocale()
 const {height,width} = Dimensions.get('window')
@@ -101,20 +108,26 @@ class HomePage extends React.Component{
                 {/* contents icon features */}
                 <ContentFeatures />
 
+                <Hr />
+
                 {/* content cards banner */}
-                <View style={{ paddingBottom: 10,backgroundColor:'#fff',paddingTop:10 }}>
+                <View style={{ paddingBottom: 10,backgroundColor:'#fff',paddingTop:15 }}>
                         <Banner />
                 </View>
 
+                <Hr/>
+
                 {/* content cards merchant */}
-                <View style={{paddingLeft:15,marginBottom:10}}>
+                <View style={{paddingLeft:15,marginBottom:10,paddingTop:10}}>
                     <Text>
                         Merchant Terdekat :
                     </Text>
                 </View>
                 <CardsMerchant />
+
+                <Hr/>
                 {/* content banner informasi */}
-                <View style={{paddingLeft:15,marginBottom:10}}>
+                <View style={{paddingLeft:15,marginBottom:10,paddingTop:10}}>
                     <Text>
                         Informasi :
                     </Text>
@@ -122,6 +135,9 @@ class HomePage extends React.Component{
                 <BannerInfo />
 
                 </ScrollView>
+                
+                <Footer/>
+
             </View>
         )
     }

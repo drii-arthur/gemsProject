@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import {withNavigation} from 'react-navigation'
+import LinearGradient from 'react-native-linear-gradient'
 
 
 const {height,width} = Dimensions.get('window')
@@ -37,14 +38,51 @@ class HeaderHome extends Component {
 
     render(){
         return(
-            <View style={s.container}>
+            <View
+             style={s.container}>
+                 <ImageBackground
+                 source={{uri:'https://www.spsgrupp.ee/wp-content/uploads/2016/08/tasut34.jpg'}}
+                style={{width:'100%',height:'100%'}} resizeMode='cover'>
+                 {/* <LinearGradient  */}
+                 {/* start={{x: 3, y: 1}} 
+                 end={{x: 0, y: 1}} 
+                 colors={['#4BC0C8','#34e7e4','#39afb5']} style={{height:'100%',width:'100%'}}> */}
                 <View style={s.topHeader}>
                         <Image 
                             source={require('../Assets/Icons/Logo_gems.png')} style={{width:width/3.5,height:25}}/>
                         <Icon name={'md-notifications'} 
                     size={26} color={'#fff'} />
                 </View>
-                <View style={{flex:1}}></View>
+
+                {/* content saldo */}
+                <View 
+                style={s.wrapperSaldo}>
+                    <View style={s.right}>
+                    <Text style={s.saldo}>Saldo Gems</Text>
+                    <View style={{flexDirection:'row'}}>
+                    <Text style={s.rp}>rp</Text>
+                    <Text style={s.nominal}>1000.000</Text>
+                    </View>
+                    </View>
+                    <View style={s.kiri}>
+                        <LinearGradient
+                        style={[s.kiri,{width:'100%',height:'100%'}]}
+                        start={{x: 1, y: 5}} 
+                        end={{x: 1, y:5}} 
+                        colors={['#4BC0C8','#feca57','#39afb5']}
+                        >
+                            <View style={{width:30,height:30,marginRight:8,borderRadius:30/2,borderWidth:2,borderColor:'yellow',justifyContent:'center',alignItems:'center'}}>
+                                <Image source={require('../Assets/Icons/coins.png')} resizeMode='center'/>
+                            </View>
+                            <View>
+                                <Text style={{fontSize:12,color:'#fff',fontWeight:'700'}}>Point</Text>
+                                <Text style={s.point}>1.000.000</Text>
+                            </View>
+                        </LinearGradient>
+                        
+                    </View>
+                </View>
+                {/* end of content saldo */}
                 
                 <View style={[s.card]}>
                     <ListContent icon={require('../Assets/Icons/TopUp_icon.png')} title='Top Up' route={() => {this.props.navigation.navigate('TopUp')}} />
@@ -52,6 +90,10 @@ class HeaderHome extends Component {
                     <ListContent icon={require('../Assets/Icons/Transfer_icon.png')} title='Transfer' route={() => {this.props.navigation.navigate('Transfer')}} />
                     <ListContent icon={require('../Assets/Icons/Withdraw_icon.png')} title='Withdraw' route={() => {this.props.navigation.navigate('TarikSaldo')}} />
                 </View>
+
+                <View style={{height:height/12}}></View>
+                {/* </L> */}
+                </ImageBackground>
             </View>
         )
     }
@@ -60,20 +102,23 @@ export default withNavigation(HeaderHome)
 
 const s = StyleSheet.create({
     container:{
-        backgroundColor:mainColor,
-        height:height/2,
+        backgroundColor:'#fff',
+        height:height/2.4,
         justifyContent: 'flex-end',
         },
     card:{
-        backgroundColor:'#f9f9f7',
-        height:height/5,
-        borderTopLeftRadius: height/13,
+        height:height/10,
         flexDirection:'row',
         paddingHorizontal:10,
         justifyContent:'space-between',
+        backgroundColor:'#fff',
+        marginHorizontal:20,
+        alignItems:'center',
         elevation:5,
-        paddingTop:10
+        borderRadius:10,
+        paddingVertical:5
     },
+
     topHeader:{
         flexDirection: 'row',
         height:height/13,
@@ -91,7 +136,8 @@ const s = StyleSheet.create({
         flex:1
     },
     title:{
-        color:mainColor
+        color:mainColor,
+        fontSize:12
     },
     wrapIcon:{
         justifyContent:'center',
@@ -99,5 +145,40 @@ const s = StyleSheet.create({
         padding:5,
         width:35,
         height:35
+    },
+    wrapperSaldo:{
+        flex:1,
+        alignItems:'center',
+        flexDirection:'row',
+        justifyContent:'center',
+        paddingLeft:20
+    },
+    right:{
+        flex:2
+    },
+    saldo:{
+        color:'#fff',
+        fontSize:14,
+        fontWeight:'700'
+    },
+    rp:{
+        color:'yellow',
+        fontWeight:'700'
+    },
+    nominal:{
+        fontSize:24,
+    },
+    kiri:{
+        flex:1,
+        height:50,
+        borderTopLeftRadius:25,
+        borderBottomLeftRadius:25,
+        justifyContent:'center',
+        alignItems:'center',
+        flexDirection:'row'
+    },
+    point:{
+        color:'yellow',
+        fontWeight:'700'
     }
 })

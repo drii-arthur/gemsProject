@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
         marginHorizontal:20,
         borderRadius:8,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        elevation:5
     },
     textSaldo: {
         color:'#fff',

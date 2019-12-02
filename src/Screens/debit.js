@@ -11,7 +11,6 @@ const s = StyleSheet.create({
   },
   container: {
     backgroundColor: "#F5F5F5",
-    marginTop: 25,
   },
   label: {
     color: "#505050",

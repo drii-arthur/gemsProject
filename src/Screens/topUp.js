@@ -3,6 +3,7 @@ import Icon  from "react-native-vector-icons/Ionicons"
 import {View,Text,StatusBar,StyleSheet,Image,ScrollView,Dimensions,FlatList,TouchableOpacity} from 'react-native'
 import CardSaldo from '../Components/cardSaldoTopup'
 import Header from '../Components/header'
+import HeaderTransaction from '../Components/headerTransaction'
 
 const OptionsTopUp = (props) => {
     return(
@@ -45,12 +46,13 @@ class TopUp extends React.Component{
             <View style={{flex:1}}>
             <StatusBar backgroundColor='#39AFB5' transculent={false} barStyle="dark-content" />
             
-            <Header title='Top up' />
+            <HeaderTransaction title="Top up" />
+            {/* <Header title='Top up' /> */}
              {/* end of header */}
 
             
             {/* start card saldo */}
-                <CardSaldo />
+                {/* <CardSaldo /> */}
             {/* end of card saldo */}
 
             <View style={styles.select}>

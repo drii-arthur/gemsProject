@@ -59,12 +59,14 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         backgroundColor:'#fff',
         paddingVertical: 15,
-        borderTopLeftRadius: height/13,
-        marginTop:-height/12,
+        borderTopLeftRadius: height/15,
+        marginTop:-height/15,
         shadowOpacity: 0.75,
         shadowRadius: 5,
         shadowColor: 'red',
-        shadowOffset: { height: 1, width: 5 }
+        shadowOffset: { height: 1, width: 5 },
+        paddingHorizontal:10
+
     },
     wrapper: {
         width: '100%',
@@ -75,10 +77,9 @@ const styles = StyleSheet.create({
     wrapperIcon: {
         width: 60,
         height: 60,
-        borderRadius: 75,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'#fff'
+        backgroundColor:'#fff',
     },
     text: {
         fontSize: 11,
