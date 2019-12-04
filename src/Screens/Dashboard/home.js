@@ -1,5 +1,16 @@
 import React from 'react'
-import {View,Text,StatusBar,StyleSheet,Dimensions,Image,ImageBackground,ScrollView,TouchableOpacity} from 'react-native'
+import {
+    View,
+    Text,
+    StatusBar,
+    StyleSheet,
+    Dimensions,
+    Image,
+    ImageBackground,
+    ScrollView,
+    TouchableOpacity,
+    Animated
+    } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import Icon from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient'
@@ -19,33 +30,76 @@ const Hr = () => {
     )
 }
 
+// const DinamisHeader = () => {
+//     return(
+        
+//     )
+// }
+
 const apiLevel = DeviceInfo.getDeviceLocale()
 const {height,width} = Dimensions.get('window')
 class HomePage extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            notif:3
+            notif:3,
+            scrollY: new Animated.Value(0)
         }
     }
     
-    // componentDidMount(){
-    //     const token = AsyncStorage.getItem('token',(err,res) => {
-    //         console.log(res,'token')
-    //         if(err){
-    //             this.props.navigation.navigate('AuthStack')
-    //         }
-
-    //     })
-    // }
 
     render(){
         console.warn(apiLevel,'api')
+
+        const staticHeaders = this.state.scrollY.interpolate({
+            inputRange: [0, 50],
+            outputRange: [0, 1]
+        })
         return(
             <View style={{flex:1}}>
                 <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.3)" translucent={true} />
-                <ScrollView>
-                <HeaderHome />
+
+                <Animated.View
+                    style={[styles.staticHeader,{opacity:staticHeaders}]}
+                >
+                <LinearGradient
+                style={styles.staticHeader}
+                    start={{x: 0, y: 1}} 
+                    end={{x: 2, y:1.}} 
+                    colors={['#39afb5','#57bfed']}
+                >
+                    <View style={styles.topHeader}>
+                    <View style={{width:width/4.5,height:25}}>
+                        <Image 
+                            style={{flex:1,width:undefined,height:undefined}}
+                            source={require('../../Assets/Icons/Logo_gems.png')} resizeMode='contain' />
+                    </View>
+                        <Icon 
+                            style={{position:'relative'}}
+                            name={'md-notifications'} 
+                            size={26} color={'#fff'} 
+                            onPress={() => {this.props.navigation.navigate('Notification')}}
+                        />
+                        {this.state.notif !== 0 && this.state.notif !== '' ?
+                        <View
+                        style={{position:'absolute',width:13,height:13,borderRadius:13/2,backgroundColor:'#d63031',top:10,right:15,justifyContent:'center',alignItems:'center',}}
+                        >
+                        <Text style={{color:'#fff',fontSize:9,fontWeight:'700',padding:0}}>{this.state.notif}</Text>
+                        </View>
+                        :null
+                        }
+                </View>
+
+                </LinearGradient>
+                </Animated.View>
+
+                <Animated.ScrollView
+                    showsVerticalScrollIndicator={false}
+                    onScroll={Animated.event(
+                        [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
+                        )}
+                >
+                <HeaderHome notif={this.state.notif} />
                 
                 {/* <ImageBackground source={require('../../Assets/Images/Header.png')}
                 imageStyle={{borderBottomRightRadius:150,borderBottomLeftRadius:150,transform:[{scaleX:1.5}]}}
@@ -134,7 +188,7 @@ class HomePage extends React.Component{
                 </View>
                 <BannerInfo />
 
-                </ScrollView>
+                </Animated.ScrollView>
                 
                 <Footer/>
 
@@ -174,7 +228,23 @@ const styles = StyleSheet.create({
         width:9,
         height:9,
         marginTop:3
-    }
+    },
+    staticHeader:{
+        height:height/9,
+        position:'absolute',
+        top:0,
+        right:0,
+        left:0,
+        zIndex:+1,
+    },
+    topHeader:{
+        flexDirection: 'row',
+        height:height/13,
+        marginTop:height/26,
+        justifyContent:'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
 })
 
 export default withNavigation(HomePage)

@@ -1,18 +1,44 @@
-'use strict';
 
 import React, {Component} from 'react'
 import {View,
     Text,
     StyleSheet,
-    AppRegistry,
     TouchableOpacity,
-    Linking} from 'react-native'
-import QRCodeScanner from 'react-native-qrcode-scanner';
+    Linking,
+    Dimensions
+    } from 'react-native'
+import QRCodeScanner from 'react-native-qrcode-scanner'
+import { RNCamera } from "react-native-camera"
 import BarcodeMask from 'react-native-barcode-mask'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import Header from "../Components/header";
+
+const {height} = Dimensions.get('window')
 class ScanScreen extends Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      handleTorch:false
+    }
+  }
+
+  _flashOn = () => {
+    this.setState({
+      handleTorch:true
+    })
+    
+  }
+
+  _flashOff = () => {
+    this.setState({
+      handleTorch:false
+    })
+    
+  }
+
     onSuccess = (e) => {
-        Linking
+        // Linking
         console.log('this data',JSON.stringify(e.data))
         //   .openURL(e.data)
           .catch(err => console.error('An error occured', err))
@@ -21,26 +47,53 @@ class ScanScreen extends Component{
       this._setScanning(true)
     }
     render(){
+      
         return(
+          <View style={{flex:1}}>
+          <Header title='Scan'/>
+          
             <QRCodeScanner
             onRead={this.onSuccess}
             showMarker={true}
             ref={(node) => { this.scanner = node }}
             customMarker={
+              <>
               <BarcodeMask
               animatedLineColor='#39afb5'
               edgeColor='#39afb5'
               />
+
+              {/* flashlight */}
+              <View style={styles.wrapperFlash}>
+              {this.state.handleTorch == false ? 
+                <TouchableOpacity 
+                style={styles.flash}
+                onPress={() => {this._flashOn()}}>
+                  <Icon name='flashlight-off' size={30} color='#39afb5' />
+                </TouchableOpacity>
+                :
+                <TouchableOpacity 
+                style={styles.flash}
+                onPress={() => this._flashOff()}>
+                <Icon name='flashlight' size={30} color='#39afb5' />
+                </TouchableOpacity>
+              }
+              </View>
+              {/* end of flashlight */}
+
+              </>
             }
-            markerStyle={{borderRadius:5,borderWidth:5,borderColor:'#39afb5'}}
-            // flashMode={QRCodeScanner.Constants.FlashMode.torch}
+            flashMode={this.state.handleTorch ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
             cameraStyle={{height:'100%'}}
             isRepeatScan={true}   
           />
+          </View>
         );
       }
     }
       
+    export default ScanScreen
+
     const styles = StyleSheet.create({
       centerText: {
         flex: 1,
@@ -48,18 +101,21 @@ class ScanScreen extends Component{
         padding: 32,
         color: '#777',
       },
-      textBold: {
-        fontWeight: '500',
-        color: '#000',
+      wrapperFlash:{
+        height:40,
+        position:'absolute',
+        right:0,
+        bottom:height/7,
+        left:0,
+        justifyContent: 'center',
+        alignItems: 'center',
       },
-      buttonText: {
-        fontSize: 21,
-        color: 'rgb(0,122,255)',
-      },
-      buttonTouchable: {
-        padding: 16,
-      },
+      flash:{
+        height:40,
+        width:50,
+        alignItems:'center',
+        justifyContent:'center'
+      }
     });
-     
-    AppRegistry.registerComponent('default', () => ScanScreen);
-    export default ScanScreen
+
+    

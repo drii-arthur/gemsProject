@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import {Toast} from 'native-base'
 import PhoneInput from 'react-native-phone-input'
 import ModalPickerImage from './modalPickerImage'
+import LinearGradient from 'react-native-linear-gradient'
 
 const {height} = Dimensions.get('window')
 class Login extends Component{
@@ -17,6 +18,7 @@ class Login extends Component{
             phone:'',
             perangkat:'Mobile',
             showToast: false,
+            kode:'+62'
         }
     }
     
@@ -33,13 +35,12 @@ class Login extends Component{
             if(res){
                 this.props.navigation.navigate('appStackNavigator')
             }
-
         })
         
     }
 
     handleLogin =  async () => {
-        let phone = this.state.phone
+        let phone = this.state.kode + this.state.phone
         if(phone.length < 10 || phone.length > 14){
             Toast.show({
             text: 'nomor tidak valid',
@@ -87,7 +88,7 @@ class Login extends Component{
         .catch((err) => {
             console.log(err)
             Toast.show({
-            text: this.props.users.errMessage,
+            text: "error",
             type: "warning",
             position:'top',
             duration:2000,
@@ -100,7 +101,13 @@ class Login extends Component{
     render(){
         return(
             // container
-            <ScrollView>
+            <LinearGradient
+                style={{flex:1}}
+                    start={{x: 1, y: 0}} 
+                    end={{x: 2, y:1.}} 
+                    colors={['#39afb5','#57bfed']}
+                >
+            <ScrollView >
                 <StatusBar backgroundColor='#39afb5' />
 
                 {/* logo Image */}
@@ -109,37 +116,28 @@ class Login extends Component{
                 </View>
                 {/* input */}
                 <View style={styles.wrapperInput}>
-                    <View style={{flexDirection:'row',borderBottomColor:'#bdc3c7',
-                        borderBottomWidth:1,}}>
-                    <PhoneInput 
-                        ref={(ref) => {
-                        this.phone = ref;
-                        }}
-                        initialCountry='id'
-                        getISOCode='+62'
-                        allowZeroAfterCountryCode={false}
-                    />
-
-                    <TextInput 
-                        onChangeText={(teks) => this.handleInput(teks,'phone')}
-                        style={styles.input}
-                        placeholder='Nomer Ponsel'
-                        keyboardType='numeric'
-                    >
-                    <Text>+62</Text>
-                    </TextInput>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={{color:'#fff',fontWeight:'700',fontSize:15}}>{this.state.kode}</Text>
+                        <View style={{flex:1,paddingHorizontal:10}}>
+                            <TextInput 
+                            onChangeText={(teks) => this.handleInput(teks,'phone')}
+                            style={styles.input}
+                            placeholder='Nomer Ponsel'
+                            keyboardType='numeric'
+                            />
+                        </View>
                     </View>
                     
                     <TouchableOpacity 
-                    onPress={this.handleLogin}
-                    style={styles.button}>
+                        onPress={this.handleLogin}
+                        style={styles.button}>
                         <Text style={[styles.textButton,{borderRadius:0}]}>MASUK</Text>
                     </TouchableOpacity>
                 
                 </View>
                 
-                
             </ScrollView>
+            </LinearGradient>
         )
     }
 }
@@ -154,16 +152,21 @@ export default connect(mapStateToProps)(Login)
 
 const styles = StyleSheet.create({
     logoImage:{
-        height:height/1.6,
+        height:height/1.8,
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
     },
     wrapperInput:{
         paddingHorizontal:50,
         flex:1,
     },
     input:{
-        paddingLeft:10
+        borderBottomColor:'#fff',
+        borderBottomWidth:1,
+        height:40,
+        padding:0,
+        color:'#fff',
+        letterSpacing:1.2
     },
     dropdown:{
         padding:0,
@@ -174,11 +177,11 @@ const styles = StyleSheet.create({
         alignItems:'center',
         paddingVertical:10,
         width:'100%',
-        backgroundColor:'#39afb5',
         borderRadius:25,
-        marginTop:30,
-        elevation:3,
-        marginBottom:5
+        marginTop:50,
+        marginBottom: 10,
+        borderWidth:1,
+        borderColor:'#fff'
     },
     textButton:{
         color:'#fff',

@@ -43,6 +43,7 @@ export default class Example extends Component {
     return (
     <View style={s.container}>
         <Header title='Debit Card' />
+        <View style={{marginTop:20}}>
             <CreditCardInput
                 autoFocus={true}
                 inputContainerStyle={s.border}
@@ -57,6 +58,7 @@ export default class Example extends Component {
                 placeholderColor={"darkgray"}
                 onFocus={this._onFocus}
                 onChange={this._onChange} />
+        </View>
     </View>
     );
   }

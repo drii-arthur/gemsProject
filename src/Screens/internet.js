@@ -31,25 +31,15 @@ class Internet extends Component{
                 <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.1)" translucent={true} />            
             <Header title={'Internet'} />
             <View style={styles.wrapperInput}>
-            <RNPickerSelect
-            style={{backgroundColor:'red',borderBottomWidth:1,borderBottomColor:'red'}}
-            onValueChange={(value) => console.warn(value)}
-            items={[
-                { label: 'Prabayar', value: 'prabayar' },
-                { label: 'Pasca Bayar', value: 'pasca bayar' },
-            ]}
-            />
 
             <Input
             inputContainerStyle={{borderBottomColor:'#ecf0f1'}}
             keyboardType='numeric'
-            label='Pilih Produk Listrik PLN'
+            label='Masukan Nomor Layanan'
             labelStyle={{color:'#39afb5',fontSize:14}}
-            placeholder='Masukan No hp anda'
+            placeholder='xxxx-xxxx-xxxx-xxxx'
             inputStyle={styles.textinput}
             onChangeText={(teks) => {this.checkNumber(teks,'phone')}}
-            // value={this.state.phone}
-            rightIcon={<Font name={'address-book'} size={24} color='#39AFB5' />}
             />
             </View>
             </View>

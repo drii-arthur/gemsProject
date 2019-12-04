@@ -83,7 +83,7 @@ class CardAccounts extends React.Component{
                             </View>
                         </View>
                         <View style={{flex:1,marginTop:10,flexDirection:'row',borderRadius:10,padding:5}}>
-                            {status == '1' ?
+                            {status == 'non-premium' ?
                             <TouchableOpacity 
                             onPress={() => this.props.navigation.navigate('UpgradePremium')}
                             style={{flex:1,padding:5,justifyContent:'center',alignItems:'center',padding: 5}}>

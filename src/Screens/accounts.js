@@ -18,7 +18,7 @@ class Accounts extends React.Component{
       token:'',
       name: '',
       phone:'',
-      status:1,
+      status:'',
     }
   }
 

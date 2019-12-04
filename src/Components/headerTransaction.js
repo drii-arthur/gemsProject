@@ -18,7 +18,7 @@ class HeaderTransaction extends React.Component{
             <LinearGradient
                 start={{x: 0, y: 1}} 
                 end={{x: 2, y:1.}} 
-                colors={['#39afb5','#326db5']}
+                colors={['#39afb5','#57bfed']}
             >
                 <View style={styles.header}>
                 <TouchableOpacity onPress={() => {this.props.navigation.goBack()}} style={styles.button}>
@@ -47,7 +47,7 @@ export default withNavigation(HeaderTransaction)
 const styles = StyleSheet.create({
      header:{
         paddingTop:25,
-        height:height/8.5,
+        height:height/8,
         flexDirection:'row',
         alignItems:'center'
     },

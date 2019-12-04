@@ -36,8 +36,8 @@ class Footer extends React.Component{
                 <LinearGradient 
                     style={[s.tabbar,s.scanner]} 
                     start={{x: 1, y: 0}} 
-                end={{x: 2, y:2}} 
-                colors={['#39afb5','#326db5']}>
+                    end={{x: 2, y:1}} 
+                    colors={['#39afb5','#57bfed']}>
                     <TouchableOpacity onPress={() => {this.props.navigation.navigate('ScanScreen')}}>
                         <Image source={require('../Assets/Icons/Scan_icon.png')} style={{width:30,height:30}} />
                         </TouchableOpacity>

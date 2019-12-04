@@ -37,24 +37,33 @@ class HeaderHome extends Component {
     }
 
     render(){
+        const {notif} = this.props
         return(
             <View
-             style={s.container}>
-                 <ImageBackground
-                 source={{uri:'https://www.spsgrupp.ee/wp-content/uploads/2016/08/tasut34.jpg'}}
-                style={{width:'100%',height:'100%'}} resizeMode='cover'>
-                 {/* <LinearGradient  */}
-                 {/* start={{x: 3, y: 1}} 
-                 end={{x: 0, y: 1}} 
-                 colors={['#4BC0C8','#34e7e4','#39afb5']} style={{height:'100%',width:'100%'}}> */}
+                style={s.container}>
+                <ImageBackground
+                    source={{uri:'https://www.spsgrupp.ee/wp-content/uploads/2016/08/tasut34.jpg'}}
+                    style={{width:'100%',height:'100%'}} resizeMode='cover'>
                 <View style={s.topHeader}>
                     <View style={{width:width/4.5,height:25}}>
                         <Image 
                             style={s.image}
                             source={require('../Assets/Icons/Logo_gems.png')} resizeMode='contain' />
                     </View>
-                        <Icon name={'md-notifications'} 
-                    size={26} color={'#fff'} />
+                        <Icon 
+                            style={{position:'relative'}}
+                            name={'md-notifications'} 
+                            size={26} color={'#fff'} 
+                            onPress={() => {this.props.navigation.navigate('Notification')}}
+                        />
+                        {notif !== 0 && notif !== '' ?
+                        <View
+                        style={{position:'absolute',width:13,height:13,borderRadius:13/2,backgroundColor:'#d63031',top:10,right:15,justifyContent:'center',alignItems:'center',}}
+                        >
+                        <Text style={{color:'#fff',fontSize:9,fontWeight:'700',padding:0}}>{notif}</Text>
+                        </View>
+                        :null
+                        }
                 </View>
 
                 {/* content saldo */}
@@ -69,10 +78,10 @@ class HeaderHome extends Component {
                     </View>
                     <View style={s.kiri}>
                         <LinearGradient
-                        style={[s.kiri,{width:'100%',height:'100%'}]}
-                        start={{x: 1, y: 5}} 
-                        end={{x: 1, y:5}} 
-                        colors={['#4BC0C8','#feca57','#39afb5']}
+                            style={[s.kiri,{width:'100%',height:'100%'}]}
+                            start={{x: 0, y: 1}} 
+                            end={{x: 2, y:1.}} 
+                            colors={['#39afb5','#57bfed']}
                         >
                             <View style={{width:30,height:30,marginRight:8,borderRadius:30/2,borderWidth:2,borderColor:'yellow',justifyContent:'center',alignItems:'center'}}>
                                 <Image source={require('../Assets/Icons/coins.png')} resizeMode='center'/>

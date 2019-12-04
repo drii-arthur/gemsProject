@@ -5,13 +5,16 @@ import {
     TextInput,
     TouchableOpacity,
     StyleSheet,
-    ScrollView
+    ScrollView,
+    Dimensions
     } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
+import Modal from 'react-native-modalbox'
 
 import HeaderTransaction from '../Components/headerTransaction'
 import Button from '../Components/button';
 
+const {height,width} = Dimensions.get('window')
 class TarikSaldo extends React.Component{
     render(){
         return(
@@ -33,15 +36,17 @@ class TarikSaldo extends React.Component{
                         <Text style={s.label}>Select Bank Account</Text>
                     </View>                    
                     <View style={{alignItems:'center',marginTop:10,}}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => {this.refs.modal3.open()}}>
                             <Text style={{color:'#39afb5',marginBottom:20,fontWeight:'bold',letterSpacing:1}}>Tambah Bank</Text>
                         </TouchableOpacity>
                         
                     </View>
                 </View>
                 </ScrollView>
+                <Modal style={[s.modal, s.modal3]} position={"bottom"} ref={"modal3"}>
                 
-                <Button title='WITHDRAW' />
+                </Modal>
+                <Button title='WITHDRAW' styles={{zIndex:-999}} />
 
             </View>
         )
@@ -64,5 +69,16 @@ const s = StyleSheet.create({
     label:{
         color:'#39afb5',
         fontWeight:'700'
+    },
+    modal: {
+        paddingTop:5,
+        paddingHorizontal:16,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+    },
+    modal3: {
+        height: height/2,
+        width: width,
+        zIndex:+3
     },
 })
