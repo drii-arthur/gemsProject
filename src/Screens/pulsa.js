@@ -115,18 +115,22 @@ class Pulsa extends Component{
             }else{console.log(err)}                   
             })
         const subs = 
-            this.props.navigation.addListener('didFocus', () => {
+            this.props.navigation.addListener('willFocus', () => {
                 this.onRefresh()
                 this.getDataNumber()
                 this.getData()
             })
 
-            this.getDataNumber() 
-            this.getData()   
+            this.getDataNumber()
+            this.getData()               
         }
     componentWillUnMount (){
         subs.remove()
     }
+
+    // componentDidUpdate(prevState){
+    //     this.getData()
+    // }
 
     getData = () => {
         if(this.state.phone.substring(0,4) == '0813' ||

@@ -51,3 +51,39 @@ export const signup = (data,token) => {
             })
         }
     }
+
+    export const user = (token) => {
+        return {
+            type : 'ALLUSER',
+            payload:axios.get(`${url}/admin/v1/home`,{
+                headers:{
+                    Accept:'application/json',
+                    Authorization:`Bearer ${token}`
+                }
+            })
+        }
+    }
+
+    export const profile = (token) => {
+        return {
+            type: 'PROFILE',
+            payload:axios.get(`${url}/admin/v1/profile/user`,{
+                headers:{
+                    Accept:'application/json',
+                    Authorization:`Bearer ${token}`
+                }
+            })
+        }
+    }
+    
+    export const upgradePremium = (data,token) => {
+        return {
+            type : 'UPGRADE_PREMIUM',
+            payload:axios.post(`${url}/admin/v1/profile/user`,data,{
+                headers:{
+                    Accept:'application/json',
+                    Authorization:`Bearer ${token}`
+                }
+            })
+        }
+    }

@@ -45,10 +45,9 @@ class Transfer extends React.Component{
                     <Text style={s.label}>Pesan</Text>
                     <TextInput
                         placeholder='Masukan Pesan Anda'
-                        numberOfLines={5}
                         multiline={true}
                         underlineColorAndroid="transparent"
-                        style={{height:100,backgroundColor:'#f9f9f7',borderRadius:5,marginVertical:5,paddingHorizontal:5}}
+                        style={{height:100,backgroundColor:'#f9f9f7',borderRadius:5,marginVertical:5,paddingHorizontal:5,textAlignVertical: 'top'}}
                     />
                 </View>
 
@@ -65,7 +64,7 @@ export default Transfer
 
 const s = StyleSheet.create({
     wrapperInput:{
-        marginTop:20,
+        marginBottom:10,
         paddingHorizontal:15
     },
     label:{

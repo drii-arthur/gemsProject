@@ -39,8 +39,8 @@ class Asuransi extends Component{
             style={{height:100}}
             onValueChange={(value) => console.warn(value)}
             items={[
-                { label: 'Prabayar', value: 'prabayar' },
-                { label: 'Pasca Bayar', value: 'pasca bayar' },
+                { label: 'Indi-Home', value: 'prabayar' },
+                { label: 'NexMedia', value: 'pasca bayar' },
             ]}
             />
 

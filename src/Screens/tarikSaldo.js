@@ -6,48 +6,94 @@ import {
     TouchableOpacity,
     StyleSheet,
     ScrollView,
-    Dimensions
+    Dimensions,
+    Picker
     } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import Modal from 'react-native-modalbox'
 
 import HeaderTransaction from '../Components/headerTransaction'
 import Button from '../Components/button';
 
 const {height,width} = Dimensions.get('window')
 class TarikSaldo extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            addBank: false,
+            bank:''
+        }
+    }
     render(){
+        const Input = (props) => {
+            return(
+                <View style={s.wrapperInput} >
+                    <Text style={s.label}>{props.label}</Text>
+                    <TextInput
+                        placeholder={props.placeholder}
+                        keyboardType={props.type}
+                        style={[s.input,props.styleInput]}>
+                    </TextInput>
+                </View>
+            )
+        }
         return(
             <View style={{flex:1}}>
                 <HeaderTransaction title='Withdraw' />
                 <ScrollView style={{flex:1}}>
-                <View style={s.wrapperInput} >
-                    <Text style={s.label}>Nominal Withdraw</Text>
-                    <TextInput
-                        placeholder='Masukan Nominal...'
-                        keyboardType='numeric'
-                        style={s.input}>
-                    </TextInput>
-                </View>
-                
+                <Input 
+                    label='Nominal Withdraw'
+                    placeholder='Masukan Nominal'
+                    type='numeric'
+                />
 
-                <View style={{marginTop:20}}>
+                <View>
                     <View style={{backgroundColor:'#f9f9f7',paddingVertical:5,paddingHorizontal:20}}>                
-                        <Text style={s.label}>Select Bank Account</Text>
+                        <Text style={s.label}>Pilih Bank</Text>
                     </View>                    
-                    <View style={{alignItems:'center',marginTop:10,}}>
-                        <TouchableOpacity onPress={() => {this.refs.modal3.open()}}>
-                            <Text style={{color:'#39afb5',marginBottom:20,fontWeight:'bold',letterSpacing:1}}>Tambah Bank</Text>
+                    <View style={{alignItems:'center',marginVertical:10,}}>
+                        <TouchableOpacity onPress={() => {this.setState({addBank:true})}}>
+                            <Text style={{color:'#39afb5',fontWeight:'bold',letterSpacing:1}}>Tambah Bank</Text>
                         </TouchableOpacity>
                         
                     </View>
                 </View>
-                </ScrollView>
-                <Modal style={[s.modal, s.modal3]} position={"bottom"} ref={"modal3"}>
-                
-                </Modal>
-                <Button title='WITHDRAW' styles={{zIndex:-999}} />
 
+                {this.state.addBank ?
+                <View style={s.boxBank}>
+                    <View style={s.wrapperInput}>
+                    <Text style={s.label}>Pilih Akun Bank</Text>
+                    <Picker
+                    selectedValue={this.state.bank}
+                    style={{height: 40, width: '100%',backgroundColor:'#fff',justifyContent:'center',padding:0}}
+                    onValueChange={(itemValue, itemIndex) =>
+                        this.setState({bank: itemValue})
+                    }>
+                    <Picker.Item label="..." value="" />
+                    <Picker.Item label="PT.BANK CABANG ASIA TBK" value="BCA" />
+                    <Picker.Item label="PT.Bank Mandiri TBK" value="MANDIRI" />
+                    </Picker>
+                    </View>
+
+                    <Input 
+                    label='No Rekening'
+                    placeholder='xxxx-xxxx-xxxx'
+                    type='numeric'
+                    styleInput={{backgroundColor:'#fff',padding:0,alignItems:'center'}}
+                    />
+
+                    <Input 
+                    label='Nama Rekening'
+                    placeholder='xxxx-xxxx-xxxx'
+                    type='numeric'
+                    styleInput={{backgroundColor:'#fff'}}
+                    />
+                    </View>
+                :null
+                }
+
+                </ScrollView>
+                
+                <Button title='WITHDRAW' />
             </View>
         )
     }
@@ -57,7 +103,8 @@ export default TarikSaldo
 
 const s = StyleSheet.create({
     wrapperInput:{
-        paddingHorizontal:20
+        paddingHorizontal:20,
+        marginBottom:10
     },
     input:{
         borderBottomWidth:1,
@@ -65,20 +112,19 @@ const s = StyleSheet.create({
         alignItems:'center',
         paddingVertical:10,
         borderRadius:5,
+        height:40,
+        padding:0
     },
     label:{
         color:'#39afb5',
         fontWeight:'700'
     },
-    modal: {
-        paddingTop:5,
-        paddingHorizontal:16,
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
+    inputBank:{
+        paddingHorizontal:20
     },
-    modal3: {
-        height: height/2,
-        width: width,
-        zIndex:+3
-    },
+    boxBank:{
+        backgroundColor:'#f9f9f7',
+        flex:1,
+        paddingVertical:20
+    }
 })

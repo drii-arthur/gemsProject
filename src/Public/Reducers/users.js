@@ -45,7 +45,6 @@ const users = (state = initialState , action) => {
             isRejected:true,
             isFullFilled:false,
             errMessage:action.payload.response ? action.payload.response.data.iduser2 : action.payload.data.iduser2,
-           
             }
         case 'IZIN_FULLFILLED':
         return{
@@ -65,7 +64,7 @@ const users = (state = initialState , action) => {
             ...state,
             isRejected:true,
             isFullFilled:false,
-             errMessage:action.payload.response ? action.payload.response.data : action.payload.data
+            errMessage:action.payload.response ? action.payload.response.data : action.payload.data
         }
         case 'SIGNUP_FULLFILLED':
         return{
@@ -108,6 +107,67 @@ const users = (state = initialState , action) => {
         case 'LOGOUT_FULLFILLED':
         return{
             ...state,
+            isRejected:false,
+            isFullFilled:true
+        }
+        case 'ALLUSER_PENDING':
+        return{
+            ...state,
+            isLoading:true,
+            isRejected:false,
+            isFullFilled:false
+        }
+        case 'ALLUSER_REJECTED':
+        return{
+            ...state,
+            isRejected:true,
+            isFullFilled:false
+        }
+        case 'ALLUSER_FULLFILLED':
+        return{
+            ...state,
+            isRejected:false,
+            isFullFilled:true
+        }
+        case 'PROFILE_PENDING':
+        return{
+            ...state,
+            isLoading:true,
+            isRejected:false,
+            isFullFilled:false
+        }
+        case 'PROFILE_REJECTEED':
+        return{
+            ...state,
+            isLoading:false,
+            isRejected:true,
+            isFullFilled:false
+        }
+        case 'PROFILE_FULLFILLED':
+        return{
+            ...state,
+            isLoading:false,
+            isRejected:false,
+            isFullFilled:true
+        }
+         case 'UPGRADE_PREMIUM_PENDING':
+        return{
+            ...state,
+            isLoading:true,
+            isRejected:false,
+            isFullFilled:false
+        }
+        case 'UPGRADE_PREMIUM_REJECTEED':
+        return{
+            ...state,
+            isLoading:false,
+            isRejected:true,
+            isFullFilled:false
+        }
+        case 'UPGRADE_PREMIUM_FULLFILLED':
+        return{
+            ...state,
+            isLoading:false,
             isRejected:false,
             isFullFilled:true
         }
