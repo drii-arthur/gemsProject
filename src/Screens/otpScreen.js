@@ -50,9 +50,12 @@ class Otp extends Component{
         
         if (code ==  codeConfirm ){
             if(customer !== null){
+                if(typeof token === 'string'){ 
+                AsyncStorage.setItem('token',(token))
+                    }
                 AsyncStorage.setItem('name',(customer.name))
                 AsyncStorage.setItem('phone',(phone))
-                AsyncStorage.setItem('status',(status))
+                AsyncStorage.setItem('accountType',(customer.role))
                 this.props.navigation.navigate('appStackNavigator')
             }else{
                 this.props.navigation.navigate('Register',{codeConfirm,token})

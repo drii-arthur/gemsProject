@@ -9,34 +9,37 @@ import PhoneInput from 'react-native-phone-input'
 import ModalPickerImage from './modalPickerImage'
 import LinearGradient from 'react-native-linear-gradient'
 
+
 const {height} = Dimensions.get('window')
 class Login extends Component{
     constructor(props){
         super(props)
+        // this.input = React.createRef();
         this.state = {
             numberCode: '',
             phone:'',
             perangkat:'Mobile',
             showToast: false,
-            kode:'+62'
+            kode:'+62',
         }
+        
     }
     
 
-    handleInput = (teks, name) => {
-        this.setState({
-            [name]: teks
-        })
-    }
-
-    componentDidMount = async () => {
-        const token = AsyncStorage.getItem('token',(err,res) => {
-            console.log(res,'token')
-            if(res){
-                this.props.navigation.navigate('appStackNavigator')
-            }
-        })
+    // componentWillMount = async () => {
+    //     const token = AsyncStorage.getItem('token',(err,res) => {
+    //         console.log(res,'token')
+    //         if(res){
+    //             this.props.navigation.navigate('appStackNavigator')
+    //         }
+    //     })
         
+    // }
+
+    resetForm = () => {
+        this.setState({
+            phone:''
+        })
     }
 
     handleLogin =  async () => {
@@ -44,14 +47,6 @@ class Login extends Component{
         if(phone.length < 10 || phone.length > 14){
             Toast.show({
             text: 'nomor tidak valid',
-            type: "danger",
-            position:'top',
-            duration:1500,
-            style:styles.toast
-            })
-        }else if(phone.substr(3,1) == 0){
-            Toast.show({
-            text: 'Harap Tidak Memasukan Angka 0 setelah kode negara',
             type: "danger",
             position:'top',
             duration:1500,
@@ -67,9 +62,6 @@ class Login extends Component{
             let token = dataObj.token
                     
                     console.warn(token,'token')
-                    if(typeof token === 'string'){ 
-                    await AsyncStorage.setItem('token',(token))
-                    }
                     // AsyncStorage.setItem('kontak',kontak)
                     // AsyncStorage.setItem('status',JSON.stringify(status))
                     // AsyncStorage.setItem('email',JSON.stringify(email))
@@ -120,7 +112,12 @@ class Login extends Component{
                         <Text style={{color:'#fff',fontWeight:'700',fontSize:15}}>{this.state.kode}</Text>
                         <View style={{flex:1,paddingHorizontal:10}}>
                             <TextInput 
-                            onChangeText={(teks) => this.handleInput(teks,'phone')}
+                            onChangeText={(phone) => {this.setState({phone}) 
+                                if(phone.substring(0,1) == 0){
+                                    this.resetForm()
+                                }
+                            }}
+                            value={this.state.phone}
                             style={styles.input}
                             placeholder='Nomer Ponsel'
                             keyboardType='numeric'

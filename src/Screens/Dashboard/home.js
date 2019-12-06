@@ -30,11 +30,15 @@ const Hr = () => {
     )
 }
 
-// const DinamisHeader = () => {
-//     return(
-        
-//     )
-// }
+const Label = (props) => {
+    return(
+        <View style={{paddingLeft:15,marginBottom:10,paddingTop:10}}>
+                    <Text>
+                       {props.label}
+                    </Text>
+                </View>
+    )
+}
 
 const apiLevel = DeviceInfo.getDeviceLocale()
 const {height,width} = Dimensions.get('window')
@@ -82,9 +86,9 @@ class HomePage extends React.Component{
                         />
                         {this.state.notif !== 0 && this.state.notif !== '' ?
                         <View
-                        style={{position:'absolute',width:13,height:13,borderRadius:13/2,backgroundColor:'#d63031',top:10,right:15,justifyContent:'center',alignItems:'center',}}
+                        style={styles.badge}
                         >
-                        <Text style={{color:'#fff',fontSize:9,fontWeight:'700',padding:0}}>{this.state.notif}</Text>
+                        <Text style={styles.teksNotif}>{this.state.notif}</Text>
                         </View>
                         :null
                         }
@@ -101,63 +105,6 @@ class HomePage extends React.Component{
                 >
                 <HeaderHome notif={this.state.notif} />
                 
-                {/* <ImageBackground source={require('../../Assets/Images/Header.png')}
-                imageStyle={{borderBottomRightRadius:150,borderBottomLeftRadius:150,transform:[{scaleX:1.5}]}}
-                 style={styles.header}>
-                <View style={{paddingHorizontal:20,paddingVertical:35,flexDirection:'row'}}>
-                <View style={{flex:1,paddingVertical:5}}>
-                <Image source={require('../../Assets/Icons/Logo_gems.png')} style={{width:width/3.5,height:25}}/>
-                </View>
-                <View style={{flexDirection:'row'}}>
-                <TouchableOpacity style={{width:26,height:26,marginRight:5}}>
-                <Image source={require('../../Assets/Icons/Logo2.png')} style={{width:undefined,height:undefined,marginTop:3,flex:1}} />
-                </TouchableOpacity>
-                
-                <Icon 
-                style={{position:'relative'}} 
-                name={'md-notifications'} 
-                size={26} color={'#fff'} 
-                onPress={() => {this.props.navigation.navigate('Notification')}
-                } style={{marginLeft:10}} />
-                {this.state.notif !== 0 && this.state.notif !== '' ?
-                <View
-                style={{position:'absolute',width:13,height:13,borderRadius:13/2,backgroundColor:'#d63031',top:-2,right:-5,justifyContent:'center',alignItems:'center',}}
-                >
-                <Text style={{color:'#fff',fontSize:9,fontWeight:'700',padding:0}}>{this.state.notif}</Text>
-                </View>
-                :null
-                }
-                </View>
-                </View>
-                </ImageBackground> */}
-                
-                {/* <View style={styles.conWrapperSaldo}>
-                <LinearGradient  colors={[ '#39AFB5','#39AFB5','#7ed6df']}  style={styles.saldo} >
-
-                    <View style={{borderRightWidth:1,borderRightColor:'#fff',flex:1,paddingHorizontal:20}}> */}
-                        {/* button top up saldo cash */}
-                        {/* <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                        <Text style={{color:'#fff'}}>SALDO CASH</Text>
-                         <TouchableOpacity style={{borderWidth:1,borderColor:'#fff',padding:3,borderRadius:5,marginLeft:7}} onPress={() => {this.props.navigation.navigate('TopUp')}}>
-                        <Text style={{color:'#fff',fontSize:11}}>TOP UP</Text>
-                        </TouchableOpacity> 
-                        </View>
-                        <Text style={{color:'yellow',fontSize:10,}}>Rp</Text>
-                        <Text style={{fontSize:15,color:'yellow',marginTop:-15,marginLeft:13,fontWeight:'700'}}>20.000.000</Text>
-                    </View>
-                    
-                    <View style={{flex:1,paddingLeft:20,position:'relative'}}> */}
-                        {/* button top up saldo cash */}                     
-                        {/* <Text style={{color:'#fff'}}>SALDO POINT</Text>
-                        <Image 
-                            style={styles.logoSaldoPoint}
-                            source={require('../../Assets/Icons/Diamond_icon.png')} />
-                        <Text style={{fontSize:15,color:'yellow',marginTop:-15,marginLeft:13,fontWeight:'700'}}>10.000</Text>
-                    </View>
-
-                </LinearGradient>
-                </View> */}
-
                 
                 {/* contents icon features */}
                 <ContentFeatures />
@@ -165,27 +112,21 @@ class HomePage extends React.Component{
                 <Hr />
 
                 {/* content cards banner */}
-                <View style={{ paddingBottom: 10,backgroundColor:'#fff',paddingTop:15 }}>
+                <LinearGradient
+                    colors={['#fff','rgba(85, 239, 196,0.2)']}
+                    style={{ paddingBottom: 10,backgroundColor:'#fff',paddingTop:15 }}>
                         <Banner />
-                </View>
+                </LinearGradient>
 
                 <Hr/>
 
                 {/* content cards merchant */}
-                <View style={{paddingLeft:15,marginBottom:10,paddingTop:10}}>
-                    <Text>
-                        Merchant Terdekat :
-                    </Text>
-                </View>
+                <Label label='Merchant Terdekat' />
                 <CardsMerchant />
 
                 <Hr/>
                 {/* content banner informasi */}
-                <View style={{paddingLeft:15,marginBottom:10,paddingTop:10}}>
-                    <Text>
-                        Informasi :
-                    </Text>
-                </View>
+                <Label label='Informasi' />
                 <BannerInfo />
 
                 </Animated.ScrollView>
@@ -245,6 +186,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 20,
     },
+    badge:{
+        position:'absolute',
+        width:13,
+        height:13,
+        borderRadius:13/2,
+        backgroundColor:'#d63031',
+        top:10,
+        right:15,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    teksNotif:{
+        color:'#fff',
+        fontSize:9,
+        fontWeight:'700',
+        padding:0
+    }
 })
 
 export default withNavigation(HomePage)

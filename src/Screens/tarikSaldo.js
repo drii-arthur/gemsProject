@@ -7,7 +7,8 @@ import {
     StyleSheet,
     ScrollView,
     Dimensions,
-    Picker
+    Picker,
+    Keyboard
     } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
@@ -20,15 +21,48 @@ class TarikSaldo extends React.Component{
         super(props)
         this.state = {
             addBank: false,
-            bank:''
+            bank:'',
+            hideButton:false,
         }
     }
+
+    componentDidMount() {
+        this.setState({hideButton:true})
+        this.keyboardDidShowListener = Keyboard.addListener(
+        'keyboardDidShow',
+        this._keyboardDidShow(),
+    );
+        this.keyboardDidHideListener = Keyboard.addListener(
+        'keyboardDidHide',
+        this._keyboardDidHide(),
+        );
+    }
+
+    componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+    }
+
+    _keyboardDidShow = () => {
+        this.setState({hideButton:false})
+    }
+
+
+    _keyboardDidHide = () => {
+        this.setState({
+            hideButton:true
+        })
+    }
+
     render(){
+        console.warn(this.state.hideButton);
+        
         const Input = (props) => {
             return(
                 <View style={s.wrapperInput} >
                     <Text style={s.label}>{props.label}</Text>
                     <TextInput
+                        // onSubmitEditing={Keyboard.dismiss}
                         placeholder={props.placeholder}
                         keyboardType={props.type}
                         style={[s.input,props.styleInput]}>
@@ -84,7 +118,7 @@ class TarikSaldo extends React.Component{
                     <Input 
                     label='Nama Rekening'
                     placeholder='xxxx-xxxx-xxxx'
-                    type='numeric'
+                    type='default'
                     styleInput={{backgroundColor:'#fff'}}
                     />
                     </View>
@@ -92,8 +126,11 @@ class TarikSaldo extends React.Component{
                 }
 
                 </ScrollView>
-                
+
+                {this.state.hideButton == true ? 
                 <Button title='WITHDRAW' />
+                :
+                null }
             </View>
         )
     }

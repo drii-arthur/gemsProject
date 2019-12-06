@@ -49,7 +49,7 @@ _handleLogout = async () => {
       AsyncStorage.removeItem('token')
       AsyncStorage.removeItem('name')
       AsyncStorage.removeItem('phone')
-      AsyncStorage.removeItem('status')
+      AsyncStorage.removeItem('accountType')
       this.props.navigation.navigate('AuthStack')
     }else{
       alert('gagal cuk')

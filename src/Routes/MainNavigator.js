@@ -39,16 +39,18 @@ import QrCode from '../Screens/qrcode'
 import TarikSaldo from '../Screens/tarikSaldo'
 import Transfer from '../Screens/transfers'
 import Wallet from '../Screens/wallet'
+import Authentication from '../Screens/authentication'
 
 
 const AuthStack = createStackNavigator({
+    Authentication,
     Login,
     Register,
     Otp,
     NewPin
 },{
     headerMode:'none',
-    initialRouteName:'Login'
+    initialRouteName:'Authentication'
     
 })
 
