@@ -54,7 +54,7 @@ class Otp extends Component {
 
 
     pinInput = React.createRef();
-    _checkCode = (code) => {
+    _checkCode = () => {
         const dataObj = this.state.otpCode
         const codeConfirm = dataObj.otp
         const customer = dataObj.customer
@@ -62,7 +62,7 @@ class Otp extends Component {
         const phone = dataObj.phone
         const status = dataObj.status
 
-        if (code == codeConfirm) {
+        if (this.state.code == codeConfirm) {
             AsyncStorage.setItem('name', (customer.name))
             AsyncStorage.setItem('phone', (phone))
             AsyncStorage.setItem('accountType', (customer.role))
@@ -85,15 +85,41 @@ class Otp extends Component {
         alert(this.state.otpCode.otp)
     }
 
-    changeText(code) {
+    changeText = (code) => {
+        const dataObj = this.state.otpCode
+        const codeConfirm = dataObj.otp
+        const customer = dataObj.customer
+        const token = dataObj.token
+        const phone = dataObj.phone
+        const status = dataObj.status
         this.setState({code})
         if(code.length == 4){
-            this._checkCode()
+            if (code == codeConfirm) {
+            AsyncStorage.setItem('name', (customer.name))
+            AsyncStorage.setItem('phone', (phone))
+            AsyncStorage.setItem('accountType', (customer.role))
+            this.props.navigation.navigate('appStackNavigator')
+            if (customer !== null) {
+                if (typeof token === 'string') {
+                    AsyncStorage.setItem('token', (token))
+                }
+               
+            } else {
+                this.props.navigation.navigate('Register', { codeConfirm, token })
+            }
+        } else {
+            this.pinInput.current.shake()
+                .then(() => this.setState({ code: '' }))
         }
+        }
+        
+        
     }
 
     render() {
         const { code } = this.state
+        console.warn(code);
+        
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar backgroundColor='#39afb5' />
@@ -102,7 +128,7 @@ class Otp extends Component {
                     end={{x:1, y:1}} 
                     colors={['#39afb5','#57bfed']}
                     style={styles.wrapperTop}>
-                    <Text style={styles.teksVerification}>Verification Code <Icon name='ios-phone-portrait' size={30} /></Text>
+                    <Text style={styles.teksVerification}>Verifikasi Kode <Icon name='ios-phone-portrait' size={30} /></Text>
                     <Text style={{color:'#fff'}}>Kami telah mengirimkan kode otp ke nomor</Text>
                     <Text style={styles.teksNoPhone}>{this.state.otpCode.phone}</Text>
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
@@ -112,7 +138,7 @@ class Otp extends Component {
                         cellStyle={styles.boxInput}
                         textStyle={styles.teksInput}
                         // cellStyleFocused={null}
-                        onFulfill={this._checkCode}
+                        // onFulfill={this._checkCode}
                         value={code}
                         onTextChange={this.changeText}
                     />
@@ -132,7 +158,7 @@ class Otp extends Component {
 
                 <View
                     style={styles.wrapperKeyboard}>
-                    <VirtualKeyboard color={mainColor} pressMode='string' onPress={(val) => this.changeText(val)} />
+                    <VirtualKeyboard color={mainColor} pressMode='string' onPress={(code) => this.changeText(code)} />
                 </View>
             </View>
         )
@@ -193,7 +219,7 @@ const styles = StyleSheet.create({
     boxInput:{
         width: 35,
         height: 35,
-        backgroundColor:'#fff'
+        backgroundColor:'rgba(255, 255, 255,0.7)',
     },
     teksInput:{
         fontSize: 22,

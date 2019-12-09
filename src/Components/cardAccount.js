@@ -29,6 +29,14 @@ const List = (props) => {
         </TouchableOpacity>
     )
 }
+
+const Label = (props) => {
+    return(
+        <View style={{backgroundColor:'#f9f9f7',paddingHorizontal:15,paddingVertical:3}}>
+            <Text style={{fontWeight:'600',fontSize:16,fontFamily:'roboto'}}>{props.label}</Text>
+        </View>
+    )
+}
 const {height,width} = Dimensions.get('window')
 class CardAccounts extends React.Component{
     constructor() {
@@ -61,45 +69,88 @@ class CardAccounts extends React.Component{
         
         return(
                 <ScrollView>
-                <View style={{height:height/2.6}}>
+                <View style={{height:height/2.8}}>
                 <ImageBackground
                 // imageStyle={{borderBottomLeftRadius:25}}
                 source={{uri:'https://www.spsgrupp.ee/wp-content/uploads/2016/08/tasut34.jpg'}}
                 style={{width:'100%',height:'100%'}} resizeMode='cover'
                 style={styles.wrapperTop}>
-                    <View style={{height:height/13,alignItems:'center',justifyContent:'space-between',paddingHorizontal:20,flexDirection:'row'}}>
-                        <Text style={{fontSize:18,color:'#fff',fontWeight:'700'}}>Profile</Text>
+
+                {/* top content */}
+                    <View style={styles.topContent}>
+                    {/* left content */}
+                        <View style={styles.wrapperImage}>
+                            <Image source={{uri:'https://pm1.narvii.com/6290/8d7fb5288992054eb8b04c4d1d07cf1b9f31b01c_hq.jpg'}} style={styles.image}/>
+                        </View>
+                        {/* end of left content */}
+
+                        {/* right content */}
                         <View style={{flexDirection:'row'}}>
                             <Icon name='ios-brush' size={24} color='#fff' style={{marginRight:15
                             }} />
                             <Icon name='md-notifications' size={26} color='#fff' />
                         </View>
+                        {/* end of right content */}
                         
-                    </View>                          
-                </ImageBackground>
-                
+                    </View>
+                    {/* end of top content */}
 
-                
-                </View>
-                <LinearGradient style={{height:height/13,backgroundColor:'#fff',margin:20,flexDirection:'row',elevation:5,borderRadius:5}}
-                colors={['cyan','#0097e6']}>
+                    {/* content name & phone */}
+                    <View style={styles.wrapperText}>
+                        <Text style={styles.textName}>Jhon Doe</Text>
+                        <Text style={styles.textPhone}>087878738585</Text>
+                    </View>  
+                     {/*end of content name & phone  */}
+
+                    <TouchableOpacity style={styles.upgrade}
+                    activeOpacity={1}
+                    onPress={() => {this.props.navigation.navigate('UpgradePremium')}}
+                    >
+                    <LinearGradient
+                    style={{width:'100%',flexDirection:'row',borderRadius:5}}
+                    colors={['cyan','#39afb5']}>
+                    
                     <View
-                    style={{justifyContent:'center',alignItems:'center',width:50,borderRightWidth:2,borderRightColor:'#fff'}}
+                    style={styles.iconUpgrade}
                     >
                         <Icon name='md-arrow-round-up' size={26} color='#fff'/>
                     </View>
-                    <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                        <Text style={{marginLeft:-50,fontSize:18,color:'#fff'}}>Upgrade Premium</Text>
+                    <View style={styles.boxTextUpgrade}>
+                        <Text style={styles.textUpgrade}>Upgrade Premium</Text>
                     </View>
+                    </LinearGradient> 
+                    </TouchableOpacity>                     
+                    <View style={{backgroundColor:'#fff',height:35,borderTopLeftRadius:25,borderTopRightRadius:25}}></View>                          
+                </ImageBackground>
+                
+                </View>
+                
+
+                <LinearGradient
+                    colors={['#fff','rgba(85, 239, 196,0.1)']}
+                    style={styles.card}>
+                    <TouchableOpacity style={styles.contentCard}>
+                        <Image source={{uri:'https://images.vexels.com/media/users/3/157862/isolated/preview/5fc76d9e8d748db3089a489cdd492d4b-barcode-scanning-icon-by-vexels.png'}} resizeMode='cover' style={styles.imageCard} />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={[styles.contentCard,styles.contentCardCenter]}>
+                        <Image source={{uri:'https://static.thenounproject.com/png/59262-200.png'}} resizeMode='cover' style={styles.imageCard} />
+                    </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.contentCard}>
+                                <Image source={require('../Assets/Icons/Multi_icon.png')}
+                                resizeMode='cover' style={{width:40,height:40}}/>
+                            </TouchableOpacity>
                 </LinearGradient>
                 
                 <View>
-                    <List title='Multi Channel' icon={'md-watch'} color={color} />
-                     <List title='Change Pin' icon={'md-key'} color={color} route={() => {this.props.navigation.navigate('ChangePin')}} />
-                    <List title='Help' icon={'md-help-circle'} color={color} route={() => {this.props.navigation.navigate('Help')}} />
-                     <List title='Terms & Conditions' icon={'ios-paper'} color={color} route={() => {this.props.navigation.navigate('TermsConditions')}} />
-                     <List title='Privacy Police' icon={'ios-card'} color={color} route={() => {this.props.navigation.navigate('PrivacyPolice')}} />
-                     <List title='Logout' icon={'md-log-out'} color={color} route={logout} s={{marginTop:5}} />
+                    <Label label='Keamanan' />
+                        <List title='Change Pin' icon={'md-key'} color={color} route={() => {this.props.navigation.navigate('ChangePin')}} />
+                    <Label label='Tentang Kita' />
+                        <List title='Help' icon={'md-help-circle'} color={color} route={() => {this.props.navigation.navigate('Help')}} />
+                        <List title='Terms & Conditions' icon={'ios-paper'} color={color} route={() => {this.props.navigation.navigate('TermsConditions')}} />
+                        <List title='Privacy Police' icon={'ios-card'} color={color} route={() => {this.props.navigation.navigate('PrivacyPolice')}} />
+                        <List title='Logout' icon={'md-log-out'} color={color} route={logout} s={{marginTop:5}} />
                  </View>
                  </ScrollView>
                 // <Modal style={[styles.modal, styles.modal3]} position={"center"} ref={"modal3"} isDisabled={this.state.isDisabled}>
@@ -121,7 +172,7 @@ export default withNavigation(CardAccounts)
 
 const styles = StyleSheet.create({
     wrapperTop:{
-        height:height/3.8,
+        flex:1,
         position:'relative'
     },
     modal: {
@@ -148,6 +199,86 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
         borderBottomColor:'#f9f9f7',
         borderBottomWidth:1
+    },
+    topContent:{
+        height:height/10,
+        alignItems:'center',
+        justifyContent:'space-between',
+        paddingHorizontal:20,
+        flexDirection:'row',
+        marginTop:20
+    },
+    wrapperImage:{
+        width:height/15,
+        height:height/15
+    },
+    image:{
+        width:undefined,
+        height:undefined,
+        flex:1,
+        borderRadius:height/15/2,
+        borderColor:'#fff',
+        borderWidth:1
+
+    },
+    wrapperText:{
+        flex:1,
+        paddingHorizontal:20,
+        justifyContent:'center'
+    },
+    textName:{
+        fontSize:22,
+        fontWeight:'700',
+        color:'#fff',
+        marginBottom:5
+    },
+    textPhone:{
+        color:'#fff'
+    },
+    upgrade:{
+        height:height/15,
+        marginHorizontal:50,
+        flexDirection:'row',
+        elevation:5,
+        borderRadius:5,
+        marginBottom:-20
+    },
+    iconUpgrade:{
+        justifyContent:'center',
+        alignItems:'center',
+        width:50,
+        borderRightWidth:2,
+        borderRightColor:'#fff'
+    },
+    boxTextUpgrade:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    textUpgrade:{
+        marginLeft:-20,
+        fontSize:18,
+        color:'#fff'
+    },
+    card:{
+        flexDirection:'row',
+        paddingVertical:20,
+        backgroundColor:'#fff',
+        height:height/6.5
+    },
+    contentCard:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    contentCardCenter:{
+        borderLeftColor:'grey',
+        borderLeftWidth:1,
+        borderRightColor:'grey',
+        borderRightWidth:1
+    },
+    imageCard:{
+        width:50,height:50
     }
 
 })

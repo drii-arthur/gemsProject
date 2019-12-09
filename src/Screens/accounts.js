@@ -77,8 +77,8 @@ _handleLogout = async () => {
     render(){
       console.warn(this.state.status)
         return(
-            <View style={{flex:1,marginTop:25}}>
-              <StatusBar barStyle="dark-content" backgroundColor="#39afb5" translucent={true} />
+            <View style={{flex:1}}>
+              <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.3)" translucent={true} />
                 <CardAccounts name={this.state.name} phone={this.state.phone} status={this.state.status} logout={this._handleLogout} />
                 <View style={{flex:1,backgroundColor:'#f9f9f7'}}>
                 </View>

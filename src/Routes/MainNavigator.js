@@ -50,7 +50,7 @@ const AuthStack = createStackNavigator({
     NewPin
 },{
     headerMode:'none',
-    initialRouteName:'NewPin'
+    initialRouteName:'Login'
     
 })
 
@@ -178,7 +178,7 @@ appStackNavigator,
 AuthStack
 },
 {
-    initialRouteName : 'appStackNavigator'
+    initialRouteName : 'AuthStack'
 })
 
 const AppContainer = createAppContainer(switchNavigator)
