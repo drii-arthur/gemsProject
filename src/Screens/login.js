@@ -26,16 +26,6 @@ class Login extends Component{
     }
     
 
-    // componentWillMount = async () => {
-    //     const token = AsyncStorage.getItem('token',(err,res) => {
-    //         console.log(res,'token')
-    //         if(res){
-    //             this.props.navigation.navigate('appStackNavigator')
-    //         }
-    //     })
-        
-    // }
-
     resetForm = () => {
         this.setState({
             phone:''

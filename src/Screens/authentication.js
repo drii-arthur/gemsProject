@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 const {height,width} = Dimensions.get('window')
 class Authentication extends Component {
-    componentWillMount = async () => {
+    componentDidMount = async () => {
         await AsyncStorage.getItem('token',(err,token) => {
             if(token){
                 this.props.navigation.navigate('HomePage')
