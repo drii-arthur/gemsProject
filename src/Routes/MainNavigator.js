@@ -40,6 +40,7 @@ import TarikSaldo from '../Screens/tarikSaldo'
 import Transfer from '../Screens/transfers'
 import Wallet from '../Screens/wallet'
 import Authentication from '../Screens/authentication'
+import ConfirmPin from '../Screens/confirmPin'
 
 
 const AuthStack = createStackNavigator({
@@ -47,10 +48,11 @@ const AuthStack = createStackNavigator({
     Login,
     Register,
     Otp,
-    NewPin
+    NewPin,
+    ConfirmPin
 },{
     headerMode:'none',
-    initialRouteName:'Login'
+    initialRouteName:'Authentication'
     
 })
 

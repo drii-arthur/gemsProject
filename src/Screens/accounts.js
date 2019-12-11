@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import CardAccounts from '../Components/cardAccount'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
+import {profile} from '../Public/Actions/users'
 // import ListinProfile from '../Components/listInProfile'
 
 import Footer from '../Components/footer'
@@ -23,24 +24,24 @@ class Accounts extends React.Component{
   }
 
 
-componentDidMount = async() => {
-  const name = await AsyncStorage.getItem('name')
-  const phone = await AsyncStorage.getItem('phone')
-  await AsyncStorage.getItem('accountType',(err,res) => {
-    console.log(res)
-    if(res){
-      this.setState({
-        status:res
-      })
-    }
-    
+componentDidMount = async () => {
+  const token = await AsyncStorage.getItem('token',(err,res) => {
+    if(res) {
+      this.setState({token:res})
+    }else{alert(err)}
   })
-  if(name != null || phone != null){
+  await this.props.dispatch(profile(this.state.token))
+  .then(res => {
+    let data = res.action.payload.data.data
     this.setState({
-      name:name,
-      phone:phone,
+      name:data.name,
+      phone:data.phone,
+      status:data.status
     })
-  }
+  })
+  .catch(err => {
+    console.log(err)
+  })
 }
 
 _handleLogout = async () => {
@@ -55,27 +56,8 @@ _handleLogout = async () => {
       alert('gagal cuk')
     }
   })
-//   if(value !== null){
-//     console.warn(value,'this here')
-//     this.setState({
-//         token: value
-//       })
-//     }
-//   await this.props.dispatch(logout(this.state.token))
-//   .then(res => {
-//     AsyncStorage.removeItem('token')
-//     AsyncStorage.removeItem('name')
-//     AsyncStorage.removeItem('phone')
-//     AsyncStorage.removeItem('status')
-//     this.props.navigation.navigate('AuthStack')
-//   })
-//   .catch(err => {
-//     console.log(err)
-//   })
-//   return value
 }
     render(){
-      console.warn(this.state.status)
         return(
             <View style={{flex:1}}>
               <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.3)" translucent={true} />

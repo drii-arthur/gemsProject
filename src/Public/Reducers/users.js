@@ -150,7 +150,7 @@ const users = (state = initialState , action) => {
             isRejected:false,
             isFullFilled:true
         }
-         case 'UPGRADE_PREMIUM_PENDING':
+        case 'UPGRADE_PREMIUM_PENDING':
         return{
             ...state,
             isLoading:true,
@@ -171,6 +171,28 @@ const users = (state = initialState , action) => {
             isRejected:false,
             isFullFilled:true
         }
+        case 'SALDO_PENDING':
+        return{
+            ...state,
+            isLoading:true,
+            isRejected:false,
+            isFullFilled:false
+        }
+        case 'SALDO_REJECTEED':
+        return{
+            ...state,
+            isLoading:false,
+            isRejected:true,
+            isFullFilled:false
+        }
+        case 'SALDO_FULLFILLED':
+        return{
+            ...state,
+            isLoading:false,
+            isRejected:false,
+            isFullFilled:true
+        }
+        
         default:
             return state
     }

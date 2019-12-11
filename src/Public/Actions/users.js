@@ -87,3 +87,14 @@ export const signup = (data,token) => {
             })
         }
     }
+export const saldo = (token) => {
+    return {
+        type:'SALDO',
+        payload:axios.get(`${url}/admin/v1/profile/saldo`,{
+            headers:{
+                Accept:'application/json',
+                Authorization:`Bearer ${token}`
+            }
+        })
+    }
+}

@@ -54,32 +54,6 @@ class Otp extends Component {
 
 
     pinInput = React.createRef();
-    _checkCode = () => {
-        const dataObj = this.state.otpCode
-        const codeConfirm = dataObj.otp
-        const customer = dataObj.customer
-        const token = dataObj.token
-        const phone = dataObj.phone
-        const status = dataObj.status
-
-        if (this.state.code == codeConfirm) {
-            AsyncStorage.setItem('name', (customer.name))
-            AsyncStorage.setItem('phone', (phone))
-            AsyncStorage.setItem('accountType', (customer.role))
-            this.props.navigation.navigate('appStackNavigator')
-            if (customer !== null) {
-                if (typeof token === 'string') {
-                    AsyncStorage.setItem('token', (token))
-                }
-               
-            } else {
-                this.props.navigation.navigate('Register', { codeConfirm, token })
-            }
-        } else {
-            this.pinInput.current.shake()
-                .then(() => this.setState({ code: '' }))
-        }
-    }
 
     componentDidMount = async () => {
         alert(this.state.otpCode.otp)
@@ -95,14 +69,14 @@ class Otp extends Component {
         this.setState({code})
         if(code.length == 4){
             if (code == codeConfirm) {
-            AsyncStorage.setItem('name', (customer.name))
-            AsyncStorage.setItem('phone', (phone))
-            AsyncStorage.setItem('accountType', (customer.role))
-            this.props.navigation.navigate('appStackNavigator')
             if (customer !== null) {
                 if (typeof token === 'string') {
                     AsyncStorage.setItem('token', (token))
                 }
+                AsyncStorage.setItem('name', (customer.name))
+            AsyncStorage.setItem('phone', (phone))
+            AsyncStorage.setItem('accountType', (customer.role))
+            this.props.navigation.navigate('appStackNavigator')
                
             } else {
                 this.props.navigation.navigate('Register', { codeConfirm, token })
@@ -118,7 +92,6 @@ class Otp extends Component {
 
     render() {
         const { code } = this.state
-        console.warn(code);
         
         return (
             <View style={{ flex: 1 }}>

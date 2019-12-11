@@ -37,12 +37,12 @@ class HeaderHome extends Component {
     }
 
     render(){
-        const {notif} = this.props
+        const {notif,saldo} = this.props
         return(
             <View
                 style={s.container}>
                 <ImageBackground
-                    source={{uri:'https://www.spsgrupp.ee/wp-content/uploads/2016/08/tasut34.jpg'}}
+                    source={require('../Assets/Images/bg1.png')}
                     style={{width:'100%',height:'100%'}} resizeMode='cover'>
                 <View style={s.topHeader}>
                     <View style={{width:width/4.5,height:25}}>
@@ -73,17 +73,17 @@ class HeaderHome extends Component {
                         <Text style={s.saldo}>Saldo</Text>
                     <View style={{flexDirection:'row'}}>
                         <Text style={s.rp}>Rp</Text>
-                        <Text style={s.nominal}>1000.000</Text>
+                        <Text style={s.nominal}>{saldo}</Text>
                     </View>
                     </View>
                     <View style={s.kiri}>
                         <LinearGradient
-                            style={[s.kiri,{width:'100%',height:'100%'}]}
+                            style={[s.kiri,{width:'100%',height:'100%',elevation:2}]}
                             start={{x: 0, y: 1}} 
                             end={{x: 2, y:1.}} 
                             colors={['#39afb5','#57bfed']}
                         >
-                            <View style={{width:30,height:30,marginRight:8,borderRadius:30/2,borderWidth:2,borderColor:'yellow',justifyContent:'center',alignItems:'center'}}>
+                            <View style={s.wrapperPoint}>
                                 <Image source={require('../Assets/Icons/coins.png')} resizeMode='center'/>
                             </View>
                             <View>
@@ -197,5 +197,15 @@ const s = StyleSheet.create({
     point:{
         color:'yellow',
         fontWeight:'700'
+    },
+    wrapperPoint:{
+        width:30,
+        height:30,
+        marginRight:8,
+        borderRadius:30/2,
+        borderWidth:2,
+        borderColor:'yellow',
+        justifyContent:'center',
+        alignItems:'center'
     }
 })

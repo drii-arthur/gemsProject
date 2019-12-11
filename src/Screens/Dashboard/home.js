@@ -16,6 +16,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient'
 import {withNavigation} from "react-navigation"
 import DeviceInfo from 'react-native-device-info-2'
+import {saldo} from '../../Public/Actions/users'
+import {connect} from 'react-redux'
 
 import HeaderHome from '../../Components/HeaderHome'
 import BannerInfo from '../../Components/bannerInfo'
@@ -47,8 +49,26 @@ class HomePage extends React.Component{
         super(props)
         this.state = {
             notif:3,
-            scrollY: new Animated.Value(0)
+            scrollY: new Animated.Value(0),
+            saldo:'',
+            token:''
         }
+    }
+
+    componentDidMount = async () => {
+        const token = await AsyncStorage.getItem('token',(err,res) => {
+            if(res){
+                this.setState({token:res})
+            }
+        })
+        await this.props.dispatch(saldo(this.state.token))
+        .then(res => {
+            console.log(res.action.payload.data.data)
+            this.setState({saldo:res.action.payload.data.data.nominal})
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
     
 
@@ -103,7 +123,7 @@ class HomePage extends React.Component{
                         [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
                         )}
                 >
-                <HeaderHome notif={this.state.notif} />
+                <HeaderHome notif={this.state.notif} saldo={this.state.saldo} />
                 
                 
                 {/* contents icon features */}
@@ -137,6 +157,14 @@ class HomePage extends React.Component{
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        users: state.users
+    };
+};
+
+export default connect(mapStateToProps)(HomePage)
 
 
 const styles = StyleSheet.create({
@@ -204,5 +232,3 @@ const styles = StyleSheet.create({
         padding:0
     }
 })
-
-export default withNavigation(HomePage)

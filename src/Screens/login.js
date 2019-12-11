@@ -52,10 +52,6 @@ class Login extends Component{
             let token = dataObj.token
                     
                     console.warn(token,'token')
-                    // AsyncStorage.setItem('kontak',kontak)
-                    // AsyncStorage.setItem('status',JSON.stringify(status))
-                    // AsyncStorage.setItem('email',JSON.stringify(email))
-                    // console.warn(dataObj.id,id)
                     Toast.show({
                     text:'Login sukses',
                     buttonText: "Okay",
@@ -94,7 +90,7 @@ class Login extends Component{
 
                 {/* logo Image */}
                 <View style={styles.logoImage}>
-                    <Image source={require('../Assets/Images/logo_login.png')} />
+                    <Image source={require('../Assets/Icons/Logo_gems.png')} />
                 </View>
                 {/* input */}
                 <View style={styles.wrapperInput}>
@@ -153,7 +149,8 @@ const styles = StyleSheet.create({
         height:40,
         padding:0,
         color:'#fff',
-        letterSpacing:1.2
+        letterSpacing:1.2,
+        fontWeight:'700'
     },
     dropdown:{
         padding:0,

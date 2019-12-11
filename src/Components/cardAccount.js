@@ -33,7 +33,7 @@ const List = (props) => {
 const Label = (props) => {
     return(
         <View style={{backgroundColor:'#f9f9f7',paddingHorizontal:15,paddingVertical:3}}>
-            <Text style={{fontWeight:'600',fontSize:16,fontFamily:'roboto'}}>{props.label}</Text>
+            <Text style={{fontWeight:'600',fontSize:14,fontFamily:'roboto'}}>{props.label}</Text>
         </View>
     )
 }
@@ -68,11 +68,11 @@ class CardAccounts extends React.Component{
         const modal = this.props.ref
         
         return(
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{height:height/2.8}}>
                 <ImageBackground
                 // imageStyle={{borderBottomLeftRadius:25}}
-                source={{uri:'https://www.spsgrupp.ee/wp-content/uploads/2016/08/tasut34.jpg'}}
+                source={require('../Assets/Images/bg2.png')}
                 style={{width:'100%',height:'100%'}} resizeMode='cover'
                 style={styles.wrapperTop}>
 
@@ -97,11 +97,12 @@ class CardAccounts extends React.Component{
 
                     {/* content name & phone */}
                     <View style={styles.wrapperText}>
-                        <Text style={styles.textName}>Jhon Doe</Text>
-                        <Text style={styles.textPhone}>087878738585</Text>
+                        <Text style={styles.textName}>{name != '' ? name : 'user account'}</Text>
+                        <Text style={styles.textPhone}>{phone != '' ? phone : '08xx-xxxx-xxxx'}</Text>
                     </View>  
                      {/*end of content name & phone  */}
-
+                    
+                    {status == "non-premium" ? 
                     <TouchableOpacity style={styles.upgrade}
                     activeOpacity={1}
                     onPress={() => {this.props.navigation.navigate('UpgradePremium')}}
@@ -119,8 +120,9 @@ class CardAccounts extends React.Component{
                         <Text style={styles.textUpgrade}>Upgrade Premium</Text>
                     </View>
                     </LinearGradient> 
-                    </TouchableOpacity>                     
-                    <View style={{backgroundColor:'#fff',height:35,borderTopLeftRadius:25,borderTopRightRadius:25}}></View>                          
+                    </TouchableOpacity> 
+                    :null}
+                    <View style={{backgroundColor:'#fff',height:25,}}></View>                          
                 </ImageBackground>
                 
                 </View>
@@ -133,7 +135,7 @@ class CardAccounts extends React.Component{
                         <Image source={{uri:'https://images.vexels.com/media/users/3/157862/isolated/preview/5fc76d9e8d748db3089a489cdd492d4b-barcode-scanning-icon-by-vexels.png'}} resizeMode='cover' style={styles.imageCard} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={[styles.contentCard,styles.contentCardCenter]}>
+                    <TouchableOpacity style={[styles.contentCard,styles.contentCardCenter]} onPress={() => this.refs.modal3.open()}>
                         <Image source={{uri:'https://static.thenounproject.com/png/59262-200.png'}} resizeMode='cover' style={styles.imageCard} />
                     </TouchableOpacity>
 
@@ -152,17 +154,20 @@ class CardAccounts extends React.Component{
                         <List title='Privacy Police' icon={'ios-card'} color={color} route={() => {this.props.navigation.navigate('PrivacyPolice')}} />
                         <List title='Logout' icon={'md-log-out'} color={color} route={logout} s={{marginTop:5}} />
                  </View>
+
+                  <Modal style={[styles.modal, styles.modal3]} position={"center"} ref={"modal3"} isDisabled={this.state.isDisabled}>
+                    <Text style={styles.text}>Scan Code</Text>
+                    <QRCode
+                        value="jancook"
+                        logo={require('../Assets/Icons/logoscan.png')}
+                        logoSize={30}
+                        size={180}
+                    />
+                    <Text style={[styles.text,styles.bottomText]}>tarik ke bawah untuk menutup</Text>
+                </Modal>
+
                  </ScrollView>
-                // <Modal style={[styles.modal, styles.modal3]} position={"center"} ref={"modal3"} isDisabled={this.state.isDisabled}>
-                //     <Text style={styles.text}>Scan Code</Text>
-                //     <QRCode
-                //         value="jancook"
-                //         logo={require('../Assets/Icons/logoscan.png')}
-                //         logoSize={30}
-                //         size={180}
-                //     />
-                //     <Text style={[styles.text,styles.bottomText]}>tarik ke bawah untuk menutup</Text>
-                // </Modal>
+               
                 
         )
     }
@@ -237,7 +242,7 @@ const styles = StyleSheet.create({
     },
     upgrade:{
         height:height/15,
-        marginHorizontal:50,
+        marginHorizontal:25,
         flexDirection:'row',
         elevation:5,
         borderRadius:5,
@@ -264,7 +269,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         paddingVertical:20,
         backgroundColor:'#fff',
-        height:height/6.5
+        height:height/6.5,
     },
     contentCard:{
         flex:1,
