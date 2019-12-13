@@ -15,7 +15,6 @@ import AsyncStorage from '@react-native-community/async-storage'
 import Icon from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient'
 import {withNavigation} from "react-navigation"
-import DeviceInfo from 'react-native-device-info-2'
 import {saldo} from '../../Public/Actions/users'
 import {connect} from 'react-redux'
 
@@ -42,7 +41,6 @@ const Label = (props) => {
     )
 }
 
-const apiLevel = DeviceInfo.getDeviceLocale()
 const {height,width} = Dimensions.get('window')
 class HomePage extends React.Component{
     constructor(props){
@@ -73,7 +71,6 @@ class HomePage extends React.Component{
     
 
     render(){
-        console.warn(apiLevel,'api')
 
         const staticHeaders = this.state.scrollY.interpolate({
             inputRange: [0, 50],

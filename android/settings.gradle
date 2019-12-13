@@ -1,8 +1,8 @@
 rootProject.name = 'reactapp'
+include ':react-native-device-info'
+project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
 include ':react-native-shimmer'
 project(':react-native-shimmer').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-shimmer/android')
-include ':react-native-device-info-2'
-project(':react-native-device-info-2').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info-2/android')
 include ':react-native-onesignal'
 project(':react-native-onesignal').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-onesignal/android')
 include ':react-native-onesignal'

@@ -8,7 +8,9 @@ import {
     ScrollView,
     StatusBar,
     Dimensions,
-    Image
+    Image,
+    ImageBackground,
+    Linking
 } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import LinearGradient from 'react-native-linear-gradient'
@@ -156,9 +158,17 @@ class Register extends Component{
         return(
             <ScrollView style={{flex: 1}}>
              <StatusBar backgroundColor='#39afb5' />
-                <LinearGradient
-                colors={[mainColor,'#57bfed']}
-                style={styles.wrapperTop}>
+                 <ImageBackground
+                 imageStyle={{borderBottomLeftRadius:35}}
+                    source={require('../Assets/Images/bg1.png')}
+                    resizeMode='cover'
+                    style={styles.wrapperTop}>
+                     <TouchableOpacity 
+                    onPress={() => {this.props.navigation.goBack()}}
+                    style={{height:height/15,width:width/7,position:'absolute',top:0,justifyContent:'center',left:0,alignItems:'center'}}>
+                    <Icons name='ios-arrow-back' size={24} color='#fff' />
+                    </TouchableOpacity>
+
                     <View style={{flex:1}}></View>
                     {/* logo */}
                     <View style={styles.wrapperLogo}>
@@ -174,7 +184,7 @@ class Register extends Component{
                         </View>
                     </View>
                     {/* end of teks daftar akun */}
-                </LinearGradient>
+                </ImageBackground>
 
                 <View style={styles.wrapperCenter}>
                     {this.state.error ? 
@@ -202,7 +212,7 @@ class Register extends Component{
                     />
 
 
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <View style={{flexDirection:'row'}}>
                         <CheckBox
                         checked={this.state.checked}
                         size={20}
@@ -210,19 +220,18 @@ class Register extends Component{
                         containerStyle={{padding:0}}
                         onPress={this._checked}
                         />
-                        <TouchableOpacity>
-                        <Text style={{color:'#39afb5',fontSize:12}}>
-                            DENGAN MELANJUTKAN SAYA SETUJU DENGAN SYARAT & KETENTUAN & KEBIJAKAN PRIVASI
+                        <Text style={{color:'grey',fontSize:12}}>
+                            Dengan Melanjutkan Saya Setuju Dengan <Text onPress={() => Linking.openURL('https://gems.id/terms.html')} style={{color:'#39afb5',fontWeight:'bold'}}>SYARAT & KETENTUAN</Text> & <Text onPress={() => Linking.openURL('https://gems.id/privacy.html') } style={{color:'#39afb5',fontWeight:'bold'}}>KEBIJAKAN PRIVASI</Text>
                         </Text>
-                        </TouchableOpacity>
+                        
                     </View>
 
                     <TouchableOpacity 
                     onPress={this.handleRegister}
                     style={styles.button}>
                         <LinearGradient
-                        start={{x:0,y:1}}
-                        end={{x:1,y:0}}
+                        start={{x:1,y:0}}
+                        end={{x:0,y:1}}
                         colors={[mainColor,'#57bfed']}
                         style={[styles.button,{marginTop:0,paddingVertical:10}]}
                         >
@@ -304,13 +313,13 @@ const styles = StyleSheet.create({
     wrapperInput:{
         backgroundColor:'#fff',
         width:width/1.2,
-        elevation:5,
         flexDirection:'row',
-        borderRadius:25,
         alignItems:'center',
-        paddingLeft:15,
+        paddingLeft:5,
         marginBottom:20,
-        height:height/15
+        height:height/15,
+        borderBottomWidth: 1,
+        borderBottomColor: '#39afb5',
     },
     wrapperCenter:{
         height:height/1.6,

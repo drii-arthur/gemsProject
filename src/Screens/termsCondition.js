@@ -32,7 +32,7 @@ class TermsConditions extends React.Component{
                 <Header title='Terms & Conditions' />
                 <View style={{flex:1}}>
                     <WebView 
-                    source={{ uri: 'https://gems.id/privacy.html' }}
+                    source={{ uri: 'https://gems.id/terms.html' }}
                     onLoadStart={() => {this.showLoading()}}
                     onLoad={() => {this.hideLoading()}}
                     style={{ flex: 1 }}

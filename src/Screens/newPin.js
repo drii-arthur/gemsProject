@@ -78,10 +78,9 @@ class NewPin extends Component {
         return (
             <View style={styles.continer}>
                 <StatusBar backgroundColor={color} />
-                <LinearGradient 
-                    start={{x: 0, y: 0.5}} 
-                    end={{x:1, y:1}} 
-                    colors={['#39afb5','#57bfed']}
+                <ImageBackground
+                 source={require('../Assets/Images/bg1.png')}
+                 resizeMode='cover'
                 style={styles.wrapperTop}>
                 <View style={{height:height/14,flexDirection:'row'}}>
                     <TouchableOpacity style={styles.iconBack}>
@@ -144,7 +143,7 @@ class NewPin extends Component {
 
                     </View>
                     <View style={{height:30}}></View>
-                </LinearGradient>
+                </ImageBackground>
                 
                 <View
                 style={styles.wrapperKeyboard}>

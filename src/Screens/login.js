@@ -8,7 +8,7 @@ import {Toast} from 'native-base'
 import PhoneInput from 'react-native-phone-input'
 import ModalPickerImage from './modalPickerImage'
 import LinearGradient from 'react-native-linear-gradient'
-
+import DeviceInfo from 'react-native-device-info'
 
 const {height} = Dimensions.get('window')
 class Login extends Component{
@@ -22,7 +22,32 @@ class Login extends Component{
             showToast: false,
             kode:'+62',
         }
+    }
+
+    componentDidMount = () => {
+        this.getDevices()
+        this.getIp()
+        let brand = DeviceInfo.getBrand()
+        let deviceId = DeviceInfo.getDeviceId();
+        let model = DeviceInfo.getModel()
+        console.log(brand,'brand');
+        console.log(deviceId);
+        console.log(model,'kiye');
         
+        
+        
+    }
+
+    getDevices = () => {
+        DeviceInfo.getAndroidId().then(androidId => {
+        console.log(androidId,'hjerer')
+        })
+    }
+    
+    getIp = () => {
+        DeviceInfo.getDevice().then(device => {
+    console.log(device);
+})
     }
     
 
@@ -107,6 +132,7 @@ class Login extends Component{
                             style={styles.input}
                             placeholder='Nomer Ponsel'
                             keyboardType='numeric'
+                            placeholderTextColor="#fff"
                             />
                         </View>
                     </View>

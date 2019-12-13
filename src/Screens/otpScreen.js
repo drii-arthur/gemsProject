@@ -6,7 +6,10 @@ import {
     StatusBar,
     TouchableWithoutFeedback,
     Keyboard,
-    Image
+    Image,
+    ImageBackground,
+    TouchableOpacity,
+    Dimensions
  } from 'react-native'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 import RNOtpVerify from 'react-native-otp-verify'
@@ -17,7 +20,7 @@ import VirtualKeyboard from 'react-native-virtual-keyboard'
 import Icon from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient'
 
-
+const {height,width} = Dimensions.get('window')
 const mainColor = '#39afb5'
 class Otp extends Component {
     constructor(props) {
@@ -96,11 +99,15 @@ class Otp extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar backgroundColor='#39afb5' />
-                <LinearGradient 
-                    start={{x: 0, y: 0.5}} 
-                    end={{x:1, y:1}} 
-                    colors={['#39afb5','#57bfed']}
+                    <ImageBackground
+                    source={require('../Assets/Images/bg2.png')}
+                    resizeMode='cover'
                     style={styles.wrapperTop}>
+                    <TouchableOpacity 
+                    onPress={() => {this.props.navigation.goBack()}}
+                    style={{height:height/15,width:width/7,position:'absolute',top:0,justifyContent:'center',left:0,alignItems:'center'}}>
+                    <Icon name='ios-arrow-back' size={24} color='#fff' />
+                    </TouchableOpacity>
                     <Text style={styles.teksVerification}>Verifikasi Kode <Icon name='ios-phone-portrait' size={30} /></Text>
                     <Text style={{color:'#fff'}}>Kami telah mengirimkan kode otp ke nomor</Text>
                     <Text style={styles.teksNoPhone}>{this.state.otpCode.phone}</Text>
@@ -127,7 +134,7 @@ class Otp extends Component {
                         color: '#fff',}}> kode akan di kirim ulang dalam
                         <Text style={{fontSize:14,color:'yellow'}}> 90 </Text>
                         detik</Text>
-                </LinearGradient>
+                </ImageBackground>
 
                 <View
                     style={styles.wrapperKeyboard}>

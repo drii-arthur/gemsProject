@@ -190,8 +190,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-device-info')
     implementation project(':react-native-shimmer')
-    implementation project(':react-native-device-info-2')
     implementation project(':react-native-image-picker')
     implementation project(':react-native-svg')
     implementation project(':react-native-otp-verify')

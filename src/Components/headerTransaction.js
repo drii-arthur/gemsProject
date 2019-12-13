@@ -9,11 +9,34 @@ import {
 import Icon  from "react-native-vector-icons/Ionicons"
 import {withNavigation} from 'react-navigation'
 import LinearGradient from 'react-native-linear-gradient'
+import {saldo} from '../Public/Actions/users'
+import AsyncStorage from '@react-native-community/async-storage'
+import {connect} from 'react-redux'
 
 const {height} = Dimensions.get('window')
 class HeaderTransaction extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            saldo:''
+        }
+    }
+    componentDidMount = async () => {
+        const token = await AsyncStorage.getItem('token',(err,res) => {
+            if(res){
+                this.setState({token:res})
+            }
+        })
+         await this.props.dispatch(saldo(this.state.token))
+        .then(res => {
+            console.log(res.action.payload.data.data)
+            this.setState({saldo:res.action.payload.data.data.nominal})
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
     render(){
-
         return(
             <LinearGradient
                 start={{x: 0, y: 1}} 
@@ -33,7 +56,7 @@ class HeaderTransaction extends React.Component{
                 <View style={styles.wrapperSaldo}>
                     <View style={styles.saldo}>
                         <Text style={styles.teksSaldo}>Saldo Gems</Text>
-                        <Text style={styles.teksNominal}>10.000.000</Text>
+                        <Text style={styles.teksNominal}>{this.state.saldo}</Text>
                     </View>
                     <View style={{height:'30%',backgroundColor:'#fff',borderTopLeftRadius:35}}></View>
                 </View>
@@ -42,7 +65,13 @@ class HeaderTransaction extends React.Component{
     }
 }
 
-export default withNavigation(HeaderTransaction)
+const mapStateToProps = state => {
+    return {
+        users: state.users
+    };
+};
+
+export default connect(mapStateToProps)(withNavigation(HeaderTransaction))
 
 const styles = StyleSheet.create({
      header:{
