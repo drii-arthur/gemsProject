@@ -192,6 +192,48 @@ const users = (state = initialState , action) => {
             isRejected:false,
             isFullFilled:true
         }
+        case 'GETPIN_PENDING':
+        return{
+            ...state,
+            isLoading:true,
+            isRejected:false,
+            isFullFilled:false
+        }
+        case 'GETPIN_REJECTEED':
+        return{
+            ...state,
+            isLoading:false,
+            isRejected:true,
+            isFullFilled:false
+        }
+        case 'GETPIN_FULLFILLED':
+        return{
+            ...state,
+            isLoading:false,
+            isRejected:false,
+            isFullFilled:true
+        }
+        case 'CHANGEPIN_PENDING':
+        return{
+            ...state,
+            isLoading:true,
+            isRejected:false,
+            isFullFilled:false
+        }
+        case 'CHANGEPIN_REJECTEED':
+        return{
+            ...state,
+            isLoading:false,
+            isRejected:true,
+            isFullFilled:false
+        }
+        case 'CHANGEPIN_FULLFILLED':
+        return{
+            ...state,
+            isLoading:false,
+            isRejected:false,
+            isFullFilled:true
+        }
         
         default:
             return state

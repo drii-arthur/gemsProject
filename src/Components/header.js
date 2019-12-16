@@ -5,15 +5,19 @@ import {withNavigation} from 'react-navigation'
 
 const {height} = Dimensions.get('window')
 class Header extends React.Component{
+     constructor(props){
+            super(props)
+        }
     render(){
+       
 
         return(
-            <View style={styles.header}>
+            <View style={[styles.header,this.props.s]}>
             <TouchableOpacity onPress={() => {this.props.navigation.goBack()}} style={styles.button}>
                 <Icon name={'ios-arrow-back'} size={24} color='#fff' />
             </TouchableOpacity>
             
-                <Text style={styles.text}>
+                <Text style={[styles.text,this.props.styleText]}>
                 {this.props.title}
                 </Text>
             </View>

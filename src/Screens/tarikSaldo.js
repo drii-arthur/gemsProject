@@ -27,14 +27,13 @@ class TarikSaldo extends React.Component{
     }
 
     componentDidMount() {
-        this.setState({hideButton:true})
         this.keyboardDidShowListener = Keyboard.addListener(
         'keyboardDidShow',
-        this._keyboardDidShow(),
+        this.keyboardDidShow(),
     );
         this.keyboardDidHideListener = Keyboard.addListener(
         'keyboardDidHide',
-        this._keyboardDidHide(),
+        this.keyboardDidHide(),
         );
     }
 
@@ -43,20 +42,18 @@ class TarikSaldo extends React.Component{
     this.keyboardDidHideListener.remove();
     }
 
-    _keyboardDidShow = () => {
+    keyboardDidShow = () => {
         this.setState({hideButton:false})
     }
 
 
-    _keyboardDidHide = () => {
+    keyboardDidHide = () => {
         this.setState({
             hideButton:true
         })
     }
 
     render(){
-        console.warn(this.state.hideButton);
-        
         const Input = (props) => {
             return(
                 <View style={s.wrapperInput} >
@@ -94,7 +91,7 @@ class TarikSaldo extends React.Component{
 
                 {this.state.addBank ?
                 <View style={s.boxBank}>
-                    <View style={s.wrapperInput}>
+                    <View style={[s.wrapperInput]}>
                     <Text style={s.label}>Pilih Akun Bank</Text>
                     <Picker
                     selectedValue={this.state.bank}
@@ -122,15 +119,20 @@ class TarikSaldo extends React.Component{
                     styleInput={{backgroundColor:'#fff'}}
                     />
                     </View>
-                :null
+                :
+                <View style={{height:height/2.1}}>
+                </View>
                 }
 
+                {this.state.addBank == false ? 
+                    <Button title='WITHDRAW' styles={{marginTop:5}} />
+                : 
+                <Button title='Tambah Bank' styles={{marginTop:5}} />
+                 }
                 </ScrollView>
+                
+                
 
-                {this.state.hideButton == true ? 
-                <Button title='WITHDRAW' />
-                :
-                null }
             </View>
         )
     }
@@ -141,7 +143,7 @@ export default TarikSaldo
 const s = StyleSheet.create({
     wrapperInput:{
         paddingHorizontal:20,
-        marginBottom:10
+        marginBottom:10,
     },
     input:{
         borderBottomWidth:1,
@@ -161,7 +163,7 @@ const s = StyleSheet.create({
     },
     boxBank:{
         backgroundColor:'#f9f9f7',
-        flex:1,
+        height:height/2.1,
         paddingVertical:20
     }
 })

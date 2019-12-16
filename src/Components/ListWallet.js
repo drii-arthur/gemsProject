@@ -26,12 +26,12 @@ class ListWallet extends Component{
              return(
             <FlatList
             data={data}
-            keyExtractor={(item,index) => index}
-            renderItem= {({item,index}) => {
+            keyExtractor={(item) => item.id}
+            renderItem= {({item}) => {
                 return(
                     <TouchableOpacity
-                    onPress={() => {this.props.navigation.navigate('VoucherDetail')}} 
-                    style={s.box} key={index}>
+                    onPress={() => {this.props.navigation.navigate('VoucherDetail',{item})}} 
+                    style={s.box} key={item.id}>
             <ImageBackground
             imageStyle={{height:'100%',borderTopLeftRadius:25}} 
             source={{uri:`${item.image}`}}

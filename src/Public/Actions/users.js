@@ -98,3 +98,27 @@ export const saldo = (token) => {
         })
     }
 }
+
+export const getPin = (token) => {
+    return {
+        type:'GETPIN',
+        payload: axios.get(`${url}/admin/v1/pin/check`,{
+            headers:{
+                Accept:'application/json',
+                Authorization:`Bearer ${token}`
+            }
+        })
+    }
+}
+
+export const changePin = (data,token) => {
+    return {
+        type:'CHANGEPIN',
+        payload:axios.put(`${url}/admin/v1/pin/1`,data,{
+            headers:{
+                Accept:'application/json',
+                Authorization:`Bearer ${token}`
+            }
+        })
+    }
+}

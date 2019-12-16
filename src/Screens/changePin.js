@@ -1,5 +1,14 @@
 import React,{Component,Fragment} from 'react';
-import { View, Text, StatusBar, StyleSheet, KeyboardAvoidingView, Keyboard,Dimensions } from 'react-native'
+import { 
+    View, 
+    Text, 
+    StatusBar, 
+    StyleSheet, 
+    KeyboardAvoidingView, 
+    Keyboard,
+    Dimensions,
+    TouchableOpacity
+    } from 'react-native'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 import { withNavigation } from 'react-navigation'
 import {pin} from '../Public/Actions/users'
@@ -26,8 +35,6 @@ class ChangePin extends Component {
             hideIcon:false,
             isOpen: false,
             isDisabled: false,
-            // swipeToClose: false,
-            // sliderValue: 0.3
         }
     }
     onClose() {
@@ -73,22 +80,6 @@ class ChangePin extends Component {
         }
     }
 
-    // _checkCode = async (confirmCode) => {
-    //     if (confirmCode == this.state.code) {
-    //         await this.props.dispatch(pin({pin:this.state.code,
-    //         pin_confirm:confirmCode},this.state.token))
-    //         .then(res => {
-    //             this.props.navigation.navigate('appStackNavigator')
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //         })
-            
-    //     } else {
-    //         this.pinInput.current.shake()
-    //             .then(() => this.setState({ confirmCode: '' }))
-    //     }
-    // }
 
     changeCode = (confirmCode) => {
         if(confirmCode == this.state.newCode){
@@ -165,7 +156,11 @@ class ChangePin extends Component {
                     onFulfill={this.oldPin}
                     value={code}
                     onTextChange={code => this.setState({ code })}
-                /></Fragment>
+                />
+                <TouchableOpacity style={{width:'55%',alignItems: 'flex-end',padding:10}}>
+                    <Text style={{color:color,fontWeight:'700'}}>Lupa Pin ?</Text>
+                </TouchableOpacity>
+                </Fragment>
                  :
 
                 

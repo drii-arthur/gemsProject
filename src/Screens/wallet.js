@@ -29,19 +29,26 @@ class Wallet extends Component{
                     Nominal:'70.000',
                     image:'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSL1HbA31_pQcwzjRNYwCM0JhpK3nl9CFeSwGlABhIjxz1ZYbGv',
                     valid:'20-20-2020',
-                    id:1
+                    kodeVoucher:'0988980',
+                    id:1,
+                    title:'Voucher Dimsum'
                 },
                 {
                     Nominal:'100.000',
                     image:'http://www.rejuve.co.id/files/website_banner_launching_summer_calamansi_fruit_1185x709px_01.jpg',
                     valid:'20-30-2020',
-                    id:2
+                    kodeVoucher:'0988980',
+                    id:2,
+                    title:'Voucher Yushinoya 100 rb'
                 },
                 {
                     Nominal:'50.000',
                     image:'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSL1HbA31_pQcwzjRNYwCM0JhpK3nl9CFeSwGlABhIjxz1ZYbGv',
                     valid:'20-15-2020',
-                    id:3
+                    kodeVoucher:'0988980',
+                    id:3,
+                    title:'Voucher Apa Aja'
+
                 }
         ]
         this.setState({
