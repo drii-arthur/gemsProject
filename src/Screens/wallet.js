@@ -31,7 +31,12 @@ class Wallet extends Component{
                     valid:'20-20-2020',
                     kodeVoucher:'0988980',
                     id:1,
-                    title:'Voucher Dimsum'
+                    title:'Voucher Dimsum',
+                    snk:['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                        'Curabitur id mauris ornare, auctor lectus interdum, molestie nisi.',
+                        'In egestas sapien et magna laoreet luctus',
+                        'Aenean sed massa at quam fringilla pulvinar posuere et tortor',
+                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.']
                 },
                 {
                     Nominal:'100.000',
@@ -39,7 +44,12 @@ class Wallet extends Component{
                     valid:'20-30-2020',
                     kodeVoucher:'0988980',
                     id:2,
-                    title:'Voucher Yushinoya 100 rb'
+                    title:'Voucher Yushinoya 100 rb',
+                    snk:['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                        'Curabitur id mauris ornare, auctor lectus interdum, molestie nisi.',
+                        'In egestas sapien et magna laoreet luctus',
+                        'Aenean sed massa at quam fringilla pulvinar posuere et tortor',
+                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.']
                 },
                 {
                     Nominal:'50.000',
@@ -47,7 +57,12 @@ class Wallet extends Component{
                     valid:'20-15-2020',
                     kodeVoucher:'0988980',
                     id:3,
-                    title:'Voucher Apa Aja'
+                    title:'Voucher Apa Aja',
+                    snk:['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                        'Curabitur id mauris ornare, auctor lectus interdum, molestie nisi.',
+                        'In egestas sapien et magna laoreet luctus',
+                        'Aenean sed massa at quam fringilla pulvinar posuere et tortor',
+                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.']
 
                 }
         ]

@@ -20,7 +20,6 @@ class ListWallet extends Component{
 
     render(){
         const {data} = this.props
-        console.warn(data);
         
         if(data != ''){
              return(
@@ -35,9 +34,12 @@ class ListWallet extends Component{
             <ImageBackground
             imageStyle={{height:'100%',borderTopLeftRadius:25}} 
             source={{uri:`${item.image}`}}
-            style={{height:'70%',paddingHorizontal:25,justifyContent:'center'}}>
-                <Text style={{color:'yellow'}}>Voucher</Text>
+            style={{height:'70%',}}>
+                <View style={{backgroundColor:'red',padding:10,borderTopLeftRadius:25,width:'50%',borderBottomRightRadius: 25,}}>
+                    <Text style={{color:'#fff',fontSize:12}}>Voucher</Text>
                 <Text style={{color:'yellow'}}>Rp <Text>{item.Nominal}</Text></Text>
+                </View>
+                
             </ImageBackground>
             <View style={{flex:1,paddingHorizontal: 25,justifyContent: 'center',}}>
                 <Text style={{fontSize:11}}>Valid</Text>
@@ -69,7 +71,7 @@ export default withNavigation(ListWallet)
 
 const s = StyleSheet.create({
     box:{
-        height:height/6,
+        height:height/4,
         backgroundColor:'#f9f9f7',
         position:'relative',
         elevation:5,

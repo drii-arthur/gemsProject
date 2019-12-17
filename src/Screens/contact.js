@@ -13,6 +13,7 @@ import {
 import Contacts from 'react-native-contacts';
 import { SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons'
+import LinearGradient from 'react-native-linear-gradient'
 
 const {height,width} = Dimensions.get('window')
 class ContactList extends React.Component {
@@ -86,8 +87,14 @@ class ContactList extends React.Component {
         console.log(JSON.stringify(this.state.contacts,
         'data'))
         return (
-            <View style={styles.container}>
+            <View style={{flex:1}}>
             <StatusBar backgroundColor='#39afb5' />
+            <LinearGradient
+             start={{x: 0, y: 1}} 
+                end={{x: 2, y:1.}} 
+                colors={['#39afb5','#57bfed']}
+                style={{width:'100%'}}
+            >
             <View style={styles.header}>
             <TouchableOpacity 
             style={styles.backIcon}
@@ -103,6 +110,12 @@ class ContactList extends React.Component {
             inputContainerStyle={styles.input}
             />
             </View>
+            <View style={{height:height/15}}>
+            <View style={{flex:1}}></View>
+            <View style={{height:'60%',borderTopLeftRadius: 25,backgroundColor:'#fff'}}></View>
+            </View>
+            </LinearGradient>
+            <View style={{flex:1,backgrounfColor:'#fff'}}>
                 <FlatList
                     data={this.state.contacts}
                     //Setting the number of column
@@ -128,6 +141,7 @@ class ContactList extends React.Component {
                         )
                     }}
                 />
+                </View>
             </View>
         )
     }
@@ -152,12 +166,9 @@ const styles = StyleSheet.create({
     },
     header:{
         flexDirection:'row',
-        elevation:2,
-        marginBottom:10,
         height:height/11,
-        backgroundColor:'#39afb5',
         alignItems:'center',
-        marginTop:20
+        marginTop:30
     },
     backIcon:{
         height:height/11,

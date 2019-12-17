@@ -15,6 +15,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import {withNavigation} from "react-navigation"
 import QRCode from 'react-native-qrcode-svg'
 import LinearGradient from 'react-native-linear-gradient'
+import Barcode from 'react-native-barcode-builder'
+
 
 const color = '#39AFB5'
 const List = (props) => {
@@ -131,7 +133,9 @@ class CardAccounts extends React.Component{
                 <LinearGradient
                     colors={['#fff','rgba(85, 239, 196,0.1)']}
                     style={styles.card}>
-                    <TouchableOpacity style={styles.contentCard}>
+                    <TouchableOpacity 
+                    onPress={() => this.refs.modal4.open()}
+                    style={styles.contentCard}>
                         <Image source={{uri:'https://images.vexels.com/media/users/3/157862/isolated/preview/5fc76d9e8d748db3089a489cdd492d4b-barcode-scanning-icon-by-vexels.png'}} resizeMode='cover' style={styles.imageCard} />
                     </TouchableOpacity>
 
@@ -158,12 +162,22 @@ class CardAccounts extends React.Component{
                   <Modal style={[styles.modal, styles.modal3]} position={"center"} ref={"modal3"} isDisabled={this.state.isDisabled}>
                     <Text style={styles.text}>Scan Code</Text>
                     <QRCode
-                        value="jancook"
+                        value="gems"
                         logo={require('../Assets/Icons/logoscan.png')}
                         logoSize={30}
                         size={180}
                     />
                     <Text style={[styles.text,styles.bottomText]}>tarik ke bawah untuk menutup</Text>
+                </Modal>
+
+                <Modal style={[styles.modal, styles.modal4]} position={"center"} ref={"modal4"} isDisabled={this.state.isDisabled}>
+                    <Text style={styles.text}>Scan Code</Text>
+                     <Barcode
+                        value='12234567890'
+                        format="CODE128"
+                        height={height/18}
+                        width={1.8}
+                        text='12234567890'/>
                 </Modal>
 
                  </ScrollView>
@@ -186,6 +200,10 @@ const styles = StyleSheet.create({
     },
     modal3: {
     height: height/1.5,
+    width: 300
+    },
+    modal4: {
+    height: height/3,
     width: 300
     },
     text: {

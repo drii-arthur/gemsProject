@@ -92,32 +92,11 @@ class Deals extends React.Component{
             // extrapolate:'clamp'
         })
         return(
-            <View style={{flex:1,zIndex:-1}}>
+            <View style={{flex:1,}}>
             <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.2)" translucent={true} />
-                
-                <Animated.View
-                style={{
-                    height:height/6,
-                    // transform:[{translateY:headerY}],
-                    // zIndex:+1000,
-                    position: 'absolute',
-                    top:headerY,
-                    left:0,
-                    bottom:0,
-                    right:0
-                    }}
-                >
-                <Image 
-                source={{uri:'https://img.freepik.com/free-vector/gradient-geometric-shape-background_78532-374.jpg?size=626&ext=jpg'}}
-                style={{
-                    width:width,
-                    height:height/6,
-                }}
-                />
-                </Animated.View>
-
-                <Animated.View 
-                    style={{paddingHorizontal:10,height:height/12,transform:[{translateY:categoryY}],zIndex:1000,marginTop:categoryY,backgroundColor: '#fff',}}>
+            <Header title='Deals' />
+                <View 
+                    style={{paddingHorizontal:10,height:height/12,backgroundColor: '#fff',}}>
                     <FlatList
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
@@ -131,24 +110,15 @@ class Deals extends React.Component{
                             )
                         }}
                     />
-                </Animated.View>
+                </View>
                 
-            <Animated.ScrollView
-            // style={{zIndex:-1000}}
-            scrollEventThrottle={10}
-            bounces={false}
-            onScroll={Animated.event(
-                [
-                    {nativeEvent:{contentOffset:{y:scrollY}
-                    }}
-                ]
-            )}
+            <ScrollView
+            style={{marginTop:20}}
             showsVerticalScrollIndicator={false}
             >
                 {/* <View style={{height:height/6,padding:10}}>
                     <Image source={require('../Assets/Images/Dashboard_bg.png')} style={{height:height/9,width:'auto'}} />
                 </View> */}
-                <View style={{height:height/10,backgroundColor:'#fff',width:width}}></View>
 
                 <View style={{backgroundColor:'red',height:height/6,marginHorizontal: 30,borderRadius:10,elevation:5,marginBottom:20}}>
                     <Image source={require('../Assets/Images/Slider-02.png')} style={{height:'100%',width:'100%',borderRadius:10}} />
@@ -165,7 +135,7 @@ class Deals extends React.Component{
                 <View style={{backgroundColor:'red',height:height/6,marginHorizontal: 30,borderRadius:10,elevation:5,marginBottom:20}}>
                     <Image source={require('../Assets/Images/Slider-02.png')} style={{height:'100%',width:'100%',borderRadius:10}} />
                 </View>
-                </Animated.ScrollView>
+                </ScrollView>
             </View>
         )
     }
@@ -182,7 +152,7 @@ const s = StyleSheet.create({
         justifyContent:'center',
         paddingHorizontal:20,
         alignItems:'center',
-        marginTop:5,
+        marginTop:10,
         borderRadius:5
     }
 })
