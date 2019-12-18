@@ -129,7 +129,7 @@ class ChangePin extends Component {
                 <Fragment>
                 <Text style={styles.text}>Masukan Pin Anda Saat Ini</Text>
                 <View style={{width:'70%'}}>
-                <Text style={{color:'#485460',textAlign:'center'}}>Pin di Gunakan Untuk masuk ke Akun Anda Dan Bertransaksi</Text>
+                <Text style={{color:'#485460',textAlign:'center'}}>Pin di Gunakan Saat Login Dan saat transaksi</Text>
                 </View>
                 <View style={{height:2,backgroundColor:color,marginBottom:15,width:50,marginTop:10}}></View>
                 <SmoothPinCodeInput

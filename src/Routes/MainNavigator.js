@@ -42,6 +42,7 @@ import Wallet from '../Screens/wallet'
 import Authentication from '../Screens/authentication'
 import ConfirmPin from '../Screens/confirmPin'
 import VoucherDetail from "../Screens/VoucherDetail";
+import DealsDetail from "../Screens/DealsDetail";
 
 
 const AuthStack = createStackNavigator({
@@ -171,7 +172,8 @@ const appStackNavigator = createStackNavigator({
     Transfer,
     TarikSaldo,
     ScanScreen,
-    VoucherDetail
+    VoucherDetail,
+    DealsDetail
 },{
     headerMode:'none',
 })

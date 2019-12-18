@@ -78,7 +78,7 @@ class HomePage extends React.Component{
         })
         return(
             <View style={{flex:1}}>
-                <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.3)" translucent={true} />
+                <StatusBar barStyle="light-content" backgroundColor="rgba(30, 39, 46,0.3)" translucent={true} />
 
                 <Animated.View
                     style={[styles.staticHeader,{opacity:staticHeaders}]}

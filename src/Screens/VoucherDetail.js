@@ -51,12 +51,12 @@ class VoucherDetail extends Component {
         const data = this.props.navigation.getParam('item')
         return(
             <>
-            <Header title={data.title}/>
-                <ScrollView style={{backgroundColor:'#f9f9f7'}}>
+            <Header title={data.title} s={{zIndex:-1}}/>
+                <ScrollView style={{backgroundColor:'#f9f9f7',zIndex: +1,marginTop:-20}}>
                     <ImageBackground
-                    imageStyle={{borderBottomRightRadius:50}} 
+                    imageStyle={{borderBottomRightRadius:50,borderTopLeftRadius:25}} 
                     source={{uri:`${data.image}`}} style={{width:'100%',height:'100%'}} resizeMode='cover'
-                    style={{height:height/4,backgroundColor:'#39afb5'}}>
+                    style={{height:height/3.5,backgroundColor:'#39afb5'}}>
                    
                     </ImageBackground>
                     

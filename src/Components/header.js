@@ -18,7 +18,7 @@ class Header extends React.Component{
             start={{x: 0, y: 1}} 
                 end={{x: 2, y:1.}} 
                 colors={['#39afb5','#57bfed']}
-            style={[styles.header]}>
+            style={[styles.header,this.props.s]}>
             <View style={{flexDirection: 'row',flex:1}}>
             <TouchableOpacity onPress={() => {this.props.navigation.goBack()}} style={styles.button}>
                 <Icon name={'ios-arrow-back'} size={24} color='#fff' />

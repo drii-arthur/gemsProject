@@ -1,16 +1,16 @@
 import React from 'react'
 import {
     View,
-Text,
-StatusBar,
-StyleSheet,
-Dimensions,
-TouchableOpacity,
-ScrollView,
-FlatList,
-Image,
-ImageBackground,
-Platform,
+    Text,
+    StatusBar,
+    StyleSheet,
+    Dimensions,
+    TouchableOpacity,
+    ScrollView,
+    FlatList,
+    Image,
+    ImageBackground,
+    Platform,
 
 } from 'react-native'
 import  Animated from 'react-native-reanimated'
@@ -21,6 +21,73 @@ import Header from '../Components/header'
 
 const {width,height} = Dimensions.get('window')
 const HEADER_HEIGHT = height/6
+const data2 = [
+            {
+                    Nominal:'70.000',
+                    image:'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSL1HbA31_pQcwzjRNYwCM0JhpK3nl9CFeSwGlABhIjxz1ZYbGv',
+                    valid:'20-20-2020',
+                    kodeVoucher:'0988980',
+                    id:1,
+                    title:'Voucher Dimsum 100 rb',
+                    snk:['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                        'Curabitur id mauris ornare, auctor lectus interdum, molestie nisi.',
+                        'In egestas sapien et magna laoreet luctus',
+                        'Aenean sed massa at quam fringilla pulvinar posuere et tortor',
+                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.']
+                },
+                {
+                    Nominal:'75.000',
+                    image:'http://www.rejuve.co.id/files/website_banner_launching_summer_calamansi_fruit_1185x709px_01.jpg',
+                    valid:'20-30-2020',
+                    kodeVoucher:'0988980',
+                    id:2,
+                    title:'Voucher Yushinoya 100 rb',
+                    snk:['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                        'Curabitur id mauris ornare, auctor lectus interdum, molestie nisi.',
+                        'In egestas sapien et magna laoreet luctus',
+                        'Aenean sed massa at quam fringilla pulvinar posuere et tortor',
+                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.']
+                },
+                {
+                    Nominal:'50.000',
+                    image:'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSL1HbA31_pQcwzjRNYwCM0JhpK3nl9CFeSwGlABhIjxz1ZYbGv',
+                    valid:'20-15-2020',
+                    kodeVoucher:'0988980',
+                    id:3,
+                    title:'Voucher Apa Aja 75.000',
+                    snk:['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                        'Curabitur id mauris ornare, auctor lectus interdum, molestie nisi.',
+                        'In egestas sapien et magna laoreet luctus',
+                        'Aenean sed massa at quam fringilla pulvinar posuere et tortor',
+                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.']
+                },
+                {
+                    Nominal:'75.000',
+                    image:'http://www.rejuve.co.id/files/website_banner_launching_summer_calamansi_fruit_1185x709px_01.jpg',
+                    valid:'20-30-2020',
+                    kodeVoucher:'0988980',
+                    id:4,
+                    title:'Voucher Yushinoya 100 rb',
+                    snk:['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                        'Curabitur id mauris ornare, auctor lectus interdum, molestie nisi.',
+                        'In egestas sapien et magna laoreet luctus',
+                        'Aenean sed massa at quam fringilla pulvinar posuere et tortor',
+                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.']
+                },
+                {
+                    Nominal:'75.000',
+                    image:'http://www.rejuve.co.id/files/website_banner_launching_summer_calamansi_fruit_1185x709px_01.jpg',
+                    valid:'20-30-2020',
+                    kodeVoucher:'0988980',
+                    id:5,
+                    title:'Voucher Yushinoya 100 rb',
+                    snk:['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                        'Curabitur id mauris ornare, auctor lectus interdum, molestie nisi.',
+                        'In egestas sapien et magna laoreet luctus',
+                        'Aenean sed massa at quam fringilla pulvinar posuere et tortor',
+                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.']
+                },
+        ]
 const color = "#39AFB5"
 class Deals extends React.Component{
     constructor(){
@@ -56,22 +123,6 @@ class Deals extends React.Component{
             ]
         }
     }
-
-    // componentWillMount(){
-    //     this.changeColor()
-    //     this.scrollY  = new Animated.Value(0)
-    //     this.startHeaderHeight = 100
-    //     this.endHeaderHeight = 50 + 25
-    //     if(Platform.OS == "android"){
-    //         this.startHeaderHeight = 120 + StatusBar.currentHeight
-    //         this.endHeaderHeight = 50 + StatusBar.currentHeight
-    //     }
-    //     this.animatedHeaderHeight = this.scrollY.interpolate({
-    //         inputRange:[0,50],
-    //         outputRange:[this.startHeaderHeight,this.endHeaderHeight],
-    //         // extrapolate:'clamp'
-    //     })
-    // }
 
     changeColor = () => {
         let color = this.state.randomColor[Math.floor(Math.random()*this.state.randomColor.length)]
@@ -111,31 +162,32 @@ class Deals extends React.Component{
                         }}
                     />
                 </View>
-                
-            <ScrollView
-            style={{marginTop:20}}
-            showsVerticalScrollIndicator={false}
-            >
-                {/* <View style={{height:height/6,padding:10}}>
-                    <Image source={require('../Assets/Images/Dashboard_bg.png')} style={{height:height/9,width:'auto'}} />
-                </View> */}
 
-                <View style={{backgroundColor:'red',height:height/6,marginHorizontal: 30,borderRadius:10,elevation:5,marginBottom:20}}>
-                    <Image source={require('../Assets/Images/Slider-02.png')} style={{height:'100%',width:'100%',borderRadius:10}} />
+                <View style={{marginTop:20}} >
+                    <FlatList 
+                    data={data2}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({item}) => {
+                        return(
+                            <TouchableOpacity 
+                            onPress={() => {this.props.navigation.navigate('DealsDetail',{item})}}
+                            activeOpacity={0.9}
+                            style={s.box}>
+                                <Image source={{uri:`${item.image}`}} style={s.image}/>
+                                <View style={s.left}>
+                                    <View style={{flex:2,}}>
+                                        <Text style={{color:'#39afb5',fontWeight:'bold'}}>{item.title}</Text>
+                                        <Text style={{fontSize:11,color:'grey'}}>Rp <Text style={{fontSize:14}}>{item.Nominal}</Text></Text>
+                                    </View>
+                                    <View style={{flex:1,justifyContent:'flex-end'}}>
+                                        <Text style={{fontSize:11,color:'grey'}}>Valid : <Text style={{fontSize:13}}>{item.valid}</Text></Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    }}
+                    />
                 </View>
-                <View style={{backgroundColor:'#fff',height:height/6,marginHorizontal: 30,borderRadius:10,elevation:5,marginBottom:20}}>
-                    <Image source={require('../Assets/Images/Slider-01.png')} style={{height:'100%',width:'100%',borderRadius:10}} />
-                </View>
-                <View style={{backgroundColor:'red',height:height/6,marginHorizontal: 30,borderRadius:10,elevation:5,marginBottom:20}}>
-                    <Image source={require('../Assets/Images/Slider-02.png')} style={{height:'100%',width:'100%',borderRadius:10}} />
-                </View>
-                 <View style={{backgroundColor:'red',height:height/6,marginHorizontal: 30,borderRadius:10,elevation:5,marginBottom:20}}>
-                    <Image source={require('../Assets/Images/Slider-02.png')} style={{height:'100%',width:'100%',borderRadius:10}} />
-                </View>
-                <View style={{backgroundColor:'red',height:height/6,marginHorizontal: 30,borderRadius:10,elevation:5,marginBottom:20}}>
-                    <Image source={require('../Assets/Images/Slider-02.png')} style={{height:'100%',width:'100%',borderRadius:10}} />
-                </View>
-                </ScrollView>
             </View>
         )
     }
@@ -154,5 +206,25 @@ const s = StyleSheet.create({
         alignItems:'center',
         marginTop:10,
         borderRadius:5
+    },
+    box:{
+        height:height/4,
+        marginHorizontal: 15,
+        elevation:5,
+        marginBottom:20,
+        borderRadius:10,
+        backgroundColor:'#fff'
+    },
+    image:{
+        height:'70%',
+        width:'100%',
+        borderTopLeftRadius:10,
+        borderTopRightRadius:10,
+    },
+    left:{
+        flex:1,
+        paddingHorizontal:10,
+        paddingVertical:5,
+        flexDirection:'row'
     }
 })
