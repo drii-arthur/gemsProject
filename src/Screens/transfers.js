@@ -38,6 +38,27 @@ class Transfer extends React.Component{
                 pesan:''
             }
      }
+
+    componentDidMount = async () => {
+        const subs = 
+            this.props.navigation.addListener('willFocus', () => {
+                this.getDataNumber()
+            })
+
+            this.getDataNumber()           
+        }
+    componentWillUnMount (){
+        subs.remove()
+    }
+
+        getDataNumber =  () => {
+            let contact = this.props.navigation.getParam('nomor')
+            if(contact != undefined){
+            this.setState({
+                phone:contact
+            })
+            }
+        }
     render(){
         return(
             <View style={{flex:1}}>
@@ -50,10 +71,12 @@ class Transfer extends React.Component{
                         <TextInput
                         placeholder='08XX-XXXX_XXXX'
                         keyboardType='numeric'
-                        style={s.input}>
+                        style={s.input}
+                        onChangeText={(phone) => this.setState({phone})}
+                        value={this.state.phone}>
                         </TextInput>
-                        <Icon name='md-person' size={24} color='#39afb5' style={{marginRight:15}} />
-                        <Icon name='md-qr-scanner' size={24} color='#39afb5' />
+                        <Icon name='md-person' size={24} color='#39afb5' style={{marginRight:15}} onPress={() => {this.props.navigation.navigate('Contact')}} />
+                        <Icon name='md-qr-scanner' size={24} color='#39afb5' onPress={() => {this.props.navigation.navigate('ScanScreen')}} />
                     </View>
                     
                 </View>
@@ -65,7 +88,7 @@ class Transfer extends React.Component{
                     value={this.state.nominal}
                 />
 
-                <View style={{flexDirection: 'row',height:60,marginTop:-25,paddingHorizontal:10}}>
+                <View style={{flexDirection: 'row',height:60,marginTop:-15,paddingHorizontal:10}}>
                     <TouchableOpacity 
                     onPress={() => {this.setState({nominal:'50000'})}}
                     style={s.list}>
@@ -120,7 +143,8 @@ const s = StyleSheet.create({
         paddingVertical:10,
         borderRadius:5,
         marginVertical:5,
-        flex:1
+        flex:1,
+        marginRight:5
     },
     list:{
         margin:10,

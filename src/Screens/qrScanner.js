@@ -50,7 +50,12 @@ class ScanScreen extends Component{
       
         return(
           <View style={{flex:1}}>
-          <Header title='Scan'/>
+          {/* <Header title='Scan'/> */}
+          <TouchableOpacity
+          onPress={() => this.props.navigation.goBack()}
+          style={{position:'absolute',top:35,left:20,zIndex:+1}}>
+          <Icon name='close-circle-outline' size={26} color='#fff'  />
+          </TouchableOpacity>
           
             <QRCodeScanner
             onRead={this.onSuccess}

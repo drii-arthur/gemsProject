@@ -16,14 +16,25 @@ import Button from '../Components/button'
 
 const Hr = () => {
     return(
-        <View style={{height:10,backgroundColor:'#ecf0f1'}}></View>
+        <View style={{height:8,backgroundColor:'#ecf0f1'}}></View>
     )
 }
 const {height} = Dimensions.get('window')
 class DealsDetail extends Component{
     constructor(props){
         super(props)
+        this.state = {
+            detail:false
+        }
     }
+
+    _handleDetail = () => {
+        this.setState({detail:true})
+    }
+    _hideDetail = () => {
+        this.setState({detail:false})
+    }
+
     render(){
         const data = this.props.navigation.getParam('item')
         return(
@@ -45,16 +56,29 @@ class DealsDetail extends Component{
                 </LinearGradient>
                 </ImageBackground>
                 
-                <View style={{height:height/10,backgroundColor:'#fff',padding:10}}>
-                    <Text style={{color:'#39afb5',fontSize:16,fontWeight:'700'}}>{data.title}</Text>
-                    <Text style={{fontSize:10}}>Rp <Text style={{fontSize:15}}>{data.Nominal}</Text></Text>
+                <View style={{height:height/10,backgroundColor:'#fff',padding:10,flexDirection:'row'}}>
+                    <View style={{flex:2}}>
+                        <Text style={{color:'#39afb5',fontSize:16,fontWeight:'700'}}>{data.title}</Text>
+                        <Text style={{fontSize:10}}>Rp <Text style={{fontSize:15}}>{data.Nominal}</Text></Text>
+                    </View>
+
+                    <View style={{justifyContent:'flex-end',flex:1}}>
+                        <Text style={{fontSize:10,color:'grey'}}>Valid : <Text style={{fontSize:13,}}>{data.valid}</Text></Text>
+                    </View>
                 </View>
 
                 <Hr />
 
                 <View style={{backgroundColor:'#fff',padding:10}}>
                     <Text style={{fontWeight:'700',marginBottom:8}}>Detail Voucher</Text>
-                    <Text>t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here'</Text>
+                    {!this.state.detail ? 
+                    <Text style={{marginLeft:10,color:'grey'}}>{data.detail.substr(0,100) + '...'} <Text style={{color:'#39afb5'}} onPress={this._handleDetail}>Lihat Detail</Text></Text>
+                    :
+                    <>
+                    <Text style={{marginLeft:10,color:'grey'}}>{data.detail}</Text>
+                    <Text style={{color:'#39afb5',marginTop:5,marginLeft:10}} onPress={this._hideDetail}>Sembunyikan Detail</Text>
+                    </>
+                    }
                 </View>
 
                 <Hr />
@@ -74,7 +98,7 @@ class DealsDetail extends Component{
                     return(
                         <View style={{flexDirection:'row',alignItems: 'center',marginBottom:3,paddingHorizontal:10}}>
                             <Icon name='md-radio-button-off' size={6} />
-                            <Text style={{marginHorizontal:8}}>{item}</Text>
+                            <Text style={{marginHorizontal:8,color:'grey'}}>{item}</Text>
                         </View>
                     )
                 }}

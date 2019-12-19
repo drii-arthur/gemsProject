@@ -33,7 +33,8 @@ const data2 = [
                         'Curabitur id mauris ornare, auctor lectus interdum, molestie nisi.',
                         'In egestas sapien et magna laoreet luctus',
                         'Aenean sed massa at quam fringilla pulvinar posuere et tortor',
-                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.']
+                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.'],
+                    detail:'t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here'
                 },
                 {
                     Nominal:'75.000',
@@ -46,7 +47,8 @@ const data2 = [
                         'Curabitur id mauris ornare, auctor lectus interdum, molestie nisi.',
                         'In egestas sapien et magna laoreet luctus',
                         'Aenean sed massa at quam fringilla pulvinar posuere et tortor',
-                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.']
+                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.'],
+                    detail:'t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here'
                 },
                 {
                     Nominal:'50.000',
@@ -59,7 +61,8 @@ const data2 = [
                         'Curabitur id mauris ornare, auctor lectus interdum, molestie nisi.',
                         'In egestas sapien et magna laoreet luctus',
                         'Aenean sed massa at quam fringilla pulvinar posuere et tortor',
-                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.']
+                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.'],
+                    detail:'t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here'
                 },
                 {
                     Nominal:'75.000',
@@ -72,7 +75,8 @@ const data2 = [
                         'Curabitur id mauris ornare, auctor lectus interdum, molestie nisi.',
                         'In egestas sapien et magna laoreet luctus',
                         'Aenean sed massa at quam fringilla pulvinar posuere et tortor',
-                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.']
+                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.'],
+                    detail:'t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here'
                 },
                 {
                     Nominal:'75.000',
@@ -85,7 +89,8 @@ const data2 = [
                         'Curabitur id mauris ornare, auctor lectus interdum, molestie nisi.',
                         'In egestas sapien et magna laoreet luctus',
                         'Aenean sed massa at quam fringilla pulvinar posuere et tortor',
-                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.']
+                        'Vivamus facilisis nisi at enim dapibus, eu fermentum dolor condimentum.'],
+                    detail:'t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here'
                 },
         ]
 const color = "#39AFB5"

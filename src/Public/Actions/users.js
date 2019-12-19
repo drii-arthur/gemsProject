@@ -1,7 +1,7 @@
 import axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage'
 
-const url = `http://43.230.131.177/api`
+const url = `http://gems-os.id/api`
 
 export const signup = (data,token) => { 
     return {

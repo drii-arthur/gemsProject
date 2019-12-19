@@ -32,27 +32,27 @@ class Otp extends Component {
         }
     }
 
-    // getHash = () =>
-    //     RNOtpVerify.getHash()
-    //         .then(console.log)
-    //         .catch(console.log);
+    getHash = () =>
+        RNOtpVerify.getHash()
+            .then(console.log)
+            .catch(console.log);
 
-    // startListeningForOtp = () =>
-    //     RNOtpVerify.getOtp()
-    //         .then(p => RNOtpVerify.addListener(this.otpHandler))
-    //         .catch(p => console.log(p));
+    startListeningForOtp = () =>
+        RNOtpVerify.getOtp()
+            .then(p => RNOtpVerify.addListener(this.otpHandler))
+            .catch(p => console.log(p));
 
-    // otpHandler = (message: string) => {
-    //     const otp = /(\d{4})/g.exec(message)[1];
+    otpHandler = (message: string) => {
+        const otp = /(\d{4})/g.exec(message)[1];
 
-    //     this.setState({ otp });
-    //     RNOtpVerify.removeListener();
-    //     Keyboard.dismiss();
-    // }
+        this.setState({ otp });
+        RNOtpVerify.removeListener();
+        Keyboard.dismiss();
+    }
 
-    // componentWillUnmount() {
-    //     RNOtpVerify.removeListener();
-    // }
+    componentWillUnmount() {
+        RNOtpVerify.removeListener()
+    }
 
 
 
