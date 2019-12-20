@@ -26,27 +26,16 @@ class Login extends Component{
 
     componentDidMount = () => {
         this.getDevices()
-        this.getIp()
         let brand = DeviceInfo.getBrand()
         let deviceId = DeviceInfo.getDeviceId();
         let model = DeviceInfo.getModel()
-        console.log(brand,'brand');
-        console.log(deviceId);
-        console.log(model,'kiye');
-        
-        
-        
     }
 
-    getDevices = () => {
-        DeviceInfo.getAndroidId().then(androidId => {
-        console.log(androidId,'hjerer')
-        })
-    }
     
-    getIp = () => {
+    getDevices = () => {
         DeviceInfo.getDevice().then(device => {
-    console.log(device);
+            this.setState({perangkat:device})
+        console.log(device,'devices')
 })
     }
     

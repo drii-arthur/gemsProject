@@ -12,14 +12,31 @@ import {
     Dimensions
  } from 'react-native'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
-import RNOtpVerify from 'react-native-otp-verify'
 import AsyncStorage from '@react-native-community/async-storage'
 import { izin } from '../Public/Actions/users'
 import { connect } from 'react-redux'
 import VirtualKeyboard from 'react-native-virtual-keyboard'
 import Icon from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient'
+import {Toast} from 'native-base'
+import SmsListener from 'react-native-android-sms-listener'
+import CountDown from 'react-native-countdown-component'
 
+
+const Counter = (props) => {
+    return(
+        <CountDown
+        size={14}
+        until={30}
+        onFinish={props.onfinish}
+        digitStyle={{backgroundColor: 'transparent',width:16}}
+        timeToShow={['S']}
+        timeLabels={{s: null}}
+        digitTxtStyle={{color: '#fff'}}
+        showSeparator
+      />
+    )
+}
 const {height,width} = Dimensions.get('window')
 const mainColor = '#39afb5'
 class Otp extends Component {
@@ -28,65 +45,67 @@ class Otp extends Component {
         this.state = {
             code: '',
             otpCode: this.props.navigation.getParam('dataObj'),
-            phoneNumber:''
+            phoneNumber:'',
+            codeConfirm:'',
+            error:false,
+            noResponSms:false
         }
     }
 
-    getHash = () =>
-        RNOtpVerify.getHash()
-            .then(console.log)
-            .catch(console.log);
 
-    startListeningForOtp = () =>
-        RNOtpVerify.getOtp()
-            .then(p => RNOtpVerify.addListener(this.otpHandler))
-            .catch(p => console.log(p));
+    getSMs = () => {
+    let subscription = SmsListener.addListener(message => {
+    let verificationCodeRegex = /([\d]{4})/
 
-    otpHandler = (message: string) => {
-        const otp = /(\d{4})/g.exec(message)[1];
-
-        this.setState({ otp });
-        RNOtpVerify.removeListener();
-        Keyboard.dismiss();
+    if (verificationCodeRegex.test(message.body)) {
+    let verificationCode = message.body.match(verificationCodeRegex)[1]
+    this.setState({codeConfirm:verificationCode})
+    subscription.remove()
+    return
+    }
+        })
     }
 
-    componentWillUnmount() {
-        RNOtpVerify.removeListener()
+    handleErrorSms = () => {
+        this.setState({noResponSms:true})
     }
 
 
-
-    pinInput = React.createRef();
+    pinInput = React.createRef()
 
     componentDidMount = async () => {
-        alert(this.state.otpCode.otp)
+        this.getSMs()
     }
 
     changeText = (code) => {
         const dataObj = this.state.otpCode
-        const codeConfirm = dataObj.otp
         const customer = dataObj.customer
         const token = dataObj.token
         const phone = dataObj.phone
         const status = dataObj.status
         this.setState({code})
         if(code.length == 4){
-            if (code == codeConfirm) {
+            if (code == this.state.codeConfirm) {
             if (customer !== null) {
                 if (typeof token === 'string') {
                     AsyncStorage.setItem('token', (token))
                 }
-                AsyncStorage.setItem('name', (customer.name))
-            AsyncStorage.setItem('phone', (phone))
-            AsyncStorage.setItem('accountType', (customer.role))
-            this.props.navigation.navigate('appStackNavigator')
-               
+                this.props.navigation.navigate('appStackNavigator')
             } else {
                 this.props.navigation.navigate('Register', { codeConfirm, token })
             }
         } else {
             this.pinInput.current.shake()
-                .then(() => this.setState({ code: '' }))
+            .then(() => {
+                this.setState({error:true})
+                Toast.show({
+                text: 'Otp tidak valid',
+                type: "danger",
+                position:'top',
+                duration:1500,
+                style:styles.toast
+            })
+            })
         }
         }
         
@@ -115,7 +134,7 @@ class Otp extends Component {
                     <SmoothPinCodeInput
                         ref={this.pinInput}
                         autoFocus={false}
-                        cellStyle={styles.boxInput}
+                        cellStyle={!this.state.error ? styles.boxInput : styles.boxError }
                         textStyle={styles.teksInput}
                         // cellStyleFocused={null}
                         // onFulfill={this._checkCode}
@@ -130,10 +149,18 @@ class Otp extends Component {
                     }}>
                         Tidak menerima kode?
                 </Text>
-                <Text style={{fontSize: 11,
-                        color: '#fff',}}> kode akan di kirim ulang dalam
-                        <Text style={{fontSize:14,color:'yellow'}}> 90 </Text>
-                        detik</Text>
+                {!this.state.noResponSms ? 
+                <View style={{flexDirection:'row',alignItems:'center',height:16}}>
+                <Text style={{fontSize: 11,color: '#fff'}}> kode akan di kirim ulang dalam waktu
+                </Text>
+                    <Counter onfinish={this.handleErrorSms} />
+                    <Text style={{color:'#fff',fontSize:11}}>Detik</Text>
+                </View>
+                :
+                <TouchableOpacity>
+                    <Text style={{color:'#fff'}}>Kirim Ulang</Text>
+                </TouchableOpacity>
+                }
                 </ImageBackground>
 
                 <View
@@ -201,9 +228,19 @@ const styles = StyleSheet.create({
         height: 35,
         backgroundColor:'rgba(255, 255, 255,0.7)',
     },
+    boxError:{
+        width: 35,
+        height: 35,
+        backgroundColor:'rgba(255, 255, 255,0.7)',
+        borderColor:'tomato',
+        borderWidth:1
+    },
     teksInput:{
         fontSize: 22,
         color: mainColor,
         marginVertical: 10
+    },
+    toast:{
+        marginTop:-20
     }
 });

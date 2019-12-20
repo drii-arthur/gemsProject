@@ -7,7 +7,9 @@ import {
     Dimensions,
     StyleSheet,
     FlatList,
-    ScrollView
+    ScrollView,
+    Modal,
+    TouchableHighlight
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -24,9 +26,14 @@ class DealsDetail extends Component{
     constructor(props){
         super(props)
         this.state = {
-            detail:false
+            detail:false,
+            modalVisible: false,
         }
     }
+
+    setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
 
     _handleDetail = () => {
         this.setState({detail:true})
@@ -85,6 +92,9 @@ class DealsDetail extends Component{
 
                 <View style={{height:height/8,backgroundColor:'#fff',padding:10}}>
                 <Text style={{fontWeight:'700',marginBottom:8}}>Lokasi Reedem</Text>
+                <TouchableOpacity onPress={() => this.setModalVisible(!this.state.modalVisible)}>
+                    <Text style={{color:'#39afb5',marginLeft:10}}>Lihat Lokasi >></Text>
+                </TouchableOpacity>
                 </View>
 
                 <Hr />
@@ -106,6 +116,26 @@ class DealsDetail extends Component{
                 </View>
 
                 </ScrollView>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                }}>
+                <View style={{padding:10,paddingHorizontal:20,backgroundColor:'#fff',elevation:3}}>
+                    <TouchableHighlight
+                    onPress={() => {
+                    this.setModalVisible(!this.state.modalVisible);
+                    }}>
+                    <Icon name='md-close' size={24} />
+                    </TouchableHighlight>
+                <View>
+
+                
+                </View>
+            </View>
+        </Modal>
                 <Button title='BELI VOUCHER' />
             </View>
         )

@@ -264,7 +264,8 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         elevation:5,
         borderRadius:5,
-        marginBottom:-20
+        marginBottom:-20,
+        zIndex:-1
     },
     iconUpgrade:{
         justifyContent:'center',
@@ -305,96 +306,3 @@ const styles = StyleSheet.create({
     }
 
 })
-
-
-// <View style={{height:height/3.3,backgroundColor:'#fff',position:'relative',borderRadius:10,elevation:2}}>
-//                         <View style={{height:'45%',backgroundColor:'#39afb5',borderTopLeftRadius:10,borderTopRightRadius:10}}>
-//                         <ImageBackground
-//                     source={require('../Assets/Images/atas-43.png')}
-//                     style={{width:'100%',alignItems: 'flex-end',height:undefined,flex:1,paddingHorizontal:15}}
-//                     imageStyle={{borderRadius:10}}
-//                     >
-//                             <View style={{width:75,height:50}}>
-//                                 <Image source={require('../Assets/Icons/Logo_gems.png')} style={{flex:1,width:undefined,height:undefined}} resizeMode='contain' />
-//                             </View>
-//                             </ImageBackground>
-//                         </View>
-//                         <View style={{height:'50%',marginTop:-50,flexDirection:'row',paddingHorizontal:10}}>
-//                             <View style={{height:100,backgroundColor:'#fff',width:100,borderRadius:100/2,borderWidth:5,borderColor:'#fff'}}>
-//                                 <Image source={{uri:'https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png'}} style={{width:'100%',height:'100%',borderRadius:100/2}} />
-//                             </View>
-//                             <View style={{flex:1,margin:20,justifyContent:'center'}}>
-//                             {name != '' ?
-//                                 <>
-//                                 <Text style={{fontSize:17,fontWeight:'bold',marginTop:40}}>{name}</Text>
-//                                 <Text>{phone}</Text>
-//                                 </>
-//                                 : 
-//                                 <>                           
-//                                 <Text style={{fontSize:17,fontWeight:'bold',marginTop:40}}>Account</Text>
-//                                 <Text>xxxx-xxxx-xxxx</Text>
-//                                 </>
-//                             }
-//                             </View>
-//                         </View>
-//                         <View style={{flex:1,marginTop:10,flexDirection:'row',borderRadius:10,padding:5}}>
-//                             {status == 'non-premium' ?
-//                             <TouchableOpacity 
-//                             onPress={() => this.props.navigation.navigate('UpgradePremium')}
-//                             style={{flex:1,padding:5,justifyContent:'center',alignItems:'center',padding: 5}}>
-//                                 <Text>Upgrade Premium</Text>
-//                             </TouchableOpacity>
-//                             :
-//                             <View  style={{flex:1,padding:5,justifyContent:'center',alignItems:'flex-start',padding: 5}}>
-//                             <Text>account type</Text>
-//                             <Text>PREMIUM</Text>
-//                             </View>
-//                             }
-//                             <View style={{flex:1,borderLeftWidth: 1,borderLeftColor:'#000',justifyContent: 'center',alignItems: 'flex-start',paddingLeft:10}}>
-//                                 <Text>Member since</Text>
-//                                 <Text>09-09-2019</Text>
-//                             </View>
-//                             <View style={{flex:1,marginTop:-height/14,alignItems:'center',justifyContent:'flex-end',paddingBottom: 10,}}>
-//                                 <TouchableOpacity onPress={() => this.refs.modal3.open()
-//                             }>
-//                             <QRCode
-//                                 value="jancook"
-//                                 logo={require('../Assets/Icons/logoscan.png')}
-//                                 logoSize={14}
-//                                 size={width/7}
-//                                 />
-//                             </TouchableOpacity>
-                            
-//                             </View>
-//                         </View>
-//                     </View>
-
-
-{/* <View style={{height:height/3.5,marginTop:-height/6.5,padding:10,paddingHorizontal:20}}>
-                    <View style={{backgroundColor:'#fff',flex:1,elevation:15,borderRadius:5,paddingHorizontal:10}}>
-                        
-                        <View style={{flex:2,paddingHorizontal:15,flexDirection:'row',alignItems
-                        :'center'}}>
-                            <View style={{flex:1}}>
-                            <Text style={{fontSize:19,color:'#353b48',fontWeight:'700',marginBottom:5}}>Hinata Hyuga</Text>
-                            <Text style={{color:'#39afb5'}}>08788984988</Text>
-                        </View>
-                        <View style={{flex:1,justifyContent:'center',alignItems:'flex-end'}}>
-                        <View style={{width:height/10,height:height/10}}>
-                            <Image source={{uri:'https://pm1.narvii.com/6290/8d7fb5288992054eb8b04c4d1d07cf1b9f31b01c_hq.jpg'}} style={{width:undefined,height:undefined,flex:1,borderRadius:height/10/2}}/>
-                        </View>
-                        </View>
-                        </View>
-                        <View style={{flex:1,flexDirection:'row',borderTopWidth:1,borderTopColor:'#ecf0f1',paddingVertical:10}}>
-                            <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                            <Image source={{uri:'https://images.vexels.com/media/users/3/157862/isolated/preview/5fc76d9e8d748db3089a489cdd492d4b-barcode-scanning-icon-by-vexels.png'}} resizeMode='cover' style={{width:40,height:40}} />
-                            </View>
-                            <View style={{flex:1, justifyContent:'center',alignItems:'center',borderLeftColor:'#ecf0f1',borderLeftWidth:1,borderRightColor:'#ecf0f1',borderRightWidth:1}}>
-                                <Image source={{uri:'https://static.thenounproject.com/png/59262-200.png'}} resizeMode='cover' style={{width:40,height:40}} />
-                            </View>
-                            <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                                <Icon name='md-watch' size={30} />
-                            </View>
-                        </View>
-                    </View>
-                </View> */}
