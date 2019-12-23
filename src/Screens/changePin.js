@@ -11,13 +11,14 @@ import {
     } from 'react-native'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 import { withNavigation } from 'react-navigation'
-import {pin} from '../Public/Actions/users'
+import {getPin,changePin} from '../Public/Actions/users'
 import AsyncStorage from '@react-native-community/async-storage'
 import {connect} from 'react-redux'
 import Header from '../Components/header'
 import {Toast} from 'native-base'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Modal from 'react-native-modalbox'
+import axios from 'axios'
 
 const color = '#39afb5'
 const {height,width} = Dimensions.get('window')
@@ -35,6 +36,8 @@ class ChangePin extends Component {
             hideIcon:false,
             isOpen: false,
             isDisabled: false,
+            token:'',
+            id_user:this.props.navigation.getParam('id')
         }
     }
     onClose() {
@@ -49,26 +52,44 @@ class ChangePin extends Component {
     console.log('the open/close of the swipeToClose just changed');
     }
 
+    componentDidMount(){
+        const token = AsyncStorage.getItem('token',(err,res) => {
+            if(res){
+                this.setState({token:res})
+            }
+        })
+        const id_user = AsyncStorage.getItem('id',(err,res) => {
+            if(res){
+                this.setState({id_user:res})
+            }
+        })
+    }
 
-    pinInput = React.createRef();
+
+    pinInput = React.createRef()
 
     oldPin = (code) => {
-        if(code == '123456'){
-            this.setState({
-                newPinCode:true
+        if(code.length == 6){
+            this.props.dispatch(getPin(this.state.token,code))
+            .then(res => {
+                if(res.action.payload.data.data.result == true){
+                    this.setState({newPinCode:true})
+                }else {
+                    Toast.show({
+                    text: 'Pin Salah',
+                    type: "danger",
+                    position:'top',
+                    duration:1500,
+                    style:styles.toast
+                    })
+                    this.pinInput.current.shake()
+                    .then(() => this.setState({ code: '' }))
+                }
             })
-        }else {
-            Toast.show({
-            text: 'Pin Salah',
-            type: "danger",
-            position:'top',
-            duration:1500,
-            style:styles.toast
+            .catch(err => {
+                console.log(err,'error')
             })
-            this.pinInput.current.shake()
-                .then(() => this.setState({ code: '' }))
         }
-
     }
 
     newPin = (newCode) => {
@@ -82,13 +103,28 @@ class ChangePin extends Component {
 
 
     changeCode = (confirmCode) => {
-        if(confirmCode == this.state.newCode){
-            this.refs.modal3.open()
+        if(confirmCode.length == 6 && confirmCode == this.state.newCode){
+            this.props.dispatch(changePin(this.state.id_user,{
+                current_password:this.state.code,
+                pin:this.state.newCode,
+                pin_confirm:confirmCode,
+                perangkat:'Mobile'},this.state.token))
+            .then(res => {
+                console.log(res);
+                this.refs.modal3.open()
             setTimeout(() => {
                 this.props.navigation.goBack()
             }, 4000);
-            // 
-        }else{
+            
+                
+            })
+            .catch(err => {
+                console.log(err);
+                
+            })
+            
+        }
+        else{
             Toast.show({
             text: 'Pin Tidak Sama',
             type: "danger",

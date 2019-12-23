@@ -63,10 +63,10 @@ class CardAccounts extends React.Component{
     console.log('the open/close of the swipeToClose just changed');
     }
     render(){
-        const logout = this.props.logout
-        const name = this.props.name
-        const phone = this.props.phone
-        const status = this.props.status
+        const {logout,id,name,phone,status} = this.props
+        // const name = this.props.name
+        // const phone = this.props.phone
+        // const status = this.props.status
         const modal = this.props.ref
         
         return(
@@ -151,7 +151,7 @@ class CardAccounts extends React.Component{
                 
                 <View>
                     <Label label='Keamanan' />
-                        <List title='Change Pin' icon={'md-key'} color={color} route={() => {this.props.navigation.navigate('ChangePin')}} />
+                        <List title='Change Pin' icon={'md-key'} color={color} route={() => {this.props.navigation.navigate('ChangePin',{id})}} />
                     <Label label='Tentang Kita' />
                         <List title='Help' icon={'md-help-circle'} color={color} route={() => {this.props.navigation.navigate('Help')}} />
                         <List title='Terms & Conditions' icon={'ios-paper'} color={color} route={() => {this.props.navigation.navigate('TermsConditions')}} />

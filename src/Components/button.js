@@ -6,6 +6,7 @@ import {
     Dimensions
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
+import { withNavigation } from 'react-navigation'
 
 const {height} = Dimensions.get('window')
 
@@ -17,14 +18,14 @@ const Button = (props) => {
                     end={{x: 2, y:1.}} 
                     colors={['#39afb5','#326db5']}
                 >
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={props.onpress}>
                         <Text style={s.text}>{props.title}</Text>
                     </TouchableOpacity>
                 </LinearGradient>
     )
 }
 
-export default Button
+export default withNavigation(Button)
 
 const s = StyleSheet.create({
     btn:{

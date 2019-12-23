@@ -99,10 +99,10 @@ export const saldo = (token) => {
     }
 }
 
-export const getPin = (token) => {
+export const getPin = (token,currentPin) => {
     return {
         type:'GETPIN',
-        payload: axios.get(`${url}/admin/v1/pin/check`,{
+        payload: axios.get(`${url}/admin/v1/pin/check/${currentPin}`,{
             headers:{
                 Accept:'application/json',
                 Authorization:`Bearer ${token}`
@@ -111,10 +111,10 @@ export const getPin = (token) => {
     }
 }
 
-export const changePin = (data,token) => {
+export const changePin = (id,data,token) => {
     return {
         type:'CHANGEPIN',
-        payload:axios.put(`${url}/admin/v1/pin/1`,data,{
+        payload:axios.put(`${url}/admin/v1/pin/${id}`,data,{
             headers:{
                 Accept:'application/json',
                 Authorization:`Bearer ${token}`

@@ -37,7 +37,7 @@ class HeaderHome extends Component {
     }
 
     render(){
-        const {notif,saldo} = this.props
+        const {notif,saldo,point} = this.props
         return(
             <View
                 style={s.container}>
@@ -76,7 +76,7 @@ class HeaderHome extends Component {
                         <Text style={s.nominal}>{saldo}</Text>
                     </View>
                     </View>
-                    <View style={s.kiri}>
+                    <View style={[s.kiri]}>
                         <LinearGradient
                             style={[s.kiri,{width:'100%',height:'100%',elevation:2}]}
                             start={{x: 0, y: 1}} 
@@ -86,9 +86,9 @@ class HeaderHome extends Component {
                             <View style={s.wrapperPoint}>
                                 <Image source={require('../Assets/Icons/coins.png')} resizeMode='center'/>
                             </View>
-                            <View>
+                            <View style={{flex:1}}>
                                 <Text style={{fontSize:12,color:'#fff',fontWeight:'700'}}>Point</Text>
-                                <Text style={s.point}>1.000.000</Text>
+                                <Text style={s.point}>{point}</Text>
                             </View>
                         </LinearGradient>
                         
@@ -206,6 +206,7 @@ const s = StyleSheet.create({
         borderWidth:2,
         borderColor:'yellow',
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        marginLeft:10
     }
 })

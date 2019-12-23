@@ -50,6 +50,8 @@ target 'reactapp' do
 
   pod 'react-native-shimmer', :path => '../node_modules/react-native-shimmer'
 
+  pod 'react-native-spinkit', :path => '../node_modules/react-native-spinkit'
+
   target 'reactappTests' do
     inherit! :search_paths
     # Pods for testing

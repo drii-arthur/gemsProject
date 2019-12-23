@@ -1,5 +1,17 @@
 import React, {Component} from 'react'
-import {ScrollView,View,Text,TextInput,StyleSheet,StatusBar,Dimensions,TouchableOpacity,Picker,Image} from 'react-native'
+import {
+    ScrollView,
+    View,
+    Text,
+    TextInput,
+    StyleSheet,
+    StatusBar,
+    Dimensions,
+    TouchableOpacity,
+    Picker,
+    Image,
+    ActivityIndicator
+    } from 'react-native'
 import Axios from 'axios'
 import {login} from '../Public/Actions/users'
 import {connect} from 'react-redux'
@@ -11,6 +23,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import DeviceInfo from 'react-native-device-info'
 
 const {height} = Dimensions.get('window')
+var Spinner = require('react-native-spinkit')
 class Login extends Component{
     constructor(props){
         super(props)
@@ -21,6 +34,10 @@ class Login extends Component{
             perangkat:'Mobile',
             showToast: false,
             kode:'+62',
+            isLoading:false,
+            types: [ 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', '9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'],
+            isVisible: true,
+            index:1
         }
     }
 
@@ -47,6 +64,7 @@ class Login extends Component{
     }
 
     handleLogin =  async () => {
+        this.setState({isLoading:true})
         let phone = this.state.kode + this.state.phone
         if(phone.length < 10 || phone.length > 14){
             Toast.show({
@@ -56,6 +74,7 @@ class Login extends Component{
             duration:1500,
             style:styles.toast
             })
+            this.setState({isLoading:false})
         }
         else{
         await this.props.dispatch(login({phone:phone,perangkat:this.state.perangkat}))
@@ -64,8 +83,6 @@ class Login extends Component{
             let id = dataObj.id
             let otp = dataObj.otp
             let token = dataObj.token
-                    
-                    console.warn(token,'token')
                     Toast.show({
                     text:'Login sukses',
                     buttonText: "Okay",
@@ -74,11 +91,12 @@ class Login extends Component{
                     duration:1000,
                     style:styles.toast
                 })
+                    this.setState({isLoading:false})
                     this.props.navigation.navigate('Otp',{dataObj})
                 
         })
         .catch((err) => {
-            console.log(err)
+            this.setState({isLoading:false})
             Toast.show({
             text: "error",
             type: "warning",
@@ -91,6 +109,7 @@ class Login extends Component{
         }
     }
     render(){
+        var type = this.state.types[this.state.index]
         return(
             // container
             <LinearGradient
@@ -129,7 +148,11 @@ class Login extends Component{
                     <TouchableOpacity 
                         onPress={this.handleLogin}
                         style={styles.button}>
+                        {this.state.isLoading == false ? 
                         <Text style={[styles.textButton,{borderRadius:0}]}>MASUK</Text>
+                        :
+                        <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={24} type={type} color='#fff'/>
+                        }
                     </TouchableOpacity>
                 
                 </View>

@@ -8,7 +8,9 @@ import {
     TouchableOpacity
     } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-
+import AsyncStorage from '@react-native-community/async-storage'
+import {transfer} from '../Public/Actions/transaction'
+import {connect} from 'react-redux'
 
 import CardSaldo from '../Components/cardSaldoTopup'
 import HeaderTransaction from '../Components/headerTransaction'
@@ -35,11 +37,18 @@ class Transfer extends React.Component{
             this.state = {
                 phone:'',
                 nominal:'',
-                pesan:''
+                pesan:'',
+                token:'',
+                isLoading:false
             }
      }
 
     componentDidMount = async () => {
+        const token = AsyncStorage.getItem('token',(err,res) => {
+            if(res){
+                this.setState({token:res})
+            }
+        })
         const subs = 
             this.props.navigation.addListener('willFocus', () => {
                 this.getDataNumber()
@@ -49,6 +58,31 @@ class Transfer extends React.Component{
         }
     componentWillUnMount (){
         subs.remove()
+    }
+
+    handleTransfer = async () => {
+        this.setState({isLoading:true})
+        await this.props.dispatch(transfer({
+            phone:this.state.phone,
+            status_invoice:'GEMSOUT',
+            code_invoice:'',
+            subject:'TRANSFER',
+            description:this.state.pesan,
+            amount:this.state.nominal,
+            tax:'300',
+            perangkat:'Mobile'
+            },this.state.token))
+        .then(res => {
+            console.log(res)
+            alert('transfer berhasil')
+            this.setState({isLoading:false})
+            
+        })
+        .catch(err => {
+            console.log(err)
+            this.setState({isLoading:false})
+            
+        })
     }
 
         getDataNumber =  () => {
@@ -112,20 +146,29 @@ class Transfer extends React.Component{
                         placeholder='Masukan Pesan Anda'
                         multiline={true}
                         underlineColorAndroid="transparent"
+                        onChangeText={(pesan) => this.setState({pesan})}
                         style={{height:100,backgroundColor:'#f9f9f7',borderRadius:5,marginVertical:5,paddingHorizontal:5,textAlignVertical: 'top'}}
                     />
                 </View>
 
                 </ScrollView>
+                
 
-                <Button title='TRANSFER'/>
+                <Button title={!this.state.isLoading ? 'TRANSFER' : 'LOADING'} onpress={() => this.handleTransfer()} />
 
             </View>
         )
     }
 }
 
-export default Transfer
+const mapStateToProps = state => {
+    return {
+        transaction: state.transaction
+    }
+}
+
+export default connect(mapStateToProps)(Transfer)
+
 
 const s = StyleSheet.create({
     wrapperInput:{

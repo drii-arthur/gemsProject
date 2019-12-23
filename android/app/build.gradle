@@ -190,12 +190,12 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-spinkit')
     implementation project(':react-native-android-sms-listener')
     implementation project(':react-native-device-info')
     implementation project(':react-native-shimmer')
     implementation project(':react-native-image-picker')
     implementation project(':react-native-svg')
-    implementation project(':react-native-otp-verify')
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-camera')
     implementation project(':react-native-vector-icons')

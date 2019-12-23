@@ -49,7 +49,8 @@ class HomePage extends React.Component{
             notif:3,
             scrollY: new Animated.Value(0),
             saldo:'',
-            token:''
+            token:'',
+            point:''
         }
     }
 
@@ -59,16 +60,29 @@ class HomePage extends React.Component{
                 this.setState({token:res})
             }
         })
+        const subs = 
+            this.props.navigation.addListener('willFocus', () => {
+                this.getSaldo()
+            })
+                this.getSaldo()
+        }
+        
+    componentWillUnMount (){
+        subs.remove()
+    }
+    
+    getSaldo = async () => {
         await this.props.dispatch(saldo(this.state.token))
         .then(res => {
-            console.log(res.action.payload.data.data)
-            this.setState({saldo:res.action.payload.data.data.nominal})
+            this.setState({
+                saldo:res.action.payload.data.data.nominal,
+                point:res.action.payload.data.data.point,
+                })
         })
         .catch(err => {
             console.log(err)
         })
     }
-    
 
     render(){
 
@@ -120,7 +134,7 @@ class HomePage extends React.Component{
                         [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
                         )}
                 >
-                <HeaderHome notif={this.state.notif} saldo={this.state.saldo} />
+                <HeaderHome notif={this.state.notif} saldo={this.state.saldo} point={this.state.point} />
                 
                 
                 {/* contents icon features */}

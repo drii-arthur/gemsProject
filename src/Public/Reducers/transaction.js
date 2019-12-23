@@ -6,21 +6,21 @@ const initialState = {
 
 const transaction = (state = initialState , action) => {
     switch (action.type) {
-        case 'TRANSACTION_PENDING':
+        case 'TRANSFER_PENDING':
             return {
                 ...state,
                 isLoading:true,
                 isRejected:false,
                 isFullFilled:false
             }
-        case 'TRANSACTION_REJECTED':
+        case 'TRANSFER_REJECTED':
             return {
                 ...state,
                 isLoading:false,
                 isRejected:true,
                 isFullFilled:false
             }
-        case 'TRANSACTION_FULLFILLED':
+        case 'TRANSFER_FULLFILLED':
             return {
                 ...state,
                 isLoading:false,

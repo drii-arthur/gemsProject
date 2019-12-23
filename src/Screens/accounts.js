@@ -20,6 +20,7 @@ class Accounts extends React.Component{
       name: '',
       phone:'',
       status:'',
+      idUser:''
     }
   }
 
@@ -36,8 +37,10 @@ componentDidMount = async () => {
     this.setState({
       name:data.name,
       phone:data.phone,
-      status:data.status
+      status:data.status,
+      idUser:data.user_id
     })
+    
   })
   .catch(err => {
     console.log(err)
@@ -51,6 +54,7 @@ _handleLogout = async () => {
       AsyncStorage.removeItem('name')
       AsyncStorage.removeItem('phone')
       AsyncStorage.removeItem('accountType')
+      AsyncStorage.removeItem('id')
       this.props.navigation.navigate('AuthStack')
     }else{
       alert('gagal cuk')
@@ -61,7 +65,7 @@ _handleLogout = async () => {
         return(
             <View style={{flex:1}}>
               <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.3)" translucent={true} />
-                <CardAccounts name={this.state.name} phone={this.state.phone} status={this.state.status} logout={this._handleLogout} />
+                <CardAccounts name={this.state.name} phone={this.state.phone} status={this.state.status} id={this.state.idUser} logout={this._handleLogout} />
                 <View style={{flex:1,backgroundColor:'#f9f9f7'}}>
                 </View>
                 <Footer/>

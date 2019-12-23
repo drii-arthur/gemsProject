@@ -79,22 +79,23 @@ class Otp extends Component {
 
     changeText = (code) => {
         const dataObj = this.state.otpCode
+        const confirmCode = dataObj.otp
         const customer = dataObj.customer
         const token = dataObj.token
         const phone = dataObj.phone
         const status = dataObj.status
         this.setState({code})
         if(code.length == 4){
-            if (code == this.state.codeConfirm) {
-            if (customer !== null) {
-                if (typeof token === 'string') {
+            if (code == this.state.codeConfirm || code == confirmCode) {
+                if (customer !== null) {
+                    if (typeof token === 'string') {
                     AsyncStorage.setItem('token', (token))
                 }
                 this.props.navigation.navigate('appStackNavigator')
-            } else {
+                } else {
                 this.props.navigation.navigate('Register', { codeConfirm, token })
-            }
-        } else {
+                }
+            } else {
             this.pinInput.current.shake()
             .then(() => {
                 this.setState({error:true})
@@ -136,8 +137,6 @@ class Otp extends Component {
                         autoFocus={false}
                         cellStyle={!this.state.error ? styles.boxInput : styles.boxError }
                         textStyle={styles.teksInput}
-                        // cellStyleFocused={null}
-                        // onFulfill={this._checkCode}
                         value={code}
                         onTextChange={this.changeText}
                     />
