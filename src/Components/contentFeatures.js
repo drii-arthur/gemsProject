@@ -30,7 +30,7 @@ const OvoFeatures = (props) => {
     )
 }
 
-class ContentFeatures extends React.Component {
+class ContentFeatures extends React.Component {   
     render() {
         return (
             <View style={styles.container}>

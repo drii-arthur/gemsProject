@@ -58,7 +58,7 @@ class Register extends Component{
         super(props)
         this.state = {
             name:'',
-            code:this.props.navigation.getParam('codeConfirm'),
+            code:this.props.navigation.getParam('confirmCode'),
             email:'',
             status:1,
             token:this.props.navigation.getParam('token'),
@@ -135,7 +135,6 @@ class Register extends Component{
             const statustype = dataObj.role
             const name = dataObj.name
             const phone = dataObj.phone
-            console.warn(statustype,'status2');
             
             AsyncStorage.setItem('accountType',(statustype))
             AsyncStorage.setItem('name',(name))

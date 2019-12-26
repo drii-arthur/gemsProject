@@ -93,7 +93,7 @@ class Otp extends Component {
                 }
                 this.props.navigation.navigate('appStackNavigator')
                 } else {
-                this.props.navigation.navigate('Register', { codeConfirm, token })
+                this.props.navigation.navigate('Register', { confirmCode, token })
                 }
             } else {
             this.pinInput.current.shake()
