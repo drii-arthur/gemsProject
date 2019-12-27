@@ -40,17 +40,6 @@ class ChangePin extends Component {
             id_user:this.props.navigation.getParam('id')
         }
     }
-    onClose() {
-    console.log('Modal just closed');
-    }
-
-    onOpen() {
-    console.log('Modal just opened');
-    }
-
-    onClosingState(state) {
-    console.log('the open/close of the swipeToClose just changed');
-    }
 
     componentDidMount(){
         const token = AsyncStorage.getItem('token',(err,res) => {

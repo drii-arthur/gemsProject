@@ -49,7 +49,8 @@ class Transfer extends Component{
                 token:'',
                 isLoading:false,
                 modalVisible: false,
-                showButton:true
+                showButton:true,
+                modalVisible2:false
             }
         }
 
@@ -70,6 +71,7 @@ class Transfer extends Component{
             this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
             this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     }
+
     componentWillUnMount (){
         subs.remove()
         this.keyboardDidShowListener.remove()
@@ -133,6 +135,10 @@ class Transfer extends Component{
         this.setState({modalVisible: visible});
         }
 
+        setModalVisible2(visible2) {
+            this.setState({modalVisible2:visible2})
+        }
+
     render(){
         const Detail = (props) => {
             return(
@@ -141,6 +147,15 @@ class Transfer extends Component{
                     <Text style={{marginRight:10}}>:</Text>
                     <Text style={{flex:2}}>{props.data}</Text>
                 </View>
+            )
+        }
+
+        const ListCard = () => {
+            return(
+                <LinearGradient 
+                colors={['#39afb5','#39afb5','#3498db']}
+                style={{height:'100%',width:5,position:'absolute',top:0,left:0}}>
+                </LinearGradient>
             )
         }
         return(
@@ -179,17 +194,20 @@ class Transfer extends Component{
                     <TouchableOpacity 
                     onPress={() => {this.setState({nominal:'50000'})}}
                     style={s.list}>
-                        <Text>50.000</Text>
+                    <ListCard />
+                        <Text style={s.nominal}>50.000</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                     onPress={() => {this.setState({nominal:'100000'})}}
                      style={s.list}>
-                        <Text>100.000</Text>
+                     <ListCard />
+                        <Text style={s.nominal}>100.000</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
                     onPress={() => {this.setState({nominal:'200000'})}}
                     style={s.list}>
-                        <Text>200.000</Text>
+                    <ListCard />
+                        <Text style={s.nominal}>200.000</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -206,12 +224,13 @@ class Transfer extends Component{
                     />
                 </View>
 
-                <PinTransaction />
+               
 
                 </ScrollView>
+                 <PinTransaction visible={this.state.modalVisible2} close={() => {this.setModalVisible2(!this.state.modalVisible2)}} />
                 
                 {this.state.showButton == true ? 
-                <Button title={!this.state.isLoading ? 'TRANSFER' : 'LOADING'} onpress={() => this.setModalVisible(!this.state.modalVisible)} />
+                <Button title={!this.state.isLoading ? 'TRANSFER' : 'LOADING'} onpress={() => this.setModalVisible(true)} />
                 :null}
 
                     <Modal
@@ -219,7 +238,7 @@ class Transfer extends Component{
                     transparent={true}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
+                    alert('Modal has been closed.');
                     }}>
                     <View style={{flex:1,backgroundColor:'rgba(45, 52, 54,0.5)',elevation:3,justifyContent: 'flex-end'}}>
                         
@@ -243,7 +262,7 @@ class Transfer extends Component{
 
                         <TouchableHighlight
                         style={{flex:1,margin:10,borderColor:'#fff',borderWidth:1,borderRadius:5}}
-                        onPress={() => {
+                        onPress={() => {this.setModalVisible(!this.state.modalVisible),this.setModalVisible2(true)
                         }}>
                             <LinearGradient
                             style={{width:'100%',paddingVertical:7,justifyContent:'center',alignItems:'center',borderRadius:5}}
@@ -300,5 +319,12 @@ const s = StyleSheet.create({
         borderRadius:7,
         justifyContent: 'center',
         alignItems: 'center',
+        position:'relative'
+    },
+    nominal:{
+        fontFamily: 'FredokaOne-Regular',
+        fontWeight:'bold',
+        color:'#39afb5',
+        fontSize:14
     }
 })
