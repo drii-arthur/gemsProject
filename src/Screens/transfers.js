@@ -153,8 +153,8 @@ class Transfer extends Component{
         const ListCard = () => {
             return(
                 <LinearGradient 
-                colors={['#39afb5','#39afb5','#3498db']}
-                style={{height:'100%',width:5,position:'absolute',top:0,left:0}}>
+                colors={['cyan','#39afb5']}
+                style={{height:'100%',width:5,position:'absolute',top:0,left:0,borderTopLeftRadius:25,borderBottomLeftRadius:25}}>
                 </LinearGradient>
             )
         }
@@ -314,7 +314,7 @@ const s = StyleSheet.create({
     list:{
         margin:10,
         flex:1,
-        borderColor:'grey',
+        borderColor:'#39afb5',
         borderWidth:1,
         borderRadius:7,
         justifyContent: 'center',

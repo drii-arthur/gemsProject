@@ -71,34 +71,18 @@ class CardAccounts extends React.Component{
         
         return(
                 <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{height:height/2.8}}>
+                <View style={{height:height/2.5}}>
                 <ImageBackground
                 // imageStyle={{borderBottomLeftRadius:25}}
                 source={require('../Assets/Images/bg2.png')}
                 style={{width:'100%',height:'100%'}} resizeMode='cover'
                 style={styles.wrapperTop}>
 
-                {/* top content */}
-                    <View style={styles.topContent}>
-                    {/* left content */}
-                        <View style={styles.wrapperImage}>
-                            <Image source={{uri:'https://pm1.narvii.com/6290/8d7fb5288992054eb8b04c4d1d07cf1b9f31b01c_hq.jpg'}} style={styles.image}/>
-                        </View>
-                        {/* end of left content */}
-
-                        {/* right content */}
-                        <View style={{flexDirection:'row'}}>
-                            <Icon name='ios-brush' size={24} color='#fff' style={{marginRight:15
-                            }} />
-                            <Icon name='md-notifications' size={26} color='#fff' />
-                        </View>
-                        {/* end of right content */}
-                        
-                    </View>
-                    {/* end of top content */}
-
                     {/* content name & phone */}
                     <View style={styles.wrapperText}>
+                    <View style={styles.wrapperImage}>
+                            <Image source={{uri:'https://pm1.narvii.com/6290/8d7fb5288992054eb8b04c4d1d07cf1b9f31b01c_hq.jpg'}} style={styles.image}/>
+                        </View>
                         <Text style={styles.textName}>{name != '' ? name : 'user account'}</Text>
                         <Text style={styles.textPhone}>{phone != '' ? phone : '08xx-xxxx-xxxx'}</Text>
                     </View>  
@@ -223,37 +207,31 @@ const styles = StyleSheet.create({
         borderBottomColor:'#f9f9f7',
         borderBottomWidth:1
     },
-    topContent:{
-        height:height/10,
-        alignItems:'center',
-        justifyContent:'space-between',
-        paddingHorizontal:20,
-        flexDirection:'row',
-        marginTop:20
-    },
     wrapperImage:{
-        width:height/15,
-        height:height/15
+        width:height/10,
+        height:height/10
     },
     image:{
         width:undefined,
         height:undefined,
         flex:1,
-        borderRadius:height/15/2,
+        borderRadius:height/10/2,
         borderColor:'#fff',
         borderWidth:1
 
     },
     wrapperText:{
         flex:1,
-        paddingHorizontal:20,
-        justifyContent:'center'
+        justifyContent:'center',
+        alignItems:'center',
+        marginTop:25
     },
     textName:{
         fontSize:22,
         fontWeight:'700',
         color:'#fff',
-        marginBottom:5
+        marginVertical:5,
+        fontFamily:'Lobster-Regular'
     },
     textPhone:{
         color:'#fff'

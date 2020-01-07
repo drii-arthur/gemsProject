@@ -2,12 +2,8 @@ import React,{Component,Fragment} from 'react';
 import {
     View,
     Text,
-    StatusBar,
     StyleSheet,
-    KeyboardAvoidingView,
-    Keyboard,
     Dimensions,
-    ImageBackground,
     TouchableOpacity,
     ActivityIndicator,
     Modal
@@ -110,8 +106,16 @@ class PinTransaction extends Component {
                     Alert.alert('Modal has been closed.')
                     }}>
                 <View style={{flex:1,backgroundColor:'rgba(45, 52, 54,0.5)',elevation:3,justifyContent: 'center'}}>
-                <View style={{backgroundColor:'#fff',height:height/3,justifyContent:'center',alignItems:'center',marginHorizontal: 20,borderRadius:10}}>
-
+                <View style={{flex:1,backgroundColor:'#fff',marginTop:height/6,borderTopLeftRadius:15,borderTopRightRadius:15}}>
+                    <View style={{borderBottomColor:'grey',borderBottomWidth:1,height:height/14,marginBottom:50}}>
+                    <TouchableOpacity 
+                    onPress={close}
+                    style={{height:'100%',width:50,alignItems:'center',justifyContent:'center'}}>
+                    <Icon name='md-close' size={24} color='grey' />
+                    </TouchableOpacity>
+                    </View>
+                
+                <View style={{alignItems:'center'}}>
                 {!this.state.isLoading ? 
                 <>
                     <Text style={styles.textPin}>Masukan Pin</Text>
@@ -160,14 +164,11 @@ class PinTransaction extends Component {
                     <Spinner isVisible={this.state.isVisible} size={36} type={type} color='#39afb5'/>
                     
                     }
+                    </View>
 
                     </View>
 
-                    <TouchableOpacity 
-                    onPress={close}
-                    style={{width:50,height:50,backgroundColor:'#e74c3c',alignSelf:'center',marginTop:10,borderRadius:25,justifyContent:'center',alignItems:'center',elevation:1}}>
-                    <Icon name='md-close' size={24} color='#fff' />
-                    </TouchableOpacity>
+                    
                 </View>
             </Modal>
         )
