@@ -15,7 +15,8 @@ import AsyncStorage from '@react-native-community/async-storage'
 import {transfer} from '../Public/Actions/transaction'
 import {connect} from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient'
-
+import {Toast} from 'native-base'
+import SweetAlert from 'react-native-sweet-alert'
 
 import CardSaldo from '../Components/cardSaldoTopup'
 import HeaderTransaction from '../Components/headerTransaction'
@@ -39,6 +40,8 @@ const Input = (props) => {
     )
 }
 
+
+
 class Transfer extends Component{
         constructor(props){
             super(props)
@@ -50,7 +53,8 @@ class Transfer extends Component{
                 isLoading:false,
                 modalVisible: false,
                 showButton:true,
-                modalVisible2:false
+                modalVisible2:false,
+                kodeTelpon:'+62'
             }
         }
 
@@ -95,18 +99,26 @@ class Transfer extends Component{
     handleTransfer = async () => {
         this.setState({isLoading:true})
         await this.props.dispatch(transfer({
-            phone:this.state.phone,
+            phone:this.state.kodeTelpon+this.state.phone,
             status_invoice:'GEMSOUT',
             code_invoice:'',
             subject:'TRANSFER',
             description:this.state.pesan,
             amount:this.state.nominal,
             tax:'300',
-            perangkat:'Mobile'
+            perangkat:'Mobile',
             },this.state.token))
         .then(res => {
             console.log(res)
-            alert('transfer berhasil')
+            SweetAlert.showAlertWithOptions({
+            title: 'Transaksi Berhasil',
+            confirmButtonTitle: 'OK',
+            confirmButtonColor: '#000',
+            otherButtonTitle: 'Cancel',
+            otherButtonColor: '#dedede',
+            style: 'success',
+            cancellable: true
+            },this.resetForm)
             this.setState({isLoading:false})
             
         })
@@ -132,12 +144,46 @@ class Transfer extends Component{
 
 
         setModalVisible(visible) {
+            if(this.state.phone.length < 10 || this.state.phone.length > 14){
+            Toast.show({
+            text: 'nomor tidak valid',
+            type: "danger",
+            position:'top',
+            duration:1500,
+            // style:styles.toast
+            })
+            this.setState({isLoading:false})
+        }else if(this.state.nominal == ''){
+            Toast.show({
+            text: 'nominal tidak boleh kosong',
+            type: "danger",
+            position:'top',
+            duration:1500,
+            })
+        }
+        else{
         this.setState({modalVisible: visible});
+        }
         }
 
         setModalVisible2(visible2) {
             this.setState({modalVisible2:visible2})
         }
+
+        resetForm = () => {
+           this.setState({
+               phone:'',
+               nominal:'',
+               pesan:'',
+               isLoading:false
+           })
+        }
+
+        reset = () => {
+        this.setState({
+            phone:''
+        })
+    }
 
     render(){
         const Detail = (props) => {
@@ -166,13 +212,18 @@ class Transfer extends Component{
                 <View style={[s.wrapperInput]}>
                     <Text style={s.label}>No Ponsel Antar GEMS</Text>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text>{this.state.kodeTelpon}</Text>
                         <TextInput
-                        placeholder='08XX-XXXX_XXXX'
+                        placeholder='8XX-XXXX_XXXX'
                         keyboardType='numeric'
                         style={s.input}
                         onSubmitEditing={() => {this.nominal.focus()}}
                         returnKeyType='next'
-                        onChangeText={(phone) => this.setState({phone})}
+                        onChangeText={(phone) => {this.setState({phone})
+                            if(phone.substring(0,1) == 0){
+                                    this.reset()
+                                }
+                        }}
                         value={this.state.phone}>
                         </TextInput>
                         <Icon name='md-person' size={24} color='#39afb5' style={{marginRight:15}} onPress={() => {this.props.navigation.navigate('Contact')}} />
@@ -227,7 +278,7 @@ class Transfer extends Component{
                
 
                 </ScrollView>
-                 <PinTransaction visible={this.state.modalVisible2} close={() => {this.setModalVisible2(!this.state.modalVisible2)}} />
+                 <PinTransaction visible={this.state.modalVisible2} close={() => {this.setModalVisible2(!this.state.modalVisible2)}} transaction={() => {this.handleTransfer()}} />
                 
                 {this.state.showButton == true ? 
                 <Button title={!this.state.isLoading ? 'TRANSFER' : 'LOADING'} onpress={() => this.setModalVisible(true)} />
@@ -245,7 +296,7 @@ class Transfer extends Component{
                     <View style={{backgroundColor:'#fff',paddingTop:20,borderTopLeftRadius: 25,borderTopRightRadius: 25}}>
                     <View style={{height:2,width:40,backgroundColor:'grey',alignSelf:'center',marginBottom:20}}></View>
                     
-                        <Detail label='No. Tujuan' data={this.state.phone} />
+                        <Detail label='No. Tujuan' data={this.state.kodeTelpon+this.state.phone} />
                         <Detail label='Nominal' data={this.state.nominal} />
                         <Detail label='Subject' data={'Transfer'} />
                         <Detail label='Tax' data='300' />
@@ -277,7 +328,7 @@ class Transfer extends Component{
                     {/* akhir tombol tombol */}
                 </View>
             </View>
-        </Modal>
+        </Modal >
             </View>
         )
     }

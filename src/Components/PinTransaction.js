@@ -18,7 +18,6 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 
 import {getPin} from '../Public/Actions/users'
-
 var Spinner = require('react-native-spinkit')
 const {height,width} = Dimensions.get('window')
 const color = '#39afb5'
@@ -66,6 +65,9 @@ class PinTransaction extends Component {
             else{
                 this.setState({isLoading:true},() => {setTimeout(() => {
                     this.setState({success:true})
+                    this.props.transaction()
+                    this.props.close()
+                    this.resetCode()
                 }, 1000)})
             }
             
@@ -88,6 +90,9 @@ class PinTransaction extends Component {
             viewPin:false,
             hideIcon:false
         })
+    }
+    resetCode = () => {
+        this.setState({code:'',isLoading:false})
     }
 
 
@@ -148,17 +153,12 @@ class PinTransaction extends Component {
                         :
                         null}
                     </View>
-                    {!this.state.hideIcon ? 
+                    {/* {!this.state.hideIcon ? 
                         <Icon name={'md-eye-off'} size={24} color='grey' onPress={this.viewCode} />   
                         :
                         <Icon name={'md-eye'} size={24} color='grey' onPress={this.hideCode} />   
-                    }
+                    } */}
                     </View>
-                    </>
-                    :
-                    (this.state.success) ? 
-                    <>
-                    <Text>Transfer Success</Text>
                     </>
                     :
                     <Spinner isVisible={this.state.isVisible} size={36} type={type} color='#39afb5'/>
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     },
     textPin:{
         fontSize:15,
-        color:color,
+        color:'grey',
         fontWeight:'700'
     },
 })
