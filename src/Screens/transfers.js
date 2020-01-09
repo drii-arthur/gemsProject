@@ -212,7 +212,7 @@ class Transfer extends Component{
                 <View style={[s.wrapperInput]}>
                     <Text style={s.label}>No Ponsel Antar GEMS</Text>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
-                        <Text>{this.state.kodeTelpon}</Text>
+                        <Text style={{color:'grey'}}>{this.state.kodeTelpon}</Text>
                         <TextInput
                         placeholder='8XX-XXXX_XXXX'
                         keyboardType='numeric'
@@ -263,7 +263,7 @@ class Transfer extends Component{
                 </View>
 
                 <View style={[s.wrapperInput,{marginTop:10}]}>
-                    <Text style={s.label}>Pesan</Text>
+                    <Text style={s.label}>Pesan <Text style={{color:'#bdc3c7'}}>(Optional)</Text></Text>
                     <TextInput
                         ref={(input) => this.message = input}
                         placeholder='Masukan Pesan Anda'
