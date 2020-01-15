@@ -129,7 +129,7 @@ class CardAccounts extends React.Component{
 
                             <TouchableOpacity style={styles.contentCard}>
                                 <Image source={require('../Assets/Icons/Multi_icon.png')}
-                                resizeMode='cover' style={{width:40,height:40}}/>
+                                resizeMode='center' style={{width:40,height:40}}/>
                             </TouchableOpacity>
                 </LinearGradient>
                 
