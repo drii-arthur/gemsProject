@@ -17,6 +17,7 @@ import Button from '../Components/button'
 import AsyncStorage from '@react-native-community/async-storage'
 import {profile} from '../Public/Actions/users'
 import SweetAlert from 'react-native-sweet-alert'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 const {height,width} = Dimensions.get('window')
 class TarikSaldo extends React.Component{
@@ -170,8 +171,9 @@ class TarikSaldo extends React.Component{
                 /> */}
 
                 <View>
-                    <View style={{backgroundColor:'#f9f9f7',paddingVertical:5,paddingHorizontal:15}}>                
+                    <View style={{backgroundColor:'#f9f9f7',paddingVertical:5,paddingHorizontal:15,}}>                
                         <Text style={s.label}>Pilih Bank</Text>
+                        {/* <Icon name='md-add-circle-outline' size={24} color='grey' /> */}
                     </View>                    
                     <View style={{alignItems:'center',marginVertical:10,}}>
                         <TouchableOpacity onPress={() => {this.setState({addBank:true})}}>
@@ -191,7 +193,7 @@ class TarikSaldo extends React.Component{
                         value={this.state.rekening}
                         placeholder='xxxx-xxxx-xxxx'
                         keyboardType='numeric'
-                        style={{backgroundColor:'#fff',paddingLeft:5}}/>
+                        style={{backgroundColor:'#fff',paddingLeft:5,justifyContent:'center'}}/>
                     </View>
                     {/* <Input
                     // value={this.state.rekening}
@@ -220,7 +222,7 @@ class TarikSaldo extends React.Component{
                     label='Nama Rekening'
                     placeholder='xxxx-xxxx-xxxx'
                     type='default'
-                    styleInput={{backgroundColor:'#fff',paddingLeft:5,height:null,color:'grey'}}
+                    styleInput={{backgroundColor:'#fff',paddingLeft:5,height:null,color:'grey',justifyContent: 'center',}}
                     value={this.state.name}
                     />
                     </View>
@@ -262,7 +264,7 @@ const s = StyleSheet.create({
         alignItems:'center',
         paddingVertical:10,
         borderRadius:5,
-        height:40,
+        // height:40,
         padding:0
     },
     label:{
