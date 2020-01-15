@@ -21,7 +21,7 @@ export default class BannerInfo extends React.Component {
     render() {
        
         return (
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ paddingHorizontal: 15, }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginRight: 10,paddingLeft:10 }}>
                         <BannerContent image={require('../Assets/Images/Banner.png')} />
                         <BannerContent image={require('../Assets/Images/Banner2.png')} />
                         <BannerContent image={require('../Assets/Images/Banner3.png')} />

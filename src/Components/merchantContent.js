@@ -31,7 +31,7 @@ export default class CardsMerchant extends React.Component {
     }
     render() {
         return (
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ paddingLeft: 15 }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginRight: 10,paddingLeft:10 }}>
                 {this.state.product.map((item, index) => {
                     return (
                         <View style={styles.wrapper} key={index}>
