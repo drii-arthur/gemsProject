@@ -20,7 +20,7 @@ const TabBar = (props) => {
         <TouchableOpacity 
             onPress={props.route}
             style={[s.tabbar]}>
-            <View style={{width:25,height:25}}>
+            <View style={{width:25,height:25,}}>
             <Image source={props.icon} resizeMode='center' style={{flex:1,width:undefined,height:undefined}} />
             </View>
             {/* <Icon name={props.icon} size={24} color={mainColor} /> */}

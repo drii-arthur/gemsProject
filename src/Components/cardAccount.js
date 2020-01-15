@@ -26,7 +26,7 @@ const List = (props) => {
             <Icon name={props.icon} size={20} color={props.color} />
             <Text  style={{fontSize:17,color:'#505050',fontFamily:'roboto',marginLeft:15}}>{props.title}</Text>
             </View>
-            {/* <Icon name={'ios-arrow-forward'} size={16} color={color} /> */}
+           <Icon name={'ios-arrow-forward'} size={18} color='#bdc3c7' />
 
         </TouchableOpacity>
     )
@@ -63,7 +63,7 @@ class CardAccounts extends React.Component{
     console.log('the open/close of the swipeToClose just changed');
     }
     render(){
-        const {logout,id,name,phone,status} = this.props
+        const {logout,id,name,phone,status,image,handleCamera} = this.props
         // const name = this.props.name
         // const phone = this.props.phone
         // const status = this.props.status
@@ -80,9 +80,9 @@ class CardAccounts extends React.Component{
 
                     {/* content name & phone */}
                     <View style={styles.wrapperText}>
-                    <View style={styles.wrapperImage}>
-                            <Image source={{uri:'https://pm1.narvii.com/6290/8d7fb5288992054eb8b04c4d1d07cf1b9f31b01c_hq.jpg'}} style={styles.image}/>
-                        </View>
+                        <TouchableOpacity style={styles.wrapperImage} onPress={handleCamera}>
+                            <Image source={{uri:`${image}`}} resizeMode='cover' style={styles.image}/>
+                        </TouchableOpacity>
                         <Text style={styles.textName}>{name != '' ? name : 'user account'}</Text>
                         <Text style={styles.textPhone}>{phone != '' ? phone : '08xx-xxxx-xxxx'}</Text>
                     </View>  
@@ -108,7 +108,7 @@ class CardAccounts extends React.Component{
                     </LinearGradient> 
                     </TouchableOpacity> 
                     :null}
-                    <View style={{backgroundColor:'#fff',height:25,}}></View>                          
+                    <View style={{backgroundColor:'#fff',height:25,borderTopLeftRadius: 25,}}></View>                          
                 </ImageBackground>
                 
                 </View>
@@ -209,15 +209,15 @@ const styles = StyleSheet.create({
     },
     wrapperImage:{
         width:height/10,
-        height:height/10
+        height:height/10,
+        borderRadius:height/10/2,
+        borderColor:'#636e72',
+        borderWidth:2,
     },
     image:{
-        width:undefined,
-        height:undefined,
-        flex:1,
-        borderRadius:height/10/2,
-        borderColor:'#fff',
-        borderWidth:1
+        width:'100%',
+        height:'100%',
+        borderRadius:height/10
 
     },
     wrapperText:{
@@ -243,7 +243,6 @@ const styles = StyleSheet.create({
         elevation:5,
         borderRadius:5,
         marginBottom:-20,
-        zIndex:-1
     },
     iconUpgrade:{
         justifyContent:'center',

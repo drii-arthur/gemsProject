@@ -150,21 +150,21 @@ const users = (state = initialState , action) => {
             isRejected:false,
             isFullFilled:true
         }
-        case 'UPGRADE_PREMIUM_PENDING':
+        case 'UPDATE_PROFILE_PENDING':
         return{
             ...state,
             isLoading:true,
             isRejected:false,
             isFullFilled:false
         }
-        case 'UPGRADE_PREMIUM_REJECTEED':
+        case 'UPDATE_PROFILE_REJECTEED':
         return{
             ...state,
             isLoading:false,
             isRejected:true,
             isFullFilled:false
         }
-        case 'UPGRADE_PREMIUM_FULLFILLED':
+        case 'UPDATE_PROFILE_FULLFILLED':
         return{
             ...state,
             isLoading:false,

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage'
 
-const url = `http://gems-os.id/api/admin/v1/transaction`
+const url = `https://gems-os.id/api/admin/v1/transaction`
 
 export const transfer = (data,token) => {
     return {

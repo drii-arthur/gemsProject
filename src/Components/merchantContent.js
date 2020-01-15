@@ -53,7 +53,7 @@ export default class CardsMerchant extends React.Component {
 
 const styles = StyleSheet.create({
     wrapper: {
-        width: width / 2.2,
+        width: width / 2,
         marginRight: 8,
         elevation: 2,
         borderWidth: 1,
@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: 150,
-        borderRadius: 5,
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
     },
     voucher:{
         backgroundColor:'#39afb5',

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage'
 
-const url = `http://gems-os.id/api`
+const url = `https://gems-os.id/api`
 
 export const signup = (data,token) => { 
     return {
@@ -76,13 +76,14 @@ export const signup = (data,token) => {
         }
     }
     
-    export const upgradePremium = (data,token) => {
+    export const upgradeProfile = (id,data,token) => { 
         return {
-            type : 'UPGRADE_PREMIUM',
-            payload:axios.post(`${url}/admin/v1/profile/user`,data,{
+            type : 'UPDATE_PROFILE',
+            payload:axios.post(`${url}/admin/v1/profile/user/${id}`,data,{
                 headers:{
                     Accept:'application/json',
-                    Authorization:`Bearer ${token}`
+                    Authorization:`Bearer ${token}`,
+                    'Content-Type': 'multipart/encrypted'
                 }
             })
         }
@@ -105,7 +106,7 @@ export const getPin = (token,currentPin) => {
         payload: axios.get(`${url}/admin/v1/pin/check/${currentPin}`,{
             headers:{
                 Accept:'application/json',
-                Authorization:`Bearer ${token}`
+                Authorization:`Bearer ${token}`,
             }
         })
     }

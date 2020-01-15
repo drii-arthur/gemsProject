@@ -278,7 +278,7 @@ class Transfer extends Component{
                
 
                 </ScrollView>
-                 <PinTransaction visible={this.state.modalVisible2} close={() => {this.setModalVisible2(!this.state.modalVisible2)}} transaction={() => {this.handleTransfer()}} />
+                 <PinTransaction visible={this.state.modalVisible2} close={() => {this.setModalVisible2(!this.state.modalVisible2)}} transaction={() => {this.handleTransfer()}} loading={this.state.isLoading} />
                 
                 {this.state.showButton == true ? 
                 <Button title={!this.state.isLoading ? 'TRANSFER' : 'LOADING'} onpress={() => this.setModalVisible(true)} />

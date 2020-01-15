@@ -1,7 +1,7 @@
 import axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage'
 
-const url = `http://gems-os.id/api`
+const url = `https://gems-os.id/api`
 
 export const pulsa = (type,provider,token) => {
     return {
