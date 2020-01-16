@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { ListItem } from 'react-native-elements'
 import {profile,upgradeProfile} from '../Public/Actions/users'
 import ImagePicker from 'react-native-image-picker'
-
+import Axios from 'axios'
 // import ListinProfile from '../Components/listInProfile'
 
 import Footer from '../Components/footer'
@@ -43,7 +43,7 @@ componentDidMount = async () => {
       name:data.name,
       phone:data.phone,
       status:data.status,
-      idUser:data.user_id.toString(),
+      idUser:data.id,
       image:data.photo_profile
     })
     
@@ -53,60 +53,71 @@ componentDidMount = async () => {
   })
 }
 
-handleUpdate = async () => {
-  let formData = new FormData();
-                formData.append('file', {
+
+
+_handleCamera = () => {
+        const options = {
+            storageOptions: {
+            skipBackup: true,
+            path: 'images'
+          }
+        }
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            // if(response.uri){
+              
+            //     this.setState({
+            //       image:response.uri,
+            //       uri:response.uri,
+            //       fileName:response.fileName
+            //     }, () => {this.handleUpdate()})            
+            // }
+
+  if (response.didCancel) {
+    console.log('User cancelled image picker');
+  } else if (response.error) {
+    console.log('ImagePicker Error: ', response.error);
+  } else if (response.customButton) {
+    console.log('User tapped custom button: ', response.customButton);
+  } else {
+    // const source = { uri: response.uri };
+    this.setState({
+      image: response.uri,
+      uri:response.path,
+      fileName:response.fileName
+    })
+  }
+});
+    }
+
+    handleUpdate = () => {
+      let formData = new FormData();
+                formData.append('photo_profile', {
                 uri: this.state.uri,
                 type: 'image/jpeg',
-                name: this.state.fileName
+                name: this.state.fileName,
             })
-      await this.props.dispatch(upgradeProfile(this.state.idUser,{photo_profile:this.state.uri,perangkat:'Mobile'},this.state.token))
+            formData.append({'perangkat':'mobile'})
+            const data = {
+              photo_profile : this.state.uri,
+              perangkat:'mobile'
+            }
+            const headers = {
+                    'Accept':'application/json',
+                    'Authorization':`Bearer ${this.state.token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+      // await this.props.dispatch(upgradeProfile(this.state.idUser,{formData},this.state.token))
+      Axios.post(`https://gems-os.id/api/admin/v1/profile/user/${this.state.idUser}`,data,{
+         headers:headers
+      })
       .then(res => {
         console.log(res)
       })
       .catch(err => {
-        console.log(err)
+        console.log(err,'errorr')
       })
-    }
-
-_handleCamera = () => {
-        const options = {
-            noData : true
-        }
-        ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response.data);
-
-            if(response.uri){
-              
-                this.setState({
-                  image:response.uri,
-                    uri:response.uri,
-                    fileName:response.fileName
-                }, () => {this.handleUpdate()})
-
-               
-            }
-
-  //       ImagePicker.showImagePicker(options, (response) => {
-  // console.log('Response = ', response);
- 
-  // if (response.didCancel) {
-  //   console.log('User cancelled image picker');
-  // } else if (response.error) {
-  //   console.log('ImagePicker Error: ', response.error);
-  // } else if (response.customButton) {
-  //   console.log('User tapped custom button: ', response.customButton);
-  // } else {
-  //   const source = { uri: response.uri };
- 
-  //   // You can also display the image using data:
-  //   // const source = { uri: 'data:image/jpeg;base64,' + response.data };
- 
-  //   this.setState({
-  //     image: source,
-  //   });
-  // }
-});
     }
 
     
@@ -131,7 +142,7 @@ _handleLogout = async () => {
         return(
             <View style={{flex:1}}>
               <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.3)" translucent={true} />
-                <CardAccounts name={this.state.name} phone={this.state.phone} status={this.state.status} id={this.state.idUser} image={this.state.image} logout={this._handleLogout} handleCamera={this._handleCamera} />
+                <CardAccounts name={this.state.name} phone={this.state.phone} status={this.state.status} id={this.state.idUser} image={this.state.image} logout={this._handleLogout} handleCamera={this._handleCamera}/>
                 <View style={{flex:1,backgroundColor:'#f9f9f7'}}>
                 </View>
                 <Footer/>

@@ -54,7 +54,8 @@ class Transfer extends Component{
                 modalVisible: false,
                 showButton:true,
                 modalVisible2:false,
-                kodeTelpon:'+62'
+                kodeTelpon:'+62',
+                kodeContact:false
             }
         }
 
@@ -99,7 +100,7 @@ class Transfer extends Component{
     handleTransfer = async () => {
         this.setState({isLoading:true})
         await this.props.dispatch(transfer({
-            phone:this.state.kodeTelpon+this.state.phone,
+            phone:this.state.kodeContact == false ? this.state.kodeTelpon+this.state.phone : this.state.phone,
             status_invoice:'GEMSOUT',
             code_invoice:'',
             subject:'TRANSFER',
@@ -136,7 +137,8 @@ class Transfer extends Component{
             let contact = this.props.navigation.getParam('nomor')
             if(contact != undefined){
             this.setState({
-                phone:contact
+                phone:contact,
+                kodeContact:true
             })
             }
         }
@@ -212,7 +214,9 @@ class Transfer extends Component{
                 <View style={[s.wrapperInput]}>
                     <Text style={s.label}>No Ponsel Antar GEMS</Text>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
+                    {!this.state.kodeContact ? 
                         <Text style={{color:'grey'}}>{this.state.kodeTelpon}</Text>
+                        :null}
                         <TextInput
                         placeholder='8XX-XXXX_XXXX'
                         keyboardType='numeric'
@@ -289,14 +293,14 @@ class Transfer extends Component{
                     transparent={true}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {
-                    alert('Modal has been closed.');
+                    this.setModalVisible(!this.state.modalVisible)
                     }}>
                     <View style={{flex:1,backgroundColor:'rgba(45, 52, 54,0.5)',elevation:3,justifyContent: 'flex-end'}}>
                         
                     <View style={{backgroundColor:'#fff',paddingTop:20,borderTopLeftRadius: 25,borderTopRightRadius: 25}}>
                     <View style={{height:2,width:40,backgroundColor:'grey',alignSelf:'center',marginBottom:20}}></View>
                     
-                        <Detail label='No. Tujuan' data={this.state.kodeTelpon+this.state.phone} />
+                        <Detail label='No. Tujuan' data={this.state.kodeContact == false ? this.state.kodeTelpon+this.state.phone : this.state.phone} />
                         <Detail label='Nominal' data={this.state.nominal} />
                         <Detail label='Subject' data={'Transfer'} />
                         <Detail label='Tax' data='300' />
@@ -360,7 +364,8 @@ const s = StyleSheet.create({
         borderRadius:5,
         marginVertical:5,
         flex:1,
-        marginRight:5
+        marginRight:5,
+        color:'grey'
     },
     list:{
         margin:10,

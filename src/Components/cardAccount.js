@@ -64,9 +64,6 @@ class CardAccounts extends React.Component{
     }
     render(){
         const {logout,id,name,phone,status,image,handleCamera} = this.props
-        // const name = this.props.name
-        // const phone = this.props.phone
-        // const status = this.props.status
         const modal = this.props.ref
         
         return(

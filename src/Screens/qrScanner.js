@@ -11,16 +11,28 @@ import QRCodeScanner from 'react-native-qrcode-scanner'
 import { RNCamera } from "react-native-camera"
 import BarcodeMask from 'react-native-barcode-mask'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-
+import {connect} from 'react-redux'
+import {AccessCode} from '../Public/Actions/Qr'
+import AsyncStorage from '@react-native-community/async-storage'
 import Header from "../Components/header";
 
-const {height} = Dimensions.get('window')
+const {height,width} = Dimensions.get('window')
 class ScanScreen extends Component{
   constructor(props){
     super(props)
     this.state = {
-      handleTorch:false
+      handleTorch:false,
+      qrCode:'',
+      token:''
     }
+  }
+
+  componentDidMount = async () => {
+    const token = await AsyncStorage.getItem('token',(err,res) => {
+      if(res){
+        this.setState({token:res})
+      }
+    }) 
   }
 
   _flashOn = () => {
@@ -37,11 +49,21 @@ class ScanScreen extends Component{
     
   }
 
-    onSuccess = (e) => {
-        // Linking
-        console.log('this data',JSON.stringify(e.data))
-        //   .openURL(e.data)
-          .catch(err => console.error('An error occured', err))
+    onSuccess = async (e) => {
+        console.log('this data',(e.data))
+        this.setState({qrCode:e.data},() => {this.handleQr()} )
+        
+    }
+
+    handleQr = async () => {
+        await this.props.dispatch(AccessCode(this.state.qrCode,this.state.token))
+        .then(res => {
+          const nomor =res.action.payload.data.data.hp
+          this.props.navigation.navigate('Transfer',{nomor:nomor})
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
     reactivate = () => {
       this._setScanning(true)
@@ -58,12 +80,14 @@ class ScanScreen extends Component{
           </TouchableOpacity>
           
             <QRCodeScanner
-            onRead={this.onSuccess}
+            onRead={(e) => this.onSuccess(e)}
             showMarker={true}
             ref={(node) => { this.scanner = node }}
             customMarker={
               <>
               <BarcodeMask
+              width={width/2}
+              height={width/2.2}
               animatedLineColor='#39afb5'
               edgeColor='#39afb5'
               />
@@ -97,7 +121,13 @@ class ScanScreen extends Component{
       }
     }
       
-    export default ScanScreen
+    const mapStateToProps = state => {
+    return {
+        Qr: state.Qr
+    };
+};
+
+export default connect(mapStateToProps)(ScanScreen)
 
     const styles = StyleSheet.create({
       centerText: {

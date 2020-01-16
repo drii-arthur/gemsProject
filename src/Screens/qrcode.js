@@ -8,10 +8,42 @@ import {
 import QRCode from 'react-native-qrcode-svg'
 import Barcode from 'react-native-barcode-builder'
 import Header from '../Components/header'
+import {connect} from 'react-redux'
+import {qrCode} from '../Public/Actions/Qr'
+import AsyncStorage from '@react-native-community/async-storage'
+
 
 const {height,width} = Dimensions.get('window')
 const mainColor = '#39afb5'
+
+
 class QrCode extends React.Component{
+    constructor(props){
+    super(props)
+        this.state = {
+            token:'',
+            qrCode:'gems'
+        }
+        }
+        
+        componentDidMount = async () => {
+            const token  = await AsyncStorage.getItem('token', (err,res) => {
+                if(res) {
+                    this.setState({token:res})
+                }
+            })
+            await this.props.dispatch(qrCode(this.state.token))
+            .then(res => {
+                console.log(res.action.payload.data.data);
+                this.setState({qrCode:res.action.payload.data.data})
+                
+            })
+            .catch(err => {
+                console.log(err)
+                
+            })
+        }
+    
     render(){
         return(
             <View>
@@ -22,26 +54,20 @@ class QrCode extends React.Component{
                     </Text>
                     <View style={s.scan}>
                     <QRCode
-                        value="gems"
+                        value={this.state.qrCode}
                         logo={require('../Assets/Icons/logoscan.png')}
                         logoSize={30}
-                        size={160}
+                        size={200}
                     />
                     </View>
                     <View style={{borderRadius:5,elevation:2,padding:5}}>
-                    <Barcode
-                        value="1234567890123456"
-                        format="CODE128"
-                        height={height/18}
-                        width={1.4}                  
-                    />
                     </View>
 
-                    <View style={[s.clip,s.garis]}>
+                    {/* <View style={[s.clip,s.garis]}>
                         <View style={{backgroundColor:mainColor,height:1,width:'100%'}}></View>
                     </View>
                     <View style={[s.clip,s.leftClip]}></View>
-                    <View style={[s.clip,s.rightClip]}></View>
+                    <View style={[s.clip,s.rightClip]}></View> */}
 
                 </View>
 
@@ -50,7 +76,13 @@ class QrCode extends React.Component{
     }
 }
 
-export default QrCode
+const mapStateToProps = state => {
+    return {
+        Qr: state.Qr
+    };
+};
+
+export default connect(mapStateToProps)(QrCode)
 
 const s =  StyleSheet.create({
     container:{
