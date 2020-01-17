@@ -22,7 +22,7 @@ const users = (state = initialState , action) => {
                 isRejected:true,
                 isFullFilled:false,
                 isLoading:false,
-                errMessage:action.payload.response ? action.payload.response.data.idcontact : action.payload.data.idcontact,
+                // errMessage:action.payload.response ? action.payload.response.data.idcontact : action.payload.data.idcontact,
             }
         case 'LOGIN_FULLFILLED':
             return{

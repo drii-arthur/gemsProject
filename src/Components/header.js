@@ -31,7 +31,7 @@ class Header extends React.Component{
             </View>
             <View style={{flex:1}}>
             <View style={{flex:1}}></View>
-            <View style={{backgroundColor:'#fff',height:'49%',borderTopLeftRadius:25}}></View>
+            <View style={{backgroundColor:'#fff',height:25,borderTopLeftRadius:25}}></View>
             </View>
                 
             </LinearGradient>

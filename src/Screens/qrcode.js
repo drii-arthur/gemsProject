@@ -3,7 +3,8 @@ import {
     View,
     Text,
     Dimensions,
-    StyleSheet
+    StyleSheet,
+    ActivityIndicator
     } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import Barcode from 'react-native-barcode-builder'
@@ -22,11 +23,13 @@ class QrCode extends React.Component{
     super(props)
         this.state = {
             token:'',
-            qrCode:'gems'
+            qrCode:'gems',
+            isLoading:false
         }
         }
         
         componentDidMount = async () => {
+            this.setState({isLoading:true})
             const token  = await AsyncStorage.getItem('token', (err,res) => {
                 if(res) {
                     this.setState({token:res})
@@ -34,9 +37,8 @@ class QrCode extends React.Component{
             })
             await this.props.dispatch(qrCode(this.state.token))
             .then(res => {
-                console.log(res.action.payload.data.data);
-                this.setState({qrCode:res.action.payload.data.data})
-                
+                console.log(res.action.payload.data.data)
+                this.setState({qrCode:res.action.payload.data.data,isLoading:false})
             })
             .catch(err => {
                 console.log(err)
@@ -49,6 +51,10 @@ class QrCode extends React.Component{
             <View>
             <Header title='Barcode'/>
                 <View style={s.container}>
+                {this.state.isLoading == true ? 
+                    <ActivityIndicator />
+                    :
+                    <>
                     <Text style={{marginHorizontal:20,textAlign:'center'}}>
                         Scan QR Code ini Untuk Melakukan Transaksi
                     </Text>
@@ -60,15 +66,14 @@ class QrCode extends React.Component{
                         size={200}
                     />
                     </View>
-                    <View style={{borderRadius:5,elevation:2,padding:5}}>
-                    </View>
 
                     {/* <View style={[s.clip,s.garis]}>
                         <View style={{backgroundColor:mainColor,height:1,width:'100%'}}></View>
                     </View>
                     <View style={[s.clip,s.leftClip]}></View>
                     <View style={[s.clip,s.rightClip]}></View> */}
-
+                    </>
+                }
                 </View>
 
             </View>
@@ -93,8 +98,7 @@ const s =  StyleSheet.create({
         paddingVertical: 35,
         borderRadius:5,
         position:'relative',
-        borderColor:mainColor,
-        borderWidth:1,
+        height:height/1.5
     },
     clip:{
         position:'absolute',

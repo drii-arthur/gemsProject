@@ -55,7 +55,8 @@ class Transfer extends Component{
                 showButton:true,
                 modalVisible2:false,
                 kodeTelpon:'+62',
-                kodeContact:false
+                kodeContact:false,
+                errorMessage:''
             }
         }
 
@@ -103,6 +104,7 @@ class Transfer extends Component{
             phone:this.state.kodeContact == false ? this.state.kodeTelpon+this.state.phone : this.state.phone,
             status_invoice:'GEMSOUT',
             code_invoice:'',
+            category:'C',
             subject:'TRANSFER',
             description:this.state.pesan,
             amount:this.state.nominal,
@@ -124,7 +126,18 @@ class Transfer extends Component{
             
         })
         .catch(err => {
-            console.log(err)
+            // alert(this.props.transaction.errMessage)
+            const errorMessage = this.props.transaction.errMessage
+            SweetAlert.showAlertWithOptions({
+            title: 'SomeThing Wrong' ,
+            subTitle: errorMessage.toString(),
+            confirmButtonTitle: 'OK',
+            confirmButtonColor: '#000',
+            otherButtonTitle: 'Cancel',
+            otherButtonColor: '#dedede',
+            style: 'error',
+            cancellable: true
+            },this.resetForm)
             this.setState({isLoading:false})
             
         })

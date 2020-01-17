@@ -66,7 +66,7 @@ class Notification extends Component{
         return(
             <View style={{flex:1}}>
                 <Header title='Notifications' />
-            <TabView style={{ backgroundColor: '#fff' }}
+            <TabView style={{ backgroundColor: '#fff',marginTop:-25}}
         navigationState={this.state}
         renderScene={SceneMap({
          Notif:Notif,

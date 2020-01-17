@@ -86,8 +86,7 @@ class ScanScreen extends Component{
             customMarker={
               <>
               <BarcodeMask
-              width={width/2}
-              height={width/2.2}
+             
               animatedLineColor='#39afb5'
               edgeColor='#39afb5'
               />

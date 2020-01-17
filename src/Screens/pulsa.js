@@ -33,13 +33,14 @@ class Pulsa extends Component{
             payAs:'',
             pulsa:[],
             token:'',
-            prabayar:false,
+            prabayar:true,
             type:'',
             provider:'',
             value:0,
             price:'',
             desc:'',
-            refreshing:false
+            refreshing:false,
+            pascaBayar:false
             
         }
     }
@@ -141,13 +142,12 @@ class Pulsa extends Component{
                 this.state.phone.substring(0,4) == '0852' ||    
                 this.state.phone.substring(0,4) == '0823' ){
                     const provider = "TELKOMSEL"
-                    const type = "REGULER"
                     this.setState({
                         provider:provider,
                         type:type
                     })
                     console.log('haii')
-                this.props.dispatch(pulsa(this.state.type,this.state.provider,this.state.token))
+                this.props.dispatch(pulsa(this.state.provider,this.state.token))
                 .then(res => {
                     this.setState({pulsa:res.action.payload.data.data})
                 })
@@ -167,7 +167,7 @@ class Pulsa extends Component{
                         provider:provider,
                         type:type
                     })
-                this.props.dispatch(pulsa(this.state.type,this.state.provider,this.state.token))
+                this.props.dispatch(pulsa(this.state.provider,this.state.token))
                 .then(res => {
                     this.setState({pulsa:res.action.payload.data.data})
                 })
@@ -180,13 +180,12 @@ class Pulsa extends Component{
                 this.state.phone.substring(0,4) == '0857' ||    
                 this.state.phone.substring(0,4) == '0858' ||        
                 this.state.phone.substring(0,4) == '0815'){
-                    const provider = "INDOSAT"
-                    const type = "REGULER"
+                    const provider = 209
                     this.setState({
                         provider:provider,
                         type:type
                     })
-                    this.props.dispatch(pulsa(this.state.type,this.state.provider,this.state.token))
+                    this.props.dispatch(pulsa(this.state.provider,this.state.token))
                     .then(res => {
                     this.setState({pulsa:res.action.payload.data.data})
                     })
@@ -230,7 +229,34 @@ class Pulsa extends Component{
             <View style={{flex:1}}>
             <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.1)" translucent={true} />
                 <Header title='Pulsa' />
-                <View style={styles.wrapperInput}>
+                <View style={{height:50,marginTop:-24,borderTopLeftRadius:25,flexDirection:'row',paddingLeft:1,paddingTop:1}}>
+                    <TouchableOpacity onPress={() => {this.setState({prabayar:true,pascaBayar:false})}} style={[styles.layanan,this.state.prabayar ?{ borderColor:'#fff', borderWidth:1
+                    } : null]}>
+                    {this.state.prabayar ? 
+                    <LinearGradient
+                    style={[styles.layanan,{height:'100%',width:'100%'}]} 
+                        start={{x: 0, y: 1}} 
+                        end={{x: 2, y:1.}} 
+                    colors={['#39afb5','#57bfed']}>
+                    <Text style={this.state.prabayar ? {color:'#fff'} :{}}>Prabayar</Text>
+                    </LinearGradient>:
+                     <Text style={this.state.prabayar ? {color:'#fff'} :{}}>Prabayar</Text>}
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => {this.setState({prabayar:false,pascaBayar:true})}} style={[styles.layanan,this.state.prabayar ?{ borderColor:'#fff', borderWidth:1
+                    } : null]}>
+                    {this.state.pascaBayar ? 
+                    <LinearGradient
+                    style={[styles.layanan,{height:'100%',width:'100%'}]} 
+                        start={{x: 0, y: 1}} 
+                        end={{x: 2, y:1.}} 
+                    colors={['#39afb5','#57bfed']}>
+                    <Text style={this.state.pascaBayar ? {color:'#fff'} :{}}>Pasca Bayar</Text>
+                    </LinearGradient>:
+                     <Text style={this.state.pascaBayar ? {color:'#fff'} :{}}>Pasca Bayar</Text>}
+                    </TouchableOpacity>
+                </View>
+                {/* <View style={styles.wrapperInput}>
                 <View style={{marginHorizontal:10,marginBottom:10,borderBottomColor:'#ecf0f1',borderBottomWidth:1,paddingVertical:10}}>
                  <Text style={{color:'#39afb5',fontWeight:'bold',fontSize:15,marginBottom:10}}>
                     Jenis Layanan
@@ -253,7 +279,7 @@ class Pulsa extends Component{
                     </View>
 
                 
-            </View>
+            </View> */}
 
             <View style={[styles.wrapperInput,{marginTop:10}]}>
             
@@ -438,4 +464,13 @@ const styles = StyleSheet.create({
         marginLeft:14,
         marginTop:-15
     },
+    layanan:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        borderRadius:25,
+    },
+    textLayanan:{
+        color:'#fff'
+    }
 })

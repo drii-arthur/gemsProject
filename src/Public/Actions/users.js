@@ -19,7 +19,6 @@ export const signup = (data,token) => {
     return {
         type: 'LOGIN',
         payload: axios.post(`${url}/login`, data)
-
     }
 }
     export const izin = (data) => {

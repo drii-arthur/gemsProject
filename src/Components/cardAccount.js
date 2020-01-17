@@ -71,7 +71,7 @@ class CardAccounts extends React.Component{
                 <View style={{height:height/2.5}}>
                 <ImageBackground
                 // imageStyle={{borderBottomLeftRadius:25}}
-                source={require('../Assets/Images/bg2.png')}
+                source={require('../Assets/Images/bg1.png')}
                 style={{width:'100%',height:'100%'}} resizeMode='cover'
                 style={styles.wrapperTop}>
 
@@ -113,7 +113,7 @@ class CardAccounts extends React.Component{
 
                 <LinearGradient
                     colors={['#fff','rgba(85, 239, 196,0.1)']}
-                    style={styles.card}>
+                    style={[styles.card,status == 'premium' ? {marginTop:-25,borderTopLeftRadius:25} : {}]}>
                     <TouchableOpacity 
                     onPress={() => this.refs.modal4.open()}
                     style={styles.contentCard}>

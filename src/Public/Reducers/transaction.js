@@ -18,7 +18,8 @@ const transaction = (state = initialState , action) => {
                 ...state,
                 isLoading:false,
                 isRejected:true,
-                isFullFilled:false
+                isFullFilled:false,
+                errMessage:action.payload.response ? action.payload.response.data.error.error : action.payload.data.error
             }
         case 'TRANSFER_FULLFILLED':
             return {
