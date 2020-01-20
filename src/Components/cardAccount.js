@@ -8,9 +8,10 @@ import {
     TouchableOpacity,
     StyleSheet,
     Button,
-    ScrollView
+    ScrollView,
+    Modal
 } from 'react-native'
-import Modal from 'react-native-modalbox'
+// import Modal from 'react-native-modalbox'
 import Icon from 'react-native-vector-icons/Ionicons'
 import {withNavigation} from "react-navigation"
 import QRCode from 'react-native-qrcode-svg'
@@ -47,9 +48,15 @@ class CardAccounts extends React.Component{
         isOpen: false,
         isDisabled: false,
         swipeToClose: true,
-        sliderValue: 0.3
+        sliderValue: 0.3,
+        modalVisible: false,
         };
     }
+
+    setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
 
     onClose() {
     console.log('Modal just closed');
@@ -63,7 +70,7 @@ class CardAccounts extends React.Component{
     console.log('the open/close of the swipeToClose just changed');
     }
     render(){
-        const {logout,id,name,phone,status,image,handleCamera} = this.props
+        const {logout,id,name,phone,status,image,handleCamera,qrCode} = this.props
         const modal = this.props.ref
         
         return(
@@ -115,12 +122,13 @@ class CardAccounts extends React.Component{
                     colors={['#fff','rgba(85, 239, 196,0.1)']}
                     style={[styles.card,status == 'premium' ? {marginTop:-25,borderTopLeftRadius:25} : {}]}>
                     <TouchableOpacity 
-                    onPress={() => this.refs.modal4.open()}
                     style={styles.contentCard}>
                         <Image source={{uri:'https://images.vexels.com/media/users/3/157862/isolated/preview/5fc76d9e8d748db3089a489cdd492d4b-barcode-scanning-icon-by-vexels.png'}} resizeMode='cover' style={styles.imageCard} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={[styles.contentCard,styles.contentCardCenter]} onPress={() => this.refs.modal3.open()}>
+                    <TouchableOpacity style={[styles.contentCard,styles.contentCardCenter]} onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible)
+                }}>
                         <Image source={{uri:'https://static.thenounproject.com/png/59262-200.png'}} resizeMode='cover' style={styles.imageCard} />
                     </TouchableOpacity>
 
@@ -140,10 +148,36 @@ class CardAccounts extends React.Component{
                         <List title='Logout' icon={'md-log-out'} color={color} route={logout} s={{marginTop:5}} />
                  </View>
 
-                  <Modal style={[styles.modal, styles.modal3]} position={"center"} ref={"modal3"} isDisabled={this.state.isDisabled}>
+                 <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            this.setModalVisible(!this.state.modalVisible)
+          }}>
+          <View style={{justifyContent:'center',backgroundColor:'rgba(45, 52, 54,0.5)',flex:1,alignItems:'center'}}>
+            <View style={{backgroundColor:'#fff',width:width/1.2,height:height/1.5,borderRadius:10,alignItems:'center',justifyContent:'center'}}>
+            <TouchableOpacity
+            style={{position:'absolute',top:0,right:0,width:40,height:40,justifyContent:'center',alignItems:'center'}}
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}>
+                <Icon name='md-close' size={24} color='tomato' />
+              </TouchableOpacity>
+                <QRCode
+                        value={qrCode}
+                        logo={require('../Assets/Icons/logoscan.png')}
+                        logoSize={30}
+                        size={200}
+                    /> 
+            </View>
+          </View>
+        </Modal>
+
+                  {/* <Modal style={[styles.modal, styles.modal3]} position={"center"} ref={"modal3"} isDisabled={this.state.isDisabled}>
                     <Text style={styles.text}>Scan Code</Text>
                     <QRCode
-                        value="gems"
+                        value={qrCode}
                         logo={require('../Assets/Icons/logoscan.png')}
                         logoSize={30}
                         size={180}
@@ -159,7 +193,7 @@ class CardAccounts extends React.Component{
                         height={height/18}
                         width={1.8}
                         text='12234567890'/>
-                </Modal>
+                </Modal> */}
 
                  </ScrollView>
                

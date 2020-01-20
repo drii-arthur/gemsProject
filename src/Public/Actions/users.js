@@ -80,9 +80,9 @@ export const signup = (data,token) => {
             type : 'UPDATE_PROFILE',
             payload:axios.post(`${url}/admin/v1/profile/user/${id}`,data,{
                 headers:{
-                    'Accept':'application/json',
-                    'Authorization':`Bearer ${token}`,
-                    'content-type': 'multipart/formData'
+                    Accept:'application/json',
+                    Authorization:`Bearer ${token}`,
+                    // 'Content-type': 'multipart/form-data'
                 }
             })
         }

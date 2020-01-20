@@ -52,6 +52,8 @@ target 'reactapp' do
 
   pod 'react-native-spinkit', :path => '../node_modules/react-native-spinkit'
 
+  pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+
   target 'reactappTests' do
     inherit! :search_paths
     # Pods for testing

@@ -30,7 +30,7 @@ class HeaderTransaction extends React.Component{
          await this.props.dispatch(saldo(this.state.token))
         .then(res => {
             console.log(res.action.payload.data.data)
-            this.setState({saldo:res.action.payload.data.data.nominal})
+            this.setState({saldo:res.action.payload.data.data.nominal.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')})
         })
         .catch(err => {
             console.log(err)

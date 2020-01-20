@@ -9,6 +9,8 @@ import { ListItem } from 'react-native-elements'
 import {profile,upgradeProfile} from '../Public/Actions/users'
 import ImagePicker from 'react-native-image-picker'
 import Axios from 'axios'
+import {qrCode} from '../Public/Actions/Qr'
+
 // import ListinProfile from '../Components/listInProfile'
 
 import Footer from '../Components/footer'
@@ -25,7 +27,8 @@ class Accounts extends React.Component{
       idUser:'',
       image:'',
       uri:'',
-      fileName:''
+      fileName:'',
+      qrCode:'gemssssssssss',
     }
   }
 
@@ -51,6 +54,16 @@ componentDidMount = async () => {
   .catch(err => {
     console.log(err)
   })
+
+   await this.props.dispatch(qrCode(this.state.token))
+            .then(res => {
+                console.log(res.action.payload.data.data)
+                this.setState({qrCode:res.action.payload.data.data})
+            })
+            .catch(err => {
+                console.log(err)
+                
+            })
 }
 
 
@@ -87,31 +100,24 @@ _handleCamera = () => {
       uri:response.path,
       fileName:response.fileName
     })
+    this.handleUpdate()
   }
 });
     }
 
-    handleUpdate = () => {
+    handleUpdate = async () => {
       let formData = new FormData();
                 formData.append('photo_profile', {
                 uri: this.state.uri,
                 type: 'image/jpeg',
                 name: this.state.fileName,
             })
-            formData.append({'perangkat':'mobile'})
-            const data = {
-              photo_profile : this.state.uri,
-              perangkat:'mobile'
-            }
-            const headers = {
-                    'Accept':'application/json',
-                    'Authorization':`Bearer ${this.state.token}`,
-                    'Content-Type': 'multipart/form-data'
-                }
-      // await this.props.dispatch(upgradeProfile(this.state.idUser,{formData},this.state.token))
-      Axios.post(`https://gems-os.id/api/admin/v1/profile/user/${this.state.idUser}`,data,{
-         headers:headers
-      })
+            formData.append('perangkat','mobile')
+            // const data = {
+            //   photo_profile : this.state.uri,
+            //   perangkat:'mobile'
+            // }
+      await this.props.dispatch(upgradeProfile(this.state.idUser,{photo_profile:this.state.uri,perangkat:'Mobile'},this.state.token))
       .then(res => {
         console.log(res)
       })
@@ -142,7 +148,7 @@ _handleLogout = async () => {
         return(
             <View style={{flex:1}}>
               <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.3)" translucent={true} />
-                <CardAccounts name={this.state.name} phone={this.state.phone} status={this.state.status} id={this.state.idUser} image={this.state.image} logout={this._handleLogout} handleCamera={this._handleCamera}/>
+                <CardAccounts name={this.state.name} phone={this.state.phone} status={this.state.status} id={this.state.idUser} image={this.state.image} logout={this._handleLogout} handleCamera={this._handleCamera} qrCode={this.state.qrCode}/>
                 <View style={{flex:1,backgroundColor:'#f9f9f7'}}>
                 </View>
                 <Footer/>

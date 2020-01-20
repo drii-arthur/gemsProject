@@ -17,6 +17,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import {withNavigation} from "react-navigation"
 import {saldo} from '../../Public/Actions/users'
 import {connect} from 'react-redux'
+import Pusher from 'pusher-js/react-native'
 
 import HeaderHome from '../../Components/HeaderHome'
 import BannerInfo from '../../Components/bannerInfo'
@@ -41,6 +42,11 @@ const Label = (props) => {
     )
 }
 
+Pusher.logToConsole = true;
+var pusher = new Pusher('3151fb2a32437abb43bc', {
+  cluster: 'ap1',
+  forceTLS: true
+});
 const {height,width} = Dimensions.get('window')
 class HomePage extends React.Component{
     constructor(props){
@@ -65,6 +71,9 @@ class HomePage extends React.Component{
                 this.getSaldo()
             })
                 this.getSaldo()
+                
+
+    
         }
         
     componentWillUnMount (){
@@ -75,7 +84,7 @@ class HomePage extends React.Component{
         await this.props.dispatch(saldo(this.state.token))
         .then(res => {
             this.setState({
-                saldo:res.action.payload.data.data.nominal,
+                saldo:res.action.payload.data.data.nominal.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'),
                 point:res.action.payload.data.data.point,
                 })
         })
@@ -85,7 +94,10 @@ class HomePage extends React.Component{
     }
 
     render(){
-
+        var channel = pusher.subscribe('3')
+channel.bind('notification', function(data) {
+  alert(JSON.stringify(data))
+});
         const staticHeaders = this.state.scrollY.interpolate({
             inputRange: [0, 50],
             outputRange: [0, 1]
