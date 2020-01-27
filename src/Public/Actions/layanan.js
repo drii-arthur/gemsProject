@@ -3,10 +3,10 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 const url = `https://gems-os.id/api`
 
-export const pulsa = (type,provider,token) => {
+export const pulsa = (provider,token) => {
     return {
         type: 'PULSA',
-        payload: axios.get(`${url}/admin/v1/pulsa?type=${type}&provider=${provider}`,{
+        payload: axios.get(`${url}/admin/v1/product/detail/${provider}`,{
             headers:{
                 'Accept' :'application/json',
                 'Authorization' :`Bearer ${token}`,

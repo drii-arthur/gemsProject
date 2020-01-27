@@ -208,8 +208,8 @@ const styles = StyleSheet.create({
     },
     wrapperTop:{
         justifyContent: 'center',
-         alignItems: 'center',
-         flex: 1 
+        alignItems: 'center',
+        flex: 1 
     },
     teksVerification:{
         fontSize: 18,

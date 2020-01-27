@@ -24,6 +24,7 @@ import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import java.util.List;
 import java.util.Arrays;
 import com.facebook.react.shell.MainReactPackage;
+// import com.b8ne.RNPusherPushNotifications.RNPusherPushNotificationsPackage;
 
 
 public class MainApplication extends Application implements ReactApplication {
@@ -39,6 +40,8 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages() ;
+          // packages.add(RNPusherPushNotificationsPackage());
+          
           return packages; 
         }
 

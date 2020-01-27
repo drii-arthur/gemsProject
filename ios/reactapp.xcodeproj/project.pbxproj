@@ -51,6 +51,7 @@
 		99AEA750CA804E558B4AD60B /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 586A9F361E834F799AD48D0A /* SimpleLineIcons.ttf */; };
 		FDA07E413E1F4832B0CEA062 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3254F5A4459491396A121EC /* Zocial.ttf */; };
 		FB723D3E8623479F9D0EDF18 /* libRNSweetAlert.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 167E8E7AC74D4942971A53EB /* libRNSweetAlert.a */; };
+		81B2C72F48C54B6C9C70B7BC /* libRNPusherPushNotifications.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA098352AAB41D39DCF1182 /* libRNPusherPushNotifications.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,8 @@
 		F3254F5A4459491396A121EC /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		F1B16A9C6DFB47F5969CAB59 /* RNSweetAlert.xcodeproj */ = {isa = PBXFileReference; name = "RNSweetAlert.xcodeproj"; path = "../node_modules/react-native-sweet-alert/ios/RNSweetAlert.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		167E8E7AC74D4942971A53EB /* libRNSweetAlert.a */ = {isa = PBXFileReference; name = "libRNSweetAlert.a"; path = "libRNSweetAlert.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		DAF15D144D3F42AF9E2F6868 /* RNPusherPushNotifications.xcodeproj */ = {isa = PBXFileReference; name = "RNPusherPushNotifications.xcodeproj"; path = "../node_modules/react-native-pusher-push-notifications/ios/RNPusherPushNotifications.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		1AA098352AAB41D39DCF1182 /* libRNPusherPushNotifications.a */ = {isa = PBXFileReference; name = "libRNPusherPushNotifications.a"; path = "libRNPusherPushNotifications.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB723D3E8623479F9D0EDF18 /* libRNSweetAlert.a in Frameworks */,
+				81B2C72F48C54B6C9C70B7BC /* libRNPusherPushNotifications.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				F1B16A9C6DFB47F5969CAB59 /* RNSweetAlert.xcodeproj */,
+				DAF15D144D3F42AF9E2F6868 /* RNPusherPushNotifications.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -620,10 +625,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../**",
+					"$(SRCROOT)/..\node_modules\react-native-pusher-push-notifications\ios",
 				);
 			};
 			name = Debug;
@@ -647,10 +654,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../**",
+					"$(SRCROOT)/..\node_modules\react-native-pusher-push-notifications\ios",
 				);
 			};
 			name = Release;
@@ -674,6 +683,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../**",
+					"$(SRCROOT)/..\node_modules\react-native-pusher-push-notifications\ios",
 				);
 			};
 			name = Debug;
@@ -696,6 +706,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../**",
+					"$(SRCROOT)/..\node_modules\react-native-pusher-push-notifications\ios",
 				);
 			};
 			name = Release;
@@ -727,10 +738,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../**",
+					"$(SRCROOT)/..\node_modules\react-native-pusher-push-notifications\ios",
 				);
 			};
 			name = Debug;
@@ -762,10 +775,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../**",
+					"$(SRCROOT)/..\node_modules\react-native-pusher-push-notifications\ios",
 				);
 			};
 			name = Release;
@@ -796,10 +811,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../**",
+					"$(SRCROOT)/..\node_modules\react-native-pusher-push-notifications\ios",
 				);
 			};
 			name = Debug;
@@ -830,10 +847,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../**",
+					"$(SRCROOT)/..\node_modules\react-native-pusher-push-notifications\ios",
 				);
 			};
 			name = Release;

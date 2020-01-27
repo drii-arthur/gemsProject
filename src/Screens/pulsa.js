@@ -1,17 +1,14 @@
 import React,{Component} from 'react'
-import { View,Text,StyleSheet,FlatList,StatusBar,Dimensions,TouchableOpacity,ScrollView,Image,Picker,RefreshControl } from "react-native"
-import {Input} from 'react-native-elements'
+import { View,Text,StyleSheet,FlatList,StatusBar,Dimensions,TouchableOpacity,ScrollView,Image,Picker,RefreshControl,TextInput,ActivityIndicator,Modal } from "react-native"
 import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
 import CardPulsa from '../Components/cardPulsa'
 import Header from '../Components/header'
 import LinearGradient from 'react-native-linear-gradient'
-import Modal from 'react-native-modalbox'
 import RNPickerSelect from 'react-native-picker-select'
 import AsyncStorage from '@react-native-community/async-storage'
 import {pulsa} from '../Public/Actions/layanan'
 import {connect} from 'react-redux'
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button'
 
 
 const color = '#39afb5'
@@ -26,28 +23,36 @@ class Pulsa extends Component{
         super(props)
         this.state = {
             phone:'',
-            isOpen: false,
-            isDisabled: false,
-            swipeToClose: true,
-            sliderValue: 0.3,
+            operator:'',
             payAs:'',
             pulsa:[],
             token:'',
             prabayar:true,
             type:'',
-            provider:'',
             value:0,
             price:'',
             desc:'',
             refreshing:false,
-            pascaBayar:false
-            
+            pascaBayar:false,
+            indosat:false,
+            telkomsel:false,
+            xl:false,
+            three:false,
+            isLoading:false,
+            axis:false,
+            smartfren:false,
+            modalVisible: false,
         }
     }
 
     _DeletedInput = () => {
         this.setState({
-            phone:''
+            phone:'',
+            indosat:false,
+            telkomsel:false,
+            xl:false,
+            three:false,
+            isLoading:false
         })
     }
 
@@ -61,13 +66,22 @@ class Pulsa extends Component{
                 teks.substring(0,4) == '0822' ||    
                 teks.substring(0,4) == '0853' ||    
                 teks.substring(0,4) == '0852' ||    
+                teks.substring(0,4) == '0851' ||    
                 teks.substring(0,4) == '0823' ){
-                    const provider = "TELKOMSEL"
-                    const type = "REGULER"
                     this.setState({
-                        provider:provider,
-                        type:type
+                        telkomsel:true,
+                        isLoading:true
                     })
+                this.props.dispatch(pulsa(327,this.state.token))
+                .then(res => {
+                    this.setState({
+                        pulsa:res.action.payload.data.products,
+                        isLoading:false
+                    })
+                })
+                .catch(err => {
+                    console.log(err)
+                })
                 }
         else if(teks.substring(0,4) == '0817' ||
                 teks.substring(0,4) == '0877' ||  
@@ -75,39 +89,137 @@ class Pulsa extends Component{
                 teks.substring(0,4) == '0819' ||    
                 teks.substring(0,4) == '0818' ||    
                 teks.substring(0,4) == '0859'){
-                    const provider = "XL"
-                    const type = "REGULER"
                     this.setState({
-                        provider:provider,
-                        type:type
+                        xl:true,
+                        isLoading:true
                     })
+                this.props.dispatch(pulsa(14,this.state.token))
+                .then(res => {
+                this.setState({
+                    pulsa:res.action.payload.data.products,
+                    isLoading:false
+                })
+                })
+            .catch(err => {
+            console.log(err)
+            })
                 }
         else if(teks.substring(0,4) == '0855' ||
                 teks.substring(0,4) == '0856' ||  
                 teks.substring(0,4) == '0857' ||    
                 teks.substring(0,4) == '0858' ||        
                 teks.substring(0,4) == '0815'){
-                    const provider = "INDOSAT"
-                    const type = "REGULER"
                     this.setState({
-                        provider:provider,
-                        type:type
+                        indosat:true,
+                        isLoading:true
+                    })
+            this.props.dispatch(pulsa(24,this.state.token))
+            .then(res => {
+                this.setState({
+                    pulsa:res.action.payload.data.products,
+                    isLoading:false 
+                })
+            })
+            .catch(err => {
+            console.log(err)
+            })
+                }
+            
+            else if(teks.substring(0,4) == '0881' ||
+                teks.substring(0,4) == '0882' ||  
+                teks.substring(0,4) == '0883' ||    
+                teks.substring(0,4) == '0884' ||        
+                teks.substring(0,4) == '0885' ||        
+                teks.substring(0,4) == '0886' ||        
+                teks.substring(0,4) == '0888' ||        
+                teks.substring(0,4) == '0887' ||        
+                teks.substring(0,4) == '0889'){
+                    this.setState({
+                        smartfren:true,
+                        isLoading:true
+                    })
+            this.props.dispatch(pulsa(207,this.state.token))
+            .then(res => {
+                this.setState({
+                    pulsa:res.action.payload.data.products,
+                    isLoading:false 
+                })
+            })
+            .catch(err => {
+            console.log(err)
+            })
+                }
+            
+            else if(teks.substring(0,4) == '0896' ||
+                teks.substring(0,4) == '0897' ||  
+                teks.substring(0,4) == '0898' ||    
+                teks.substring(0,4) == '0899' ||        
+                teks.substring(0,4) == '0895'){
+                    this.setState({
+                        three:true,
+                        isLoading:true
+                    })
+            this.props.dispatch(pulsa(6,this.state.token))
+            .then(res => {
+                this.setState({
+                    pulsa:res.action.payload.data.products,
+                    isLoading:false 
+                })
+            })
+            .catch(err => {
+            console.log(err)
+            })
+                }
+
+            else if(teks.substring(0,4) == '0831' ||
+                teks.substring(0,4) == '0832' ||  
+                teks.substring(0,4) == '0838' ||            
+                teks.substring(0,4) == '0833'){
+                    this.setState({
+                        axis:true,
+                        isLoading:true
+                    })
+            this.props.dispatch(pulsa(18,this.state.token))
+            .then(res => {
+                this.setState({
+                    pulsa:res.action.payload.data.products,
+                    isLoading:false 
+                })
+            })
+            .catch(err => {
+            console.log(err)
+            })
+                }
+            else {
+                    this.setState({
+                        pulsa:'',
+                        indosat:false,
+                        telkomsel:false,
+                        three:false,
+                        indosat:false,
+                        xl:false,
+                        axis:false,
+                        smartfren:false
                     })
                 }
-        if(teks.length >= 4) {
-        this.props.dispatch(pulsa(this.state.type,this.state.provider,this.state.token))
-        .then(res => {
-            console.log(res)
-            this.setState({pulsa:res.action.payload.data.data})
-        })
-        .catch(err => {
-            console.log(err)
-        })
-        }
+        // if(teks.length == 4) {
+        // this.props.dispatch(pulsa(this.state.provider,this.state.token))
+        // .then(res => {
+        //     console.log(res.action.payload.data.products[0].image_url)
+        //     this.setState({
+        //         pulsa:res.action.payload.data.products,
+        //         image:res.action.payload.data.products[0].image_url
+        //         })
+        // })
+        // .catch(err => {
+        //     console.log(err)
+        // })
+        // }
         
     }
 
     componentDidMount = async () => {
+        this.setState({isLoading:false})
         const token = await AsyncStorage.getItem('token',(err,res) => {
             if(res){
                 this.setState({
@@ -216,6 +328,9 @@ class Pulsa extends Component{
             }, 2000);})
         }
 
+         setModalVisible(visible) {
+            this.setState({modalVisible:visible})
+        }
 
     goBack = () => {
         this.props.navigation.goBack()
@@ -223,13 +338,12 @@ class Pulsa extends Component{
     render(){
         const {pulsa} = this.state
         const {phone} = this.state
-        console.log(phone);
         
         return(
             <View style={{flex:1}}>
             <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.1)" translucent={true} />
                 <Header title='Pulsa' />
-                <View style={{height:50,marginTop:-24,borderTopLeftRadius:25,flexDirection:'row',paddingLeft:1,paddingTop:1}}>
+                <View style={{height:50,marginTop:-20,borderTopLeftRadius:25,flexDirection:'row',paddingHorizontal:5,paddingTop:1}}>
                     <TouchableOpacity onPress={() => {this.setState({prabayar:true,pascaBayar:false})}} style={[styles.layanan,this.state.prabayar ?{ borderColor:'#fff', borderWidth:1
                     } : null]}>
                     {this.state.prabayar ? 
@@ -247,120 +361,152 @@ class Pulsa extends Component{
                     } : null]}>
                     {this.state.pascaBayar ? 
                     <LinearGradient
-                    style={[styles.layanan,{height:'100%',width:'100%'}]} 
+                    style={[styles.layanan,{height:'100%',width:'100%'}]}
                         start={{x: 0, y: 1}} 
                         end={{x: 2, y:1.}} 
                     colors={['#39afb5','#57bfed']}>
                     <Text style={this.state.pascaBayar ? {color:'#fff'} :{}}>Pasca Bayar</Text>
                     </LinearGradient>:
-                     <Text style={this.state.pascaBayar ? {color:'#fff'} :{}}>Pasca Bayar</Text>}
+                        <Text style={this.state.pascaBayar ? {color:'#fff'} :{}}>Pasca Bayar</Text>}
                     </TouchableOpacity>
                 </View>
-                {/* <View style={styles.wrapperInput}>
-                <View style={{marginHorizontal:10,marginBottom:10,borderBottomColor:'#ecf0f1',borderBottomWidth:1,paddingVertical:10}}>
-                 <Text style={{color:'#39afb5',fontWeight:'bold',fontSize:15,marginBottom:10}}>
-                    Jenis Layanan
-                </Text>
-                
-            <RadioForm
-                        radio_props={radio_props}
-                        initial={0}
-                        labelStyle={{marginRight:20}}
-                        style={{width:'100%',marginLeft:10}}
-                        buttonSize={10}
-                        buttonInnerColor='red'
-                        selectedButtonColor={'#198f94'}
-                        formHorizontal={true}
-                        labelHorizontal={true}
-                        onPress={(value) => {this.setState({value:value})}}
-                        animation={true}
-                        buttonColor={'#198f94'}
-                    />
-                    </View>
 
-                
-            </View> */}
+            <View 
+            style={{marginTop:15,backgroundColor:'#dfe6e9',margin:10,borderRadius:10,elevation:5}}>
+             <LinearGradient
+                    colors={['#fff','rgba(85, 239, 196,0.1)']}
+                    style={{padding:10,borderRadius:10}}
+                    >
 
-            <View style={[styles.wrapperInput,{marginTop:10}]}>
+            <Text style={{color:'#39afb5',fontWeight:'bold',marginBottom:5}}>Phone Number</Text>
+
+            <View style={{flexDirection:'row',alignItems:'center'}}>
+            <View style={{width:40,height:40,backgroundColor:'#b2bec3',borderRadius:40/2}}>
+            {this.state.indosat == true ?
+                <Image source={{uri:`http://www.hptekno.com/wp-content/uploads/2015/11/Indosat-Ooredoo.png`}} 
+                resizeMode='cover'
+                style={{flex:1,borderRadius:40/2}}
+                />
+            :null
+            }
+
+             {this.state.xl == true ?
+                <Image source={{uri:`https://i2.wp.com/klikall.com/blog/wp-content/uploads/2018/10/cara-cek-pulsa-xl.png?fit=800%2C600&ssl=1`}} 
+                resizeMode='cover'
+                style={{flex:1,borderRadius:40/2}}
+                />
+            :null
+            }
+
+            {this.state.telkomsel == true ?
+                <Image source={{uri:`http://3.bp.blogspot.com/-P6XKrnl5ZiU/UDBHT8JpbKI/AAAAAAAAAKw/KAsLBUTOOos/s1600/logo+telkomsel+1.png`}} 
+                resizeMode='center'
+                style={{flex:1,borderRadius:40/2}}
+                />
+            :null
+            }
+
+            {this.state.three == true ?
+                <Image source={{uri:`https://i0.wp.com/sadewapulsa.com/wp-content/uploads/2017/08/Three-3-logo.jpg?ssl=1`}} 
+                resizeMode='cover'
+                style={{flex:1,borderRadius:40/2}}
+                />
+            :null
+            }
+             {this.state.axis == true ?
+                <Image source={{uri:`https://4.bp.blogspot.com/-WLfOY9cHMxM/WJlS0lFqZeI/AAAAAAAACx0/qPCq9rWYuZYtFFUyl26dem1LyARkD7sBwCLcB/s320/AXIS4.jpg`}} 
+                resizeMode='cover'
+                style={{flex:1,borderRadius:40/2}}
+                />
+            :null
+            }
+
+            {this.state.smartfren == true ?
+                <Image source={{uri:`https://www.prodata.co.id/wp-content/uploads/2017/08/client-logo-TSP-S-05.jpg`}} 
+                resizeMode='cover'
+                style={{flex:1,borderRadius:40/2}}
+                />
+            :null
+            }
+            </View>
             
-            <Input
-            inputContainerStyle={{borderBottomColor:'#ecf0f1',position:'relative'}}
-            keyboardType='numeric'
-            label='Phone Number'
-            labelStyle={{color:color,fontSize:14}}
-            placeholder='Masukan No hp anda'
-            inputStyle={styles.textinput}
-            onChangeText={(teks) => {this.checkNumber(teks,'phone')}}
-            value={phone}
-            rightIcon={<Font name={'address-book'} size={24} color={color} onPress={() => {this.props.navigation.navigate('ContactList')}} />}
+            <TextInput
+                placeholder='Masukan No Telpon'
+                style={{flex:1,marginLeft:5,borderBottomWidth:1,marginRight:10,position:'relative',borderBottomColor:'#b2bec3'}}
+                onChangeText={(teks) => {this.checkNumber(teks,'phone')}}
+                value={phone}
+                keyboardType='numeric'
             />
+
+            <Font name={'address-book'} size={24} color={color} onPress={() => {this.props.navigation.navigate('ContactList')}} />
             {phone.length != '' ? 
-            <Icon name='ios-close' size={20} color='#fff' style={{position:'absolute',top:35,right:60,width:20,height:20,backgroundColor:'grey',textAlign:'center',borderRadius:25/2}} onPress={() => {this._DeletedInput()}} />
+            <Icon name='ios-close' size={20} color='#fff' style={{position:'absolute',top:15,right:50,width:20,height:20,backgroundColor:'grey',textAlign:'center',borderRadius:25/2,alignItems:'center'}} onPress={() => {this._DeletedInput()}} />
             :null}
+            </View>
+            </LinearGradient>
             </View>
 
 
-            {phone.length >= 5 && this.state.value == 0 ?
+            {phone && phone.length != '' ?
             <FlatList
             refreshControl={        
                 <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
             }
-            style={{alignSelf:'center'}}
+            style={{alignSelf:'center',margin:5}}
             data={this.state.pulsa}
             numColumns={2}
             keyExtractor={(item,index) => index}
             onEndReachedThreshold={0.2}
             renderItem={({item,index}) => {
                 return(
+                    item.product_code != null ?
                     <TouchableOpacity onPress={() => {this.setState({
                         
                         price:item.price,
                         desc:item.description,
-                        provider:item.operator
-                    }),this.refs.modal3.open()}} style={styles.containerCard}
+                        operator:item.product_name
+                    }),this.setModalVisible(true)}} style={styles.containerCard}
                     key={index}
                     >
-                    <Text style={styles.textJumlah}>{item.description} </Text>
-                    <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
-                    <Text style={styles.textPrice}>{item.price}</Text>
-                    <View style={{alignItems:'flex-end'}}>
-                    
-                    {
-                    item.operator == 'TELKOMSEL' ?
-                    (<Image style={{height:30,width:60}} source={{uri:'https://1.bp.blogspot.com/-C64gdRuVaJM/XW4zTQRSZgI/AAAAAAAABAg/mrYpbD-rYkkmIzv9PZRaK99pDvhpueCLwCLcBGAs/s400/Logo%2BTelkomsel%2BTerbaru.png'}} />) : null }
-                    {
-                    item.operator == 'INDOSAT' ?
-                    (<Image style={{height:16,width:60}} source={{uri:'https://upload.wikimedia.org/wikipedia/id/thumb/3/3f/Indosat_Logo.svg/1280px-Indosat_Logo.svg.png'}} />) : null }
-                    {
-                    item.operator == 'XL'?
-                    (<Image style={{height:25,width:25}} source={{uri:'https://upload.wikimedia.org/wikipedia/id/thumb/b/ba/XL_Axiata.svg/1076px-XL_Axiata.svg.png'}} />) : null }
-                    
+                    <View style={{flex:2,justifyContent:'center'}}>
+                        <Text style={{fontSize:15,fontWeight:'bold',color:'#39afb5',}}>{item.name}</Text>
                     </View>
-                        
+
+                    <View style={{flex:1}}>
+                        <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
+                        <Text style={styles.textPrice}>{item.price}</Text>
+                    </View>
+
+                     <View style={{flex:1}}>
+                        <Text style={{fontSize:10,color:'tomato',alignSelf:'flex-end'}}>{item.desc}</Text>
+                    </View>
+                    
                     
                     </TouchableOpacity>
-                ) 
+                    :null
+                )
+               
             }}
-            />
+            /> 
          : null }
 
-            {/* <CardPulsa 
-            check={this.state.phone} 
-            pulsa={pulsa} 
-            prabayar={this.state.value} 
-            getContact={contact} 
-            press={() => {this.refs.modal3.open()}} 
-            price={this.state.price}
-            desc={this.state.desc} /> */}
-            <Modal style={[styles.modal, styles.modal3]} position={"bottom"} ref={"modal3"} isDisabled={this.state.isDisabled}>
-                <View style={{height:6,justifyContent:'center',alignItems:'center',marginTop:5}}>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={this.state.modalVisible}
+                onRequestClose={() => {
+                this.setModalVisible(!this.state.modalVisible)
+                }}>
+                <View style={{flex:1,backgroundColor:'rgba(45, 52, 54,0.5)',elevation:3,justifyContent: 'flex-end'}}>
+                    <View style={{backgroundColor:'#fff',padding:20,borderTopLeftRadius:25,borderTopRightRadius:25}}>
+                    <View style={{height:6,justifyContent:'center',alignItems:'center',marginTop:5,backgroundColor:'#fff'}}>
                 <View style={{backgroundColor:'grey',height:3,width:width/10}}></View>
                 </View>
                     <Text style={[styles.text]}>Konfirmasi Pembayaran</Text>
                     <Text style={styles.textP} >Nomor Telpon : <Text style={{fontWeight:'700'}}>{phone}</Text></Text>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                         <Text style={styles.textP}>Operator : </Text>
-                    <Text>{this.state.provider}</Text>
+                    <Text>{this.state.operator}</Text>
                     </View>
 
                     <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
@@ -400,11 +546,16 @@ class Pulsa extends Component{
                         </LinearGradient>
                         </TouchableOpacity>
                         
-                        <TouchableOpacity onPress={() => this.refs.modal3.close()} style={{width:'47%',alignItems:'center',borderRadius:5,elevation:2,marginTop:10,alignItems:'center',justifyContent:'center',backgroundColor:'#fff'}} >
+                        <TouchableOpacity  onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible);
+                        }} style={{width:'47%',alignItems:'center',borderRadius:5,elevation:2,marginTop:10,alignItems:'center',justifyContent:'center',backgroundColor:'#fff'}} >
                             <Text>Batalkan</Text>
                         </TouchableOpacity>
                     </View>
-                </Modal>
+                    </View>
+                </View>
+            </Modal>
+
             </View>
         )
     }
@@ -450,7 +601,7 @@ const styles = StyleSheet.create({
         elevation:4,
         margin:5,
         backgroundColor:'#fff',
-        padding:10,
+        paddingHorizontal:10,
         borderRadius:5
     },
     textJumlah:{
@@ -462,7 +613,8 @@ const styles = StyleSheet.create({
     textPrice:{
         color:'#535c68',
         marginLeft:14,
-        marginTop:-15
+        marginTop:-15,
+        fontSize:12
     },
     layanan:{
         flex:1,

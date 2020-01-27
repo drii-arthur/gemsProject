@@ -43,10 +43,6 @@ const Label = (props) => {
 }
 
 Pusher.logToConsole = true;
-var pusher = new Pusher('3151fb2a32437abb43bc', {
-  cluster: 'ap1',
-  forceTLS: true
-});
 const {height,width} = Dimensions.get('window')
 class HomePage extends React.Component{
     constructor(props){
@@ -61,6 +57,10 @@ class HomePage extends React.Component{
     }
 
     componentDidMount = async () => {
+        var pusher = new Pusher('3151fb2a32437abb43bc', {
+            cluster: 'ap1',
+            forceTLS: true
+        });
         const token = await AsyncStorage.getItem('token',(err,res) => {
             if(res){
                 this.setState({token:res})
@@ -72,7 +72,11 @@ class HomePage extends React.Component{
             })
                 this.getSaldo()
                 
-
+        var channel = pusher.subscribe('3')
+        let count = this.state.notif
+            channel.bind('notification', function(data) {
+            alert(data.message)
+        });
     
         }
         
@@ -94,10 +98,6 @@ class HomePage extends React.Component{
     }
 
     render(){
-        var channel = pusher.subscribe('3')
-channel.bind('notification', function(data) {
-  alert(JSON.stringify(data))
-});
         const staticHeaders = this.state.scrollY.interpolate({
             inputRange: [0, 50],
             outputRange: [0, 1]
