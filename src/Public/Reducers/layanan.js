@@ -29,6 +29,28 @@ const layanan = (state = initialState,action) => {
                 dataPulsa: action.payload.data.data
             }
 
+        case 'TRANSAKSI_PULSA_PENDING':
+            return {
+                ...state,
+                isLoading:true,
+                isRejected:false,
+                isFullFilled:false
+            }
+        case 'TRANSAKSI_PULSA_REJECTED':
+            return {
+                ...state,
+                isLoading:false,
+                isRejected:true,
+                isFullFilled:false
+            }
+        case 'PULSA_FULLFILLED':
+            return {
+                ...state,
+                isRejected:false,
+                isFullFilled:true,
+                dataPulsa: action.payload.data.data
+            }
+
         case 'PLN_PENDING':
             return {
                 ...state,
@@ -42,7 +64,27 @@ const layanan = (state = initialState,action) => {
                 isRejected:true,
                 isFullFilled:false
             }
-        case 'PLN_FULLFILLED':
+        case 'TRANSAKSI_PLN_FULLFILLED':
+            return {
+                ...state,
+                isRejected:false,
+                isFullFilled:true
+            }
+        case 'CHECK_TOKEN_PENDING':
+            return {
+                ...state,
+                isRejected:false,
+                isLoading:true,
+                isFullFilled:false
+            }
+        case 'CHECK_TOKEN_REJECTED':
+            return {
+                ...state,
+                isRejected:true,
+                isFullFilled:false
+            }
+
+        case 'CHECK_TOKEN_FULLFILLED':
             return {
                 ...state,
                 isRejected:false,

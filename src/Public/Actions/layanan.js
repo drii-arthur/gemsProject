@@ -16,10 +16,34 @@ export const pulsa = (provider,token) => {
     }
 }
 
+export const transaksiPulsa = (data,token) => {
+    return{
+        type:'TRANSAKSI_PULSA',
+        payload: axios.post(`${url}/admin/v1/product/transaksi/beli`,data,{
+            headers:{
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
+}
+
 export const pln = (token) => {
     return {
         type: 'PLN',
-        payload:axios.get(`${url}/admin/v1/pln`,{
+        payload:axios.get(`${url}/admin/v1/product/detail/7`,{
+            headers:{
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
+}
+
+export const checkToken = (data,token) => {
+    return {
+        type: 'CHECK_TOKEN',
+        payload:axios.post(`${url}/admin/v1/product/token/check`,data,{
             headers:{
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${token}`

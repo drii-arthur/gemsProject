@@ -2,14 +2,16 @@ import React,{Component} from 'react'
 import { View,Text,StyleSheet,FlatList,StatusBar,Dimensions,TouchableOpacity,ScrollView,Image,Picker,RefreshControl,TextInput,ActivityIndicator,Modal } from "react-native"
 import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
-import CardPulsa from '../Components/cardPulsa'
-import Header from '../Components/header'
 import LinearGradient from 'react-native-linear-gradient'
 import RNPickerSelect from 'react-native-picker-select'
 import AsyncStorage from '@react-native-community/async-storage'
-import {pulsa} from '../Public/Actions/layanan'
+import {pulsa,transaksiPulsa} from '../Public/Actions/layanan'
 import {connect} from 'react-redux'
+import {Toast} from 'native-base'
 
+import PinTransaction from '../Components/PinTransaction'
+import CardPulsa from '../Components/cardPulsa'
+import Header from '../Components/header'
 
 const color = '#39afb5'
 const colorP = '#485460'
@@ -18,6 +20,12 @@ const radio_props = [
 {label: 'Pasca bayar', value: 1 }
 ]
 const {height,width} = Dimensions.get('window')
+
+const Hr = () => {
+    return(
+        <View style={{backgroundColor:'#ecf0f1',height:10,width:width}}></View>
+    )
+}
 class Pulsa extends Component{
     constructor(props){
         super(props)
@@ -42,6 +50,9 @@ class Pulsa extends Component{
             axis:false,
             smartfren:false,
             modalVisible: false,
+            modalVisible2:false,
+            product_id:'',
+            reff_id:''
         }
     }
 
@@ -70,7 +81,8 @@ class Pulsa extends Component{
                 teks.substring(0,4) == '0823' ){
                     this.setState({
                         telkomsel:true,
-                        isLoading:true
+                        isLoading:true,
+                        product_id:327
                     })
                 this.props.dispatch(pulsa(327,this.state.token))
                 .then(res => {
@@ -91,7 +103,8 @@ class Pulsa extends Component{
                 teks.substring(0,4) == '0859'){
                     this.setState({
                         xl:true,
-                        isLoading:true
+                        isLoading:true,
+                        product_id:14
                     })
                 this.props.dispatch(pulsa(14,this.state.token))
                 .then(res => {
@@ -111,6 +124,7 @@ class Pulsa extends Component{
                 teks.substring(0,4) == '0815'){
                     this.setState({
                         indosat:true,
+                        product_id:24,
                         isLoading:true
                     })
             this.props.dispatch(pulsa(24,this.state.token))
@@ -136,6 +150,7 @@ class Pulsa extends Component{
                 teks.substring(0,4) == '0889'){
                     this.setState({
                         smartfren:true,
+                        product_id:207,
                         isLoading:true
                     })
             this.props.dispatch(pulsa(207,this.state.token))
@@ -157,6 +172,7 @@ class Pulsa extends Component{
                 teks.substring(0,4) == '0895'){
                     this.setState({
                         three:true,
+                        product_id:6,
                         isLoading:true
                     })
             this.props.dispatch(pulsa(6,this.state.token))
@@ -177,6 +193,7 @@ class Pulsa extends Component{
                 teks.substring(0,4) == '0833'){
                     this.setState({
                         axis:true,
+                        product_id:18,
                         isLoading:true
                     })
             this.props.dispatch(pulsa(18,this.state.token))
@@ -202,19 +219,6 @@ class Pulsa extends Component{
                         smartfren:false
                     })
                 }
-        // if(teks.length == 4) {
-        // this.props.dispatch(pulsa(this.state.provider,this.state.token))
-        // .then(res => {
-        //     console.log(res.action.payload.data.products[0].image_url)
-        //     this.setState({
-        //         pulsa:res.action.payload.data.products,
-        //         image:res.action.payload.data.products[0].image_url
-        //         })
-        // })
-        // .catch(err => {
-        //     console.log(err)
-        // })
-        // }
         
     }
 
@@ -241,9 +245,37 @@ class Pulsa extends Component{
         subs.remove()
     }
 
-    // componentDidUpdate(prevState){
-    //     this.getData()
-    // }
+    _transactionPulsa = async () => {
+        await this.props.dispatch(transaksiPulsa({
+            product_id:this.state.product_id,
+            phone_number:this.state.phone,
+            reff_id:this.state.reff_id
+        },this.state.token))
+        .then(res => {
+            console.log(res)
+            Toast.show({
+                    text:'Pembelian Berhasil',
+                    buttonText: "Okay",
+                    type: "success",
+                    position:'top',
+                    duration:2000,
+                    style:styles.toast
+                })
+            
+        })
+        .catch(err => {
+            console.log(err)
+            Toast.show({
+                    text:'Pembelian Gagal',
+                    buttonText: "Okay",
+                    type: "danger",
+                    position:'top',
+                    duration:2000,
+                    style:styles.toast
+                })
+            
+        })
+    }
 
     getData = () => {
         if(this.state.phone.substring(0,4) == '0813' ||
@@ -332,6 +364,10 @@ class Pulsa extends Component{
             this.setState({modalVisible:visible})
         }
 
+         setModalVisible2(visible2) {
+            this.setState({modalVisible2:visible2})
+        }
+
     goBack = () => {
         this.props.navigation.goBack()
     }
@@ -343,7 +379,7 @@ class Pulsa extends Component{
             <View style={{flex:1}}>
             <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.1)" translucent={true} />
                 <Header title='Pulsa' />
-                <View style={{height:50,marginTop:-20,borderTopLeftRadius:25,flexDirection:'row',paddingHorizontal:5,paddingTop:1}}>
+                <View style={{height:50,marginTop:-20,borderTopLeftRadius:25,flexDirection:'row',paddingHorizontal:5,paddingTop:1,marginBottom:10}}>
                     <TouchableOpacity onPress={() => {this.setState({prabayar:true,pascaBayar:false})}} style={[styles.layanan,this.state.prabayar ?{ borderColor:'#fff', borderWidth:1
                     } : null]}>
                     {this.state.prabayar ? 
@@ -371,8 +407,9 @@ class Pulsa extends Component{
                     </TouchableOpacity>
                 </View>
 
+<Hr />
             <View 
-            style={{marginTop:15,backgroundColor:'#dfe6e9',margin:10,borderRadius:10,elevation:5}}>
+            style={{marginVertical:15,backgroundColor:'#dfe6e9',margin:10,borderRadius:10,elevation:5}}>
              <LinearGradient
                     colors={['#fff','rgba(85, 239, 196,0.1)']}
                     style={{padding:10,borderRadius:10}}
@@ -446,8 +483,10 @@ class Pulsa extends Component{
             </LinearGradient>
             </View>
 
+            <Hr />
 
-            {phone && phone.length != '' ?
+
+            {phone && phone.length != '' && this.state.prabayar == true ?
             <FlatList
             refreshControl={        
                 <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
@@ -463,8 +502,9 @@ class Pulsa extends Component{
                     <TouchableOpacity onPress={() => {this.setState({
                         
                         price:item.price,
-                        desc:item.description,
-                        operator:item.product_name
+                        desc:item.name,
+                        operator:item.product_name,
+                        reff_id:item.product_detail_id
                     }),this.setModalVisible(true)}} style={styles.containerCard}
                     key={index}
                     >
@@ -539,7 +579,8 @@ class Pulsa extends Component{
                         <Text style={{fontSize:18,color:colorP,fontWeight:'700'}}>{this.state.price}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                        <TouchableOpacity 
+                        <TouchableOpacity
+                        onPress={() => {this.setModalVisible(!this.state.modalVisible),this.setModalVisible2(true) }}
                             style={{width:'47%',alignItems:'center',borderRadius:5,elevation:2,marginTop:10}} >
                         <LinearGradient colors={[ '#39AFB5','#1e90ff']} style={{paddingVertical:10,width:'100%',alignItems:'center',borderRadius:5}}>
                             <Text style={{color:'#fff',fontWeight:'bold',fontSize:16,letterSpacing:1.2}}>Konfirmasi</Text>
@@ -555,6 +596,8 @@ class Pulsa extends Component{
                     </View>
                 </View>
             </Modal>
+
+            <PinTransaction visible={this.state.modalVisible2} close={() => {this.setModalVisible2(!this.state.modalVisible2)}} transaction={() => {this._transactionPulsa()}} loading={this.state.isLoading} />
 
             </View>
         )

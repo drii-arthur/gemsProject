@@ -77,7 +77,7 @@ class Login extends Component{
             this.setState({isLoading:false})
         }
         else{
-        await this.props.dispatch(login({phone:phone,perangkat:this.state.perangkat}))
+        await this.props.dispatch(login({phone:phone,perangkat:this.state.perangkat,signcode:'test'}))
         .then(async (res) => {
             const dataObj = res.action.payload.data.data
             let id = dataObj.id
