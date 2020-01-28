@@ -166,7 +166,7 @@ class CardAccounts extends React.Component{
               </TouchableOpacity>
                 <QRCode
                         value={qrCode}
-                        logo={require('../Assets/Icons/logoscan.png')}
+                        logo={require('../Assets/Icons/IconWallet.png')}
                         logoSize={30}
                         size={200}
                     /> 

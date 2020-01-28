@@ -5,6 +5,9 @@ import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
 import LinearGradient from 'react-native-linear-gradient'
 import {pulsa,transaksiPulsa} from '../Public/Actions/layanan'
+import {connect} from 'react-redux'
+import AsyncStorage from '@react-native-community/async-storage'
+import {Toast} from 'native-base'
 
 
 import CardPulsa from '../Components/cardPulsa.js'
@@ -33,8 +36,52 @@ class PaketData extends Component{
            isLoading:false,
            axis:false,
            smartfren:false,
+           token:''
         }
     }
+
+    _DeletedInput = () => {
+        this.setState({
+            phone:'',
+            indosat:false,
+            telkomsel:false,
+            xl:false,
+            three:false,
+            isLoading:false
+        })
+    }
+
+    componentDidMount = async () => {
+        this.setState({isLoading:false})
+        const token = await AsyncStorage.getItem('token',(err,res) => {
+            if(res){
+                this.setState({
+                    token:res
+                })
+            }else{console.log(err)}                   
+            })
+        const subs = 
+            this.props.navigation.addListener('willFocus', () => {
+                // this.onRefresh()
+                this.getDataNumber()
+                // this.getData()
+            })
+
+            this.getDataNumber()
+            // this.getData()               
+        }
+    componentWillUnMount (){
+        subs.remove()
+    }
+
+     getDataNumber =  () => {
+            let contact = this.props.navigation.getParam('nomor')
+            if(contact != undefined){
+            this.setState({
+                phone:contact
+            })
+            }
+        }
 
     checkNumber = (teks,name) => {
        this.setState({
@@ -51,9 +98,9 @@ class PaketData extends Component{
                     this.setState({
                         telkomsel:true,
                         isLoading:true,
-                        product_id:327
+                        product_id:10
                     })
-                this.props.dispatch(pulsa(327,this.state.token))
+                this.props.dispatch(pulsa(10,this.state.token))
                 .then(res => {
                     this.setState({
                         paketData:res.action.payload.data.products,
@@ -292,7 +339,13 @@ class PaketData extends Component{
     }
 }
 
-export default PaketData
+const mapStateToProps = state => {
+    return {
+        layanan: state.layanan
+    };
+};
+
+export default connect(mapStateToProps)(PaketData)
 
 const styles = StyleSheet.create({
     header:{
