@@ -90,6 +90,27 @@ const layanan = (state = initialState,action) => {
                 isRejected:false,
                 isFullFilled:true
             }
+
+        case 'GAMES_VOUCHER_PENDING':
+            return {
+                ...state,
+                isRejected:false,
+                isLoading:true,
+                isFullFilled:false
+            }
+        case 'GAMES_VOUCHER_REJECTED':
+            return {
+                ...state,
+                isRejected:true,
+                isFullFilled:false
+            }
+
+        case 'GAMES_VOUCHER_FULLFILLED':
+            return {
+                ...state,
+                isRejected:false,
+                isFullFilled:true
+            }
     
         default:
             return state

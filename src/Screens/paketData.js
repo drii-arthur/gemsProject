@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import { View,Text,StyleSheet,FlatList,StatusBar,TextInput,Dimensions,Image } from "react-native"
+import { View,Text,StyleSheet,FlatList,StatusBar,TextInput,Dimensions,Image,TouchableOpacity,Modal } from "react-native"
 import {Input} from 'react-native-elements'
 import Icon  from "react-native-vector-icons/Ionicons"
 import Font from 'react-native-vector-icons/FontAwesome5'
@@ -9,12 +9,13 @@ import {connect} from 'react-redux'
 import AsyncStorage from '@react-native-community/async-storage'
 import {Toast} from 'native-base'
 
-
+import PinTransaction from '../Components/PinTransaction'
 import CardPulsa from '../Components/cardPulsa.js'
 import Header from '../Components/header'
 import JenisLayanan from '../Components/JenisLayanan'
 
 const color = '#39afb5'
+const colorP = '#485460'
 const {width,height} = Dimensions.get('window')
 const Hr = () => {
     return(
@@ -25,18 +26,22 @@ class PaketData extends Component{
     constructor(props){
         super(props)
         this.state = {
-           phone:'',
-           paketData:'',
-           prabayar:true,
-           pascaBayar:false,
-           indosat:false,
-           telkomsel:false,
-           xl:false,
-           three:false,
-           isLoading:false,
-           axis:false,
-           smartfren:false,
-           token:''
+        phone:'',
+        paketData:'',
+        prabayar:true,
+        pascaBayar:false,
+        indosat:false,
+        telkomsel:false,
+        xl:false,
+        three:false,
+        isLoading:false,
+        axis:false,
+        smartfren:false,
+        token:'',
+        modalVisible:false,
+        modalVisible2:false,
+        product_id:'',
+        reff_id:''
         }
     }
 
@@ -74,7 +79,7 @@ class PaketData extends Component{
         subs.remove()
     }
 
-     getDataNumber =  () => {
+    getDataNumber =  () => {
             let contact = this.props.navigation.getParam('nomor')
             if(contact != undefined){
             this.setState({
@@ -83,8 +88,40 @@ class PaketData extends Component{
             }
         }
 
+        _transactionPulsa = async () => {
+        await this.props.dispatch(transaksiPulsa({
+            product_id:this.state.product_id,
+            phone_number:this.state.phone,
+            reff_id:this.state.reff_id
+        },this.state.token))
+        .then(res => {
+            console.log(res)
+            Toast.show({
+                    text:'Pembelian Berhasil',
+                    buttonText: "Okay",
+                    type: "success",
+                    position:'top',
+                    duration:2000,
+                    style:styles.toast
+                })
+            
+        })
+        .catch(err => {
+            console.log(err)
+            Toast.show({
+                    text:'Pembelian Gagal',
+                    buttonText: "Okay",
+                    type: "danger",
+                    position:'top',
+                    duration:2000,
+                    style:styles.toast
+                })
+            
+        })
+    }
+
     checkNumber = (teks,name) => {
-       this.setState({
+        this.setState({
             [name]:teks,
         })
         if(teks.substring(0,4) == '0813' ||
@@ -120,7 +157,7 @@ class PaketData extends Component{
                     this.setState({
                         xl:true,
                         isLoading:true,
-                        product_id:14
+                        product_id:8
                     })
                 this.props.dispatch(pulsa(8,this.state.token))
                 .then(res => {
@@ -140,7 +177,7 @@ class PaketData extends Component{
                 teks.substring(0,4) == '0815'){
                     this.setState({
                         indosat:true,
-                        product_id:24,
+                        product_id:94,
                         isLoading:true
                     })
             this.props.dispatch(pulsa(94,this.state.token))
@@ -149,6 +186,7 @@ class PaketData extends Component{
                     paketData:res.action.payload.data.products,
                     isLoading:false 
                 })
+                console.log(res.action.payload.data.products.price)
             })
             .catch(err => {
             console.log(err)
@@ -166,7 +204,7 @@ class PaketData extends Component{
                 teks.substring(0,4) == '0889'){
                     this.setState({
                         smartfren:true,
-                        product_id:207,
+                        product_id:4,
                         isLoading:true
                     })
             this.props.dispatch(pulsa(4,this.state.token))
@@ -188,10 +226,10 @@ class PaketData extends Component{
                 teks.substring(0,4) == '0895'){
                     this.setState({
                         three:true,
-                        product_id:6,
+                        product_id:5,
                         isLoading:true
                     })
-            this.props.dispatch(pulsa(6,this.state.token))
+            this.props.dispatch(pulsa(5,this.state.token))
             .then(res => {
                 this.setState({
                     paketData:res.action.payload.data.products,
@@ -209,10 +247,10 @@ class PaketData extends Component{
                 teks.substring(0,4) == '0833'){
                     this.setState({
                         axis:true,
-                        product_id:18,
+                        product_id:9,
                         isLoading:true
                     })
-            this.props.dispatch(pulsa(18,this.state.token))
+            this.props.dispatch(pulsa(9,this.state.token))
             .then(res => {
                 this.setState({
                     paketData:res.action.payload.data.products,
@@ -232,7 +270,11 @@ class PaketData extends Component{
                         indosat:false,
                         xl:false,
                         axis:false,
-                        smartfren:false
+                        smartfren:false,
+                        price:'',
+                        operator:'',
+                        desc:'',
+                        reff_id:''
                     })
                 }
         
@@ -241,6 +283,13 @@ class PaketData extends Component{
     goBack = () => {
         this.props.navigation.goBack()
     }
+
+    setModalVisible(visible) {
+            this.setState({modalVisible:visible})
+        }
+    setModalVisible2(visible2) {
+            this.setState({modalVisible2:visible2})
+        }
     render(){
         const {phone} = this.state
         console.log(this.state.phone)
@@ -248,7 +297,7 @@ class PaketData extends Component{
             <View style={{flex:1}}>
             <StatusBar barStyle="dark-content" backgroundColor="rgba(30, 39, 46,0.1)" translucent={true} />
             <Header title='Paket Data' />
-             <JenisLayanan
+            <JenisLayanan
                 prabayar={this.state.prabayar}
                 changePrabayar={() => {this.setState({prabayar:true,pascaBayar:false})}}
                 pascabayar={this.state.pascaBayar}
@@ -333,7 +382,115 @@ class PaketData extends Component{
 
             <Hr />
 
-            <CardPulsa check={this.state.phone} />
+            <FlatList
+            style={{alignSelf:'center',margin:5}}
+            data={this.state.paketData}
+            numColumns={2}
+            keyExtractor={(item,index) => index}
+            onEndReachedThreshold={0.2}
+            renderItem={({item,index}) => {
+                return(
+                    item.price >= 12000 || item.is_gangguan != 0 ?
+                    <TouchableOpacity 
+                    onPress={() => {this.setState({
+                        price:item.price,
+                        desc:item.name,
+                        operator:item.product_name,
+                        reff_id:item.product_detail_id
+                    }),this.setModalVisible(true)}} style={styles.containerCard}
+                    key={index}
+                    >
+                    <View style={{flex:2,justifyContent:'center'}}>
+                        <Text style={{fontSize:15,fontWeight:'bold',color:'#39afb5',}}>{item.name.substr(0,45)}</Text>
+                    </View>
+
+                    <View style={{flex:1,flexDirection:'row'}}>
+                        <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
+                        <Text style={styles.textPrice}>{item.price}</Text>
+                    </View>
+
+                     {/* <View style={{flex:1}}>
+                        <Text style={{fontSize:10,color:'tomato',alignSelf:'flex-end'}}>{item.desc}</Text>
+                    </View> */}
+                    
+                    
+                    </TouchableOpacity>
+                    :null
+                )
+            }}
+            /> 
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={this.state.modalVisible}
+                onRequestClose={() => {
+                this.setModalVisible(!this.state.modalVisible)
+                }}>
+                <View style={{flex:1,backgroundColor:'rgba(45, 52, 54,0.5)',elevation:3,justifyContent: 'flex-end'}}>
+                    <View style={{backgroundColor:'#fff',padding:20,borderTopLeftRadius:25,borderTopRightRadius:25}}>
+                    <View style={{height:6,justifyContent:'center',alignItems:'center',marginTop:5,backgroundColor:'#fff'}}>
+                <View style={{backgroundColor:'grey',height:3,width:width/10}}></View>
+                </View>
+                    <Text style={[styles.textKonfirmasi]}>Konfirmasi Pembayaran</Text>
+                    <Text style={styles.textP} >Nomor Telpon : <Text style={{fontWeight:'700'}}>{phone}</Text></Text>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={styles.textP}>Operator : </Text>
+                    <Text>{this.state.operator}</Text>
+                    </View>
+
+                    <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+                        <Text style={styles.textP}>Metode Pembayaran : </Text>
+                        {/* <Picker
+                        selectedValue={this.state.language}
+                        style={{flex:1,alignItems:'center',height:30,justifyContent:'center'}}
+                        onValueChange={(itemValue, itemIndex) =>
+                            this.setState({language: itemValue})
+                        }
+                        itemStyle={{color:'blue',fontSize:13}}
+                        >
+                        <Picker.Item label="Gems Cash" value="Gems Cash"/>
+                        <Picker.Item label="Gems Point" value="Gems Point" />
+                        </Picker> */}
+                    </View>
+                    
+                    
+                    <Text style={{fontSize:16,color:color,fontWeight:'700',marginBottom:5}}>Detail</Text>
+                    <View style={{flexDirection:'row',paddingHorizontal:10}}>
+                        <Text style={styles.textP}>Pembayaran : </Text>
+                        <View style={{flex:1}}>
+                            <Text style={[styles.textP,{alignSelf:'flex-end'}]}>{this.state.desc}</Text>
+                        </View>
+                    </View>
+                    <View style={{flexDirection:'row',justifyContent:'space-between',borderBottomWidth:1,borderBottomColor:'#f9f9f7',paddingBottom:3,paddingHorizontal:10}}>
+                    <Text style={[styles.textP,{marginRight:10}]}>Harga : </Text>
+                    <Text style={styles.textP}>{this.state.price}</Text>
+                    </View>
+                    <View style={{flexDirection:'row',justifyContent:'space-between',paddingRight:12}}>
+                    <Text style={{fontSize:18,color:colorP,fontWeight:'700'}}>Total</Text>
+                        <Text style={{fontSize:18,color:colorP,fontWeight:'700'}}>{this.state.price}</Text>
+                    </View>
+                    <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                        <TouchableOpacity
+                        onPress={() => {this.setModalVisible(!this.state.modalVisible),this.setModalVisible2(true) }}
+                            style={{width:'47%',alignItems:'center',borderRadius:5,elevation:2,marginTop:10}} >
+                        <LinearGradient colors={[ '#39AFB5','#1e90ff']} style={{paddingVertical:10,width:'100%',alignItems:'center',borderRadius:5,}}>
+                            <Text style={{color:'#fff',fontWeight:'bold',fontSize:16,letterSpacing:1.2}}>Konfirmasi</Text>
+                        </LinearGradient>
+                        </TouchableOpacity>
+                        
+                        <TouchableOpacity  onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible);
+                        }} style={{width:'47%',alignItems:'center',borderRadius:5,elevation:2,marginTop:10,alignItems:'center',justifyContent:'center',backgroundColor:'#fff'}} >
+                            <Text>Batalkan</Text>
+                        </TouchableOpacity>
+                    </View>
+                    </View>
+                </View>
+            </Modal>
+
+            <PinTransaction visible={this.state.modalVisible2} close={() => {this.setModalVisible2(!this.state.modalVisible2)}} transaction={() => {this._transactionPulsa()}} loading={this.state.isLoading} />
+
+
             </View>
         )
     }
@@ -365,5 +522,25 @@ const styles = StyleSheet.create({
         marginTop:25,
         alignItems:'center',
         marginBottom:20
-    }
+    },
+    containerCard:{
+        height:height/8,
+        width:width/2.3,
+        elevation:4,
+        margin:7,
+        backgroundColor:'#fff',
+        padding:10,
+        borderRadius:5,
+    },
+    textP:{
+        color:colorP,
+        marginBottom:5
+    },
+    textKonfirmasi: {
+        fontSize:15,
+        color: color,
+        textAlign:'center',
+        marginVertical:10,
+        fontWeight:'700'
+    },
 })

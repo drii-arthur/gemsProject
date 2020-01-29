@@ -63,7 +63,7 @@ class QrCode extends React.Component{
                         value={this.state.qrCode}
                         logo={require('../Assets/Icons/IconWallet.png')}
                         logoSize={30}
-                        size={200}
+                        size={height/3}
                     />
                     </View>
 

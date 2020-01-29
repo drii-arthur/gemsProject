@@ -51,3 +51,15 @@ export const checkToken = (data,token) => {
         })
     }
 }
+
+export const gamesVoucher = (id,token) => {
+    return {
+        type : 'GAMES_VOUCHER',
+        payload: axios.get(`${url}/admin/v1/product/${id}`,{
+            headers:{
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
+}

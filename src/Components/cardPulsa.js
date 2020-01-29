@@ -19,67 +19,50 @@ class CardPulsa extends Component{
     }
 
     render(){
-        const data = this.props.pulsa
+        const data = this.props.data
         const prabayar = this.props.prabayar
         const press = this.props.press
-        let check = this.props.check
         return(
             <View style={{flex:1}}>
-            {check.length >= 4 && prabayar == 0 ?
-            <FlatList
-            style={{alignSelf:'center'}}
+            {data.length >= 4 && prabayar == true ?
+             <FlatList
+            style={{alignSelf:'center',margin:5}}
             data={data}
             numColumns={2}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item,index) => index}
             onEndReachedThreshold={0.2}
             renderItem={({item,index}) => {
                 return(
+                    item.price >= 12000 ?
                     <TouchableOpacity onPress={() => {this.setState({
                         
                         price:item.price,
-                        desc:item.description
-                    }),press()}} style={styles.containerCard}
+                        desc:item.name,
+                        operator:item.product_name,
+                        reff_id:item.product_detail_id
+                    }),this.setModalVisible(true)}} style={styles.containerCard}
                     key={index}
                     >
-                    <Text style={styles.textJumlah}>{item.description} </Text>
-                    <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
-                    <Text style={styles.textPrice}>{item.price}</Text>
-                    <View style={{alignItems:'flex-end'}}>
-                    
-                    {
-                    check.substring(0,4) == '0813' ||
-                    check.substring(0,4) == '0812' ||  
-                    check.substring(0,4) == '0811' ||    
-                    check.substring(0,4) == '0822' ||    
-                    check.substring(0,4) == '0853' ||    
-                    check.substring(0,4) == '0852' ||    
-                    check.substring(0,4) == '0823' ?
-                    (<Image style={{height:30,width:60}} source={{uri:'https://1.bp.blogspot.com/-C64gdRuVaJM/XW4zTQRSZgI/AAAAAAAABAg/mrYpbD-rYkkmIzv9PZRaK99pDvhpueCLwCLcBGAs/s400/Logo%2BTelkomsel%2BTerbaru.png'}} />) : null }
-                    {
-                    check.substring(0,4) == '0857' ||
-                    check.substring(0,4) == '0855' ||
-                    check.substring(0,4) == '0858' ||
-                    check.substring(0,4) == '0814' ||
-                    check.substring(0,4) == '0815' ||
-                    check.substring(0,4) == '0816' ||
-                    check.substring(0,4) == '0856' ?
-                    (<Image style={{height:16,width:60}} source={{uri:'https://upload.wikimedia.org/wikipedia/id/thumb/3/3f/Indosat_Logo.svg/1280px-Indosat_Logo.svg.png'}} />) : null }
-                    {
-                    check.substring(0,4) == '0877' ||  
-                    check.substring(0,4) == '0878' ||  
-                    check.substring(0,4) == '0859' ||  
-                    check.substring(0,4) == '0818' ||  
-                    check.substring(0,4) == '0819' ||  
-                    check.substring(0,4) == '0817'  ?
-                    (<Image style={{height:30,width:30}} source={{uri:'https://upload.wikimedia.org/wikipedia/id/thumb/b/ba/XL_Axiata.svg/1076px-XL_Axiata.svg.png'}} />) : null }
-                    
+                    <View style={{flex:2,justifyContent:'center'}}>
+                        <Text style={{fontSize:15,fontWeight:'bold',color:'#39afb5',}}>{item.name}</Text>
                     </View>
-                        
+
+                    <View style={{flex:1}}>
+                        <Text style={{fontSize:10,color:'#535c68'}}>Rp</Text>
+                        <Text style={styles.textPrice}>{item.price}</Text>
+                    </View>
+
+                     {/* <View style={{flex:1}}>
+                        <Text style={{fontSize:10,color:'tomato',alignSelf:'flex-end'}}>{item.desc}</Text>
+                    </View> */}
+                    
                     
                     </TouchableOpacity>
-                ) 
+                    :null
+                )
+               
             }}
-            />
+            /> 
             : null }
             </View>
         )
